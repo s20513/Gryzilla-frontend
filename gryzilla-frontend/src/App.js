@@ -1,16 +1,15 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavBar from './components/NavBar';
 import { Container, Col, Row } from 'react-bootstrap';
-import MainPage from './components/MainPage';
 
+import MainPage from './components/MainPage';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
-    
-    <>
+    <div style={{backgroundColor: "#212833", height: "100vh", color: "white" }}>
       <NavBar></NavBar>
-      <Container>
+      <Container className="MainContainer">
         <Row>
           <Col xs={8}>
             <MainPage></MainPage>
@@ -20,8 +19,7 @@ function App() {
           </Col>
         </Row>
       </Container>
-    </>
-    
+    </div> 
   );
 }
 
