@@ -1,25 +1,30 @@
-import './App.css';
+import './App.sccs';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from 'react-bootstrap';
 
-import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
+import LeftColumn from './components/LeftColumn';
+import RightColumn from './components/RightColumn'
+
+import "./Styles/Global.scss";
+import "./Styles/DataContainer.scss";
 
 function App() {
+  document.body.style = 'background-color: #1E1F23;';
   return (
-    <div style={{backgroundColor: "#212833", height: "100vh", color: "white" }}>
+    <>
       <NavBar></NavBar>
-      <Container className="MainContainer">
+      <Container className="main-container">
         <Row>
           <Col xs={8}>
-            <MainPage></MainPage>
+            <LeftColumn></LeftColumn>
           </Col>
           <Col>
-            <Container className="bg-light border" bg="red">col1</Container>
+            <RightColumn></RightColumn>
           </Col>
         </Row>
       </Container>
-    </div> 
+    </> 
   );
 }
 

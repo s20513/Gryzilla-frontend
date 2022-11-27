@@ -1,0 +1,35 @@
+@import 'Variables';
+
+
+.data-container {
+    padding: 1rem;
+
+    .upper-data-container {
+        background-color: $upper-data-container-color;
+        padding: 1rem;
+        border-radius: 1.5rem;
+
+        .likes-count {
+            color: green;
+            font-weight: bold;
+        }
+
+        .user-nick {
+            color: red;
+        }
+
+        .hr-line {
+            border-top: 4px solid $column-container-color;
+            opacity: 1;
+        }
+    }
+
+    .lower-tag-container {
+        background-color: $lower-tag-container-color;
+        padding: 0rem 2rem 0rem 2rem;
+        display: inline-block;
+        margin-left: 2rem;
+        width: auto;
+        border-radius: 0rem 0rem 0.8rem 0.8rem;
+    }
+}

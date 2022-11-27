@@ -1,0 +1,18 @@
+@import 'Variables';
+
+.main-container {
+    margin-top: 3rem;
+    color: white;
+}
+
+.column-container {
+    background-color: $column-container-color;
+    border-radius: 1.5rem;
+
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+
+    -webkit-box-shadow: 10px 5px 0px 0px $shadow-color;
+    -moz-box-shadow: 10px 5px 0px 0px $shadow-color;
+    box-shadow: 10px 5px 0px 0px $shadow-color;
+}
