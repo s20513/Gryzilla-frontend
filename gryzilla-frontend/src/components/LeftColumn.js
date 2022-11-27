@@ -9,17 +9,29 @@ export default function LeftColumn() {
 
     useEffect(() => {
         fetch(`https://192.168.0.221:1337/api/posts`)
-         .then((response) => console.log(response));
+         .then((response) => response.json())
+         .then((data) => {
+            //console.log(data);
+            setData(data);
+            setError(null);
+         })
+         .catch((err) => {
+            setError(err.message);
+            setData(null);
+         })
+         .finally(() => {
+            setLoading(false);
+         });
        }, []);
-
-    console.log("test");
 
     return (
         <Container className="column-container">
             <h2>Wszystkie posty</h2>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
+            {data && 
+                data.map((postData) => (
+                    <Post postData={postData}></Post>
+                ))
+            }
         </Container>
     );
 }
