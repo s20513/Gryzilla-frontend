@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
-import {Container} from 'react-bootstrap';
+import {Container, Dropdown} from 'react-bootstrap';
 import Post from './Post';
+
 
 export default function LeftColumn() {
     const [data, setData] = useState(null);
@@ -26,10 +27,26 @@ export default function LeftColumn() {
 
     return (
         <Container className="column-container">
-            <h2>Wszystkie posty</h2>
+            <Container className="d-flex justify-content-between">
+                <h2>Wszystkie posty</h2>
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Sortuj
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu alignRight className="dropdown-menu-right">
+                        <Dropdown.Item href="#/action-1">Od najpopularniejszych</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Od najnowszych</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Od najstarszych</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Najwięcej komentarzy</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Container>
+            
+            
             {data && 
                 data.map((postData) => (
-                    <Post postData={postData}></Post>
+                    <Post key={postData.idPost} postData={postData}></Post>
                 ))
             }
         </Container>
