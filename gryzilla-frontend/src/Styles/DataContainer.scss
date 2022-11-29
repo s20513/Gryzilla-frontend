@@ -6,7 +6,7 @@
     .upper-data-container {
         background-color: $upper-data-container-color;
         padding: 1rem;
-        border-radius: 1rem 1rem 1rem 0rem;
+        border-radius: 1rem 1rem 0rem 0rem;
 
         span {
             padding-right: 0.5rem;
@@ -31,9 +31,12 @@
     .lower-tag-container {
         background-color: $lower-tag-container-color;
         padding: 0rem 2rem 0rem 2rem;
-        display: inline-block;
-        width: auto;
         border-radius: 0rem 0rem 0.8rem 0.8rem;
+    }
+
+    .widget-container {
+        margin-left: 1rem;
+        margin-top: 0.5rem;
     }
 
     .comment-data-container {

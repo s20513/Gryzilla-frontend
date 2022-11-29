@@ -36,7 +36,7 @@ export default function LeftColumn() {
 
                     <Dropdown.Menu alignRight className="dropdown-menu-right">
                         <Dropdown.Item href="#/action-1">Od najpopularniejszych</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Od najnowszych</Dropdown.Item>
+                        <Dropdown.Item active href="#/action-2">Od najnowszych</Dropdown.Item>
                         <Dropdown.Item href="#/action-3">Od najstarszych</Dropdown.Item>
                         <Dropdown.Item href="#/action-3">Najwięcej komentarzy</Dropdown.Item>
                     </Dropdown.Menu>

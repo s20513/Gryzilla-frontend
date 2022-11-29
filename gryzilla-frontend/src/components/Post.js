@@ -1,5 +1,7 @@
 import {React, useState} from "react";
 import {BsFillChatLeftTextFill} from "react-icons/bs"
+import {AiFillWarning} from "react-icons/ai"
+import {Button} from 'react-bootstrap';
 import Comments from "./Comments";
 
 export default function Post(props) {
@@ -21,16 +23,17 @@ export default function Post(props) {
                 <hr className="hr-line"/>
                 <span>{postData.content}</span>
             </div>
-            <div className="flex-row">
-                <div onClick={changeDisplayComments} className="lower-tag-container" style={{backgroundColor:"green"}}>
-                    <span>{postData.comments} </span><BsFillChatLeftTextFill/>
-                </div>
-                <div className="lower-tag-container">
-                    {postData.tags.map((tag) => (
+            
+            <div className="lower-tag-container">
+                {postData.tags.map((tag) => (
                             <span>#{tag.nameTag} </span>
-                        ))
-                    }
-                </div>
+                    ))
+                }
+            </div>
+            
+            <div onClick={changeDisplayComments} className="d-flex widget-container">
+                <Button variant="success">{postData.comments}<BsFillChatLeftTextFill/></Button>
+                <Button variant="warning"><AiFillWarning/></Button>
             </div>
             
             {displayComments && <Comments idPost={postData.idPost}></Comments>}
