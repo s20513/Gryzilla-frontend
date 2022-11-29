@@ -1,4 +1,5 @@
 import {React, useState} from "react";
+import {BsFillChatLeftTextFill} from "react-icons/bs"
 import Comments from "./Comments";
 
 export default function Post(props) {
@@ -12,21 +13,26 @@ export default function Post(props) {
     };
 
     return (
-        <div onClick={changeDisplayComments} className="data-container">
+        <div className="data-container">
             <div className="upper-data-container">
                 <span className="likes-count">+{postData.likes}</span>
                 <span className="user-nick">{postData.nick}</span>
                 <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>
-                <span className="timestamp">#{postData.comments}#</span>
                 <hr className="hr-line"/>
                 <span>{postData.content}</span>
             </div>
-            <div className="lower-tag-container">
-                {postData.tags.map((tag) => (
-                        <span>#{tag.nameTag} </span>
-                    ))
-                }
+            <div className="flex-row">
+                <div onClick={changeDisplayComments} className="lower-tag-container" style={{backgroundColor:"green"}}>
+                    <span>{postData.comments} </span><BsFillChatLeftTextFill/>
+                </div>
+                <div className="lower-tag-container">
+                    {postData.tags.map((tag) => (
+                            <span>#{tag.nameTag} </span>
+                        ))
+                    }
+                </div>
             </div>
+            
             {displayComments && <Comments idPost={postData.idPost}></Comments>}
         </div>
     );

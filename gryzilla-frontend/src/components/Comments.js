@@ -29,7 +29,11 @@ export default function Comments(props) {
        return (
         <>
             {data && data.comments.map((comment) => (
-                <div className="upper-data-container">{comment.description}</div>
+                <div className="comment-data-container">
+                    <span className="user-nick">{comment.nick}</span>
+                    <br/>
+                    {comment.description}
+                </div>
             ))}
         </>
        );
