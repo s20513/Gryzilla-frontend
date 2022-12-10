@@ -32,8 +32,8 @@ export default function Post(props) {
             </div>
             
             <div onClick={changeDisplayComments} className="d-flex widget-container">
-                <Button variant="success">{postData.comments}<BsFillChatLeftTextFill/></Button>
-                <Button variant="warning"><AiFillWarning/></Button>
+                <Button variant="success">{postData.comments} <BsFillChatLeftTextFill/></Button>
+                {/* <Button variant="warning"><AiFillWarning/></Button> */}
             </div>
             
             {displayComments && <Comments idPost={postData.idPost}></Comments>}
