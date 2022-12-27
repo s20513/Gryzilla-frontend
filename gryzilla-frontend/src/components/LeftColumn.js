@@ -9,6 +9,8 @@ export default function LeftColumn() {
     const [error, setError] = useState(null);
     const [sortType, setSortType] = useState(null);
 
+    console.log('akcja')
+
     const fetchData = (sortType) => {
         //setSortType(sortType ? sortType : 'byPopular');
         setSortType(sortType);
@@ -36,9 +38,9 @@ export default function LeftColumn() {
     }
 
     useEffect(() => {
-        console.log("Loading posts")
+        window.localStorage.setItem('sortType', sortType);
         fetchData("byPopular");
-       }, []);
+       }, [sortType]);
 
     return (
         <Container className="column-container">

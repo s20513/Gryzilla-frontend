@@ -14,6 +14,8 @@ import Profile from './components/Profile';
 
 function App() {
   document.body.style = 'background-color: #1E1F23 ;';
+
+  console.log('akcja')
   return (
     <>
       <NavBar></NavBar>
