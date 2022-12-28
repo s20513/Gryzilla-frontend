@@ -7,14 +7,10 @@ export default function LeftColumn() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [sortType, setSortType] = useState(null);
+    const [sortType, setSortType] = useState('byPopular');
 
-    console.log('akcja')
-
-    const fetchData = (sortType) => {
-        //setSortType(sortType ? sortType : 'byPopular');
-        setSortType(sortType);
-
+    
+    const fetchData = () => {
         let url;
         if( sortType === 'byPopular')
             url = `https://192.168.0.221:1337/bylikes/most`
@@ -39,7 +35,7 @@ export default function LeftColumn() {
 
     useEffect(() => {
         window.localStorage.setItem('sortType', sortType);
-        fetchData("byPopular");
+        fetchData();
        }, [sortType]);
 
     return (
@@ -52,10 +48,10 @@ export default function LeftColumn() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu alignRight className="dropdown-menu-right">
-                        <Dropdown.Item onClick={() => {fetchData("byPopular")}} active={sortType === "byPopular" ? true : false} href="#/action-1">Od najpopularniejszych</Dropdown.Item>
-                        <Dropdown.Item onClick={() => {fetchData("byNew")}} active={sortType === "byNew" ? true : false} href="#/action-2">Od najnowszych</Dropdown.Item>
-                        <Dropdown.Item onClick={() => {fetchData("byOld")}} active={sortType === "byOld" ? true : false} href="#/action-3">Od najstarszych</Dropdown.Item>
-                        <Dropdown.Item onClick={() => {fetchData("byComments")}} active={sortType === "byComments" ? true : false} href="#/action-3">Najwięcej komentarzy</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {setSortType('byPopular')}} active={sortType === "byPopular" ? true : false} href="#/action-1">Od najpopularniejszych</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {setSortType('byNew')}} active={sortType === "byNew" ? true : false} href="#/action-2">Od najnowszych</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {setSortType("byOld")}} active={sortType === "byOld" ? true : false} href="#/action-3">Od najstarszych</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {setSortType("byComments")}} active={sortType === "byComments" ? true : false} href="#/action-3">Najwięcej komentarzy</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Container>
