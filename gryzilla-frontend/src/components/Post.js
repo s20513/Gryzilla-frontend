@@ -6,7 +6,10 @@ import Comments from "./Comments";
 
 export default function Post(props) {
 
-    const { postData } = props;
+    const postData = props.postData;
+    const indexNumber = (props.indexNumber + 0.3) * 0.6;
+
+    console.log("Moj indeks" + indexNumber);
 
     const [displayComments, setDisplayComments] = useState(false);
 
@@ -15,7 +18,7 @@ export default function Post(props) {
     };
 
     return (
-        <div className="data-container">
+        <div className="data-container" style={{animationDuration : indexNumber + "s"}}>
             <div className="upper-data-container">
                 <span className="likes-count">+{postData.likes}</span>
                 <span className="user-nick">{postData.nick}</span>

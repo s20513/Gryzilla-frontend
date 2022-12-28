@@ -1,7 +1,31 @@
 @import 'Variables';
 
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+// @keyframes visibilityAni {
+//     50% {
+//         visibility: hidden;
+//     }
+//     100% {
+//         visibility: visible;
+//     }
+// }
+
 .data-container {
     padding: 1rem;
+
+    animation-name: slideInFromRight;
+    transform: translateX(100%);
+    //animation: 10s visibilityAni;
+    //animation-delay: 2s;
+    
 
     .upper-data-container {
         background-color: $upper-data-container-color;

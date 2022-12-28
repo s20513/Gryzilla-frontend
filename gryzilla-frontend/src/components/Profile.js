@@ -8,10 +8,11 @@ export default function Profile() {
                 <h2>Mój profil</h2>
             </Container>
             <img 
-                    className="profile-img"
-                    src="https://picsum.photos/250"
-                    alt="profile picture"
-                />
+                className="profile-img"
+                src="https://picsum.photos/250"
+                alt="profile picture"
+            />
+            
         </Container>
     );
 }
