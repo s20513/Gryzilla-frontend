@@ -13,6 +13,7 @@
 .data-container {
     padding: 1rem;
     transition: transform .2s;
+    transition-timing-function: ease-in-out;
 
     // animation-name: slideInFromRight;
     // transform: translateX(100%);
@@ -65,7 +66,7 @@
 }
 
 .data-container:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 
