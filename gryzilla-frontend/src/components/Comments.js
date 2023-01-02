@@ -9,7 +9,7 @@ export default function Comments(props) {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch(`/api/posts/` + idPost)
+        fetch(`/posts/` + idPost)
          .then((response) => response.json())
          .then((data) => {
             setData(data);

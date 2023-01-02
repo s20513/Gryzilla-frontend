@@ -1,28 +1,21 @@
 @import 'Variables';
 
-@keyframes slideInFromRight {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-// @keyframes visibilityAni {
-//     50% {
-//         visibility: hidden;
+// @keyframes slideInFromRight {
+//     0% {
+//         transform: translateX(100%);
 //     }
 //     100% {
-//         visibility: visible;
+//         transform: translateX(0);
 //     }
 // }
 
+
 .data-container {
     padding: 1rem;
+    transition: transform .2s;
 
-    animation-name: slideInFromRight;
-    transform: translateX(100%);
+    // animation-name: slideInFromRight;
+    // transform: translateX(100%);
     //animation: 10s visibilityAni;
     //animation-delay: 2s;
     
@@ -70,3 +63,9 @@
         border-radius: 1rem;
     }
 }
+
+.data-container:hover {
+    transform: scale(1.05);
+}
+
+

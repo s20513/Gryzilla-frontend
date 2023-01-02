@@ -14,7 +14,7 @@ export default function LeftColumn() {
 
     
     const fetchData = () => {
-        const url = `/api/posts/${sortType}`;
+        const url = `/posts/${sortType}`;
 
         console.log(url)
         

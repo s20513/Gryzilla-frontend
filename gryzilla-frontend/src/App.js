@@ -1,4 +1,3 @@
-import './App.sccs';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from 'react-bootstrap';
 import { Routes, Route } from 'react-router-dom'
