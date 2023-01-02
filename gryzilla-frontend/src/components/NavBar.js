@@ -1,11 +1,19 @@
 import {Navbar, Nav, NavDropdown, Container, Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import gryzillaLogo from './logo.png';
 
 export default function NavBar() {
     return (
         <Navbar bg="black" expand="lg" variant="dark">
         <Container>
-            <Navbar.Brand href="#home">Gryzilla</Navbar.Brand>
+            <Navbar.Brand href="#home">
+                <img
+                src={gryzillaLogo}
+                height="30"
+                className="d-inline-block align-top"
+                alt="React Bootstrap logo"
+                />
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
