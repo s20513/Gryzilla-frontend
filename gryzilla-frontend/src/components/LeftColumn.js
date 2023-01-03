@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {useState, useEffect} from "react";
 import {Container, Dropdown} from 'react-bootstrap';
 import Post from './Post';
@@ -7,31 +8,40 @@ export default function LeftColumn() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     const [sortType, setSortType] = useState(() => {
         const savedSortType = localStorage.getItem('sortType');
         return savedSortType || "byDateDesc";
     });
 
     
-    const fetchData = () => {
-        const url = `/posts/${sortType}`;
+    const fetchData = async () => {
 
-        console.log(url)
-        
-        fetch(url)
-         .then((response) => response.json())
-         .then((data) => {
-            //console.log(data);
-            setData(data);
+        try {
+            const response = await axios.get(`/posts/${sortType}`);
+            setData(response.data);
             setError(null);
-         })
-         .catch((err) => {
+        } catch(err) {
             setError(err.message);
             setData(null);
-         })
-         .finally(() => {
+        } finally {
             setLoading(false);
-         });
+        }
+        
+        // fetch(url)
+        //  .then((response) => response.json())
+        //  .then((data) => {
+        //     //console.log(data);
+        //     setData(data);
+        //     setError(null);
+        //  })
+        //  .catch((err) => {
+        //     setError(err.message);
+        //     setData(null);
+        //  })
+        //  .finally(() => {
+        //     setLoading(false);
+        //  });
     }
 
     useEffect(() => {
@@ -57,6 +67,15 @@ export default function LeftColumn() {
                 </Dropdown>
             </Container>
             
+            {loading && 
+                <div className="loading-block">
+                    Ładowanie postów...
+                </div>}
+
+            {error && 
+                <div className="error-loading">
+                    {error}
+                </div>}
             
             {data && 
                 data.map((postData, index) => (

@@ -30,7 +30,8 @@ export default function NavBar() {
                     Separated link
                 </NavDropdown.Item>
                 </NavDropdown>
-                <Form className="d-flex">
+            </Nav>
+            <Form className="d-flex">
                     <Form.Control
                         type="search"
                         placeholder="Search"
@@ -38,8 +39,7 @@ export default function NavBar() {
                         aria-label="Search"
                         />
                     <Button variant="outline-success">Search</Button>
-                </Form>
-            </Nav>
+            </Form>
             </Navbar.Collapse>
         </Container>
         </Navbar>
