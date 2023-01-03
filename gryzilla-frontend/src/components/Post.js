@@ -9,8 +9,7 @@ export default function Post(props) {
     const postData = props.postData;
     const indexNumber = (props.indexNumber + 0.3) * 0.6;
 
-    console.log("Moj indeks" + indexNumber);
-
+    const [commentsLoading, setCommentsLoading] = useState(false);
     const [displayComments, setDisplayComments] = useState(false);
 
     const changeDisplayComments = async () => {
@@ -35,11 +34,12 @@ export default function Post(props) {
             </div>
             
             <div onClick={changeDisplayComments} className="d-flex widget-container">
-                <Button variant="success">{postData.comments} <BsFillChatLeftTextFill/></Button>
-                {/* <Button variant="warning"><AiFillWarning/></Button> */}
+                <Button variant="success">
+                    {!commentsLoading ?  <>{postData.comments} <BsFillChatLeftTextFill/></> : (<div class="lds-dual-ring"></div>) }
+                </Button>
             </div>
             
-            {displayComments && <Comments idPost={postData.idPost}></Comments>}
+            {displayComments && <Comments idPost={postData.idPost} onChangeLoading={setCommentsLoading}></Comments>}
         </div>
     );
 }

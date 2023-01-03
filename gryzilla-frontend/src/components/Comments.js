@@ -1,30 +1,35 @@
+import axios from 'axios';
 import {React, useEffect, useState} from 'react';
 
 export default function Comments(props) {
 
-    const {idPost} = props;
-
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        fetch(`/posts/` + idPost)
-         .then((response) => response.json())
-         .then((data) => {
-            setData(data);
+    const idPost = props.idPost;
+    const commentsLoding = props.onChangeLoading;
+    commentsLoding(loading);
+
+    const fetchData = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.get(`/posts/${idPost}`);
+            setData(response.data);
             setError(null);
-         })
-         .catch((err) => {
+        } catch(err) {
             setError(err.message);
             setData(null);
-         })
-         .finally(() => {
+        } finally {
             setLoading(false);
-         });
-       }, []);
+        }
+    }
 
-       console.log(data);
+    useEffect(() => {
+        fetchData();
+       }, []);
 
        return (
         <>

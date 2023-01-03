@@ -16,6 +16,8 @@ export default function LeftColumn() {
 
     
     const fetchData = async () => {
+        setLoading(true);
+        setError(null);
 
         try {
             const response = await axios.get(`/posts/${sortType}`);
