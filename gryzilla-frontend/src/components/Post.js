@@ -13,7 +13,8 @@ export default function Post(props) {
     const [displayComments, setDisplayComments] = useState(false);
 
     const changeDisplayComments = async () => {
-        setDisplayComments(!displayComments);
+        if(postData.comments > 0)
+            setDisplayComments(!displayComments);
     };
 
     return (

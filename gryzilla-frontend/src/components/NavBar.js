@@ -1,6 +1,7 @@
 import {Navbar, Nav, NavDropdown, Container, Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import gryzillaLogo from './logo.png';
+import {AiOutlineUser} from "react-icons/ai"
 
 export default function NavBar() {
     return (
@@ -41,6 +42,7 @@ export default function NavBar() {
                     <Button variant="outline-success">Search</Button>
             </Form>
             </Navbar.Collapse>
+            <AiOutlineUser/>
         </Container>
         </Navbar>
     );

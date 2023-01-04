@@ -29,21 +29,6 @@ export default function LeftColumn() {
         } finally {
             setLoading(false);
         }
-        
-        // fetch(url)
-        //  .then((response) => response.json())
-        //  .then((data) => {
-        //     //console.log(data);
-        //     setData(data);
-        //     setError(null);
-        //  })
-        //  .catch((err) => {
-        //     setError(err.message);
-        //     setData(null);
-        //  })
-        //  .finally(() => {
-        //     setLoading(false);
-        //  });
     }
 
     useEffect(() => {
@@ -56,11 +41,11 @@ export default function LeftColumn() {
             <Container className="d-flex justify-content-between">
                 <h2>Wszystkie posty</h2>
                 <Dropdown align="end">
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
                         Sortuj
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className="dropdown-menu-right">
+                    <Dropdown.Menu className="dropdown-menu-right dropdown-menu-dark">
                         <Dropdown.Item onClick={() => {setSortType('byDateDesc')}} active={sortType === "byDateDesc" ? true : false} href="#/action-2">Najnowsze</Dropdown.Item>
                         <Dropdown.Item onClick={() => {setSortType("byDateAsc")}} active={sortType === "byDateAsc" ? true : false} href="#/action-3">Najstarsze</Dropdown.Item>
                         <Dropdown.Item onClick={() => {setSortType('byLikesDesc')}} active={sortType === "byLikesDesc" ? true : false} href="#/action-1">Najpopularniejsze</Dropdown.Item>
