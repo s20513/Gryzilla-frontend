@@ -33,11 +33,18 @@ export default function Post(props) {
                     ))
                 }
             </div>
-            
-            <div onClick={changeDisplayComments} className="d-flex widget-container">
-                <Button variant="success">
-                    {!commentsLoading ?  <>{postData.comments} <BsFillChatLeftTextFill/></> : (<div class="lds-dual-ring"></div>) }
-                </Button>
+
+            {/* <div className="d-flex .justify-content-center .align-items-center"> */}
+            <div className="widget-box">
+                <div onClick={changeDisplayComments} className={'' + ( displayComments ? 'comment-icon-enable' : 'comment-icon-disable' )}>
+                        {!commentsLoading ?  <>{postData.comments} <BsFillChatLeftTextFill/></> : (<div class="lds-dual-ring"></div>) }
+                </div>
+                <div onClick={changeDisplayComments} className="comment-icon">
+                       xd
+                </div>
+                <div onClick={changeDisplayComments} className={'' + ( displayComments ? 'comment-icon-enable' : 'comment-icon-disable' )}>
+                       xd
+                </div>
             </div>
             
             {displayComments && <Comments idPost={postData.idPost} onChangeLoading={setCommentsLoading}></Comments>}
