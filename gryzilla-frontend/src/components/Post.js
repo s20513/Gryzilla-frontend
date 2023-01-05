@@ -19,20 +19,23 @@ export default function Post(props) {
 
     return (
         <div className="data-container" style={{animationDuration : indexNumber + "s"}}>
-            <div className="upper-data-container">
-                <span className="likes-count">+{postData.likes}</span>
-                <span className="user-nick">{postData.nick}</span>
-                <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>
-                <hr className="hr-line"/>
-                <span>{postData.content}</span>
+            <div className="post-wrapper">
+                <div className="upper-data-container">
+                    <span className="likes-count">+{postData.likes}</span>
+                    <span className="user-nick">{postData.nick}</span>
+                    <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>
+                    <hr className="hr-line"/>
+                    <span>{postData.content}</span>
+                </div>
+                
+                <div className="lower-tag-container">
+                    {postData.tags.map((tag) => (
+                                <span>#{tag.nameTag} </span>
+                        ))
+                    }
+                </div>
             </div>
-            
-            <div className="lower-tag-container">
-                {postData.tags.map((tag) => (
-                            <span>#{tag.nameTag} </span>
-                    ))
-                }
-            </div>
+
 
             {/* <div className="d-flex .justify-content-center .align-items-center"> */}
             <div className="widget-box">
