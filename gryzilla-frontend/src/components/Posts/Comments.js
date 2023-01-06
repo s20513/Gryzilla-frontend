@@ -32,15 +32,18 @@ export default function Comments(props) {
        }, []);
 
        return (
-        <>
-            {data && data.comments.map((comment) => (
-                <div className="comment-data-container">
-                    <span className="user-nick">{comment.nick}</span>
-                    <br/>
-                    {comment.description}
+            <div className="d-flex">
+                <div className="comments-vertical-line"></div>
+                <div style={{"flexGrow" : "1"}}>  
+                    {data && data.comments.map((comment) => (
+                        <div className="comment-data-container">
+                            <span className="user-nick">{comment.nick}</span>
+                            <br/>
+                            {comment.description}
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </>
+            </div>
        );
 
 

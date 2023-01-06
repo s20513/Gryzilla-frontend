@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {useState, useEffect} from "react";
 import {Container, Dropdown} from 'react-bootstrap';
-import Post from './Post';
+import Post from './Posts/Post';
+import PostInput from './Posts/PostInput';
 
 
 export default function LeftColumn() {
@@ -37,7 +38,8 @@ export default function LeftColumn() {
        }, [sortType]);
 
     return (
-        <Container className="column-container">
+        <Container className="main-panel">
+
             <Container className="d-flex justify-content-between">
                 <h3>Wszystkie posty</h3>
                 <Dropdown align="end">
@@ -53,6 +55,8 @@ export default function LeftColumn() {
                     </Dropdown.Menu>
                 </Dropdown>
             </Container>
+
+            <PostInput></PostInput>
             
             {loading && 
                 <div className="loading-block">
