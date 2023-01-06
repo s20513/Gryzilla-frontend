@@ -4,13 +4,13 @@ export default function MainPage() {
     return (
         <>
             <Container className="column-container">
-                <h2>Znajomi</h2>
+                <h3>Znajomi</h3>
             </Container>
             <Container className="column-container">
-                <h2>Hity</h2>
+                <h3>Hity</h3>
             </Container>
             <Container className="column-container">
-                <h2>Top posty</h2>
+                <h3>Top posty</h3>
             </Container>
         </>
     );

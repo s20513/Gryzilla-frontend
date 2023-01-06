@@ -39,7 +39,7 @@ export default function LeftColumn() {
     return (
         <Container className="column-container">
             <Container className="d-flex justify-content-between">
-                <h2>Wszystkie posty</h2>
+                <h3>Wszystkie posty</h3>
                 <Dropdown align="end">
                     <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
                         Sortuj
