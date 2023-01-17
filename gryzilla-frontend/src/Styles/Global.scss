@@ -15,6 +15,11 @@ html {
     color: white;
 }
 
+.modal-open {
+    padding-right: 0 !important;
+    overflow: auto !important;
+}
+
 .main-panel {
     background-color: $column-container-color;
     -webkit-box-shadow: 6px 5px 7px 5px black;

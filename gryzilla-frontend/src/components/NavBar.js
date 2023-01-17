@@ -1,10 +1,15 @@
+import { useState } from 'react';
 import {Navbar, Nav, NavDropdown, Container, Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import gryzillaLogo from './logo.png';
 import {AiOutlineUser} from "react-icons/ai"
+import LoginModal from "./LoginModal"
 
 export default function NavBar() {
+    const [modalShow, setModalShow] = useState(false);
+
     return (
+        <>
         <Navbar bg="black" expand="lg" variant="dark">
         <Container>
             <Navbar.Brand href="#home">
@@ -19,7 +24,11 @@ export default function NavBar() {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
                 <Nav.Link as={Link} to="/">Posty</Nav.Link>
-                <Nav.Link as={Link} to="/profile">Profil</Nav.Link> 
+                <Nav.Link as={Link} to="/profile">Profil</Nav.Link>
+                {/* <Nav.Link as={Link} to="/login">Logowanie</Nav.Link> */}
+                <Button variant="primary" onClick={() => setModalShow(true)}>
+                    Login
+                </Button>
                 <NavDropdown title="Ulubione" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -45,6 +54,12 @@ export default function NavBar() {
             <AiOutlineUser/>
         </Container>
         </Navbar>
+
+        <LoginModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+        />
+        </>
     );
 }
 

@@ -10,9 +10,6 @@
     //overflow: hidden;
     padding: 0.6rem;
 
-    span {
-        padding-right: 0.5rem;
-    }
 }
 
 .content-wrapper {
@@ -42,8 +39,9 @@
     .lower-tag-container {
         color:rgb(161, 195, 247);
         padding-top: 0.2rem;
+        
         span {
-            padding-right: 0;
+            padding-right: 0.2rem;
         }
     }
 
@@ -96,8 +94,8 @@
         resize: none;
     }
 
-    .content-input-widget-box {
-    
+    .toolbar-class {
+        
     }
 
        
