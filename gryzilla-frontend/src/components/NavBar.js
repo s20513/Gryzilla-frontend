@@ -59,6 +59,7 @@ export default function NavBar() {
             show={modalShow}
             onHide={() => setModalShow(false)}
         />
+        
         </>
     );
 }

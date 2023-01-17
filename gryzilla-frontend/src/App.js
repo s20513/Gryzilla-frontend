@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar';
 import LeftColumn from './components/LeftColumn';
 import RightColumn from './components/RightColumn'
-import Login from "./components/Login";
 
 import "./Styles/Global.scss";
 import "./Styles/DataContainer.scss";
@@ -24,7 +23,6 @@ function App() {
             <Routes>
               <Route path="/" element={<LeftColumn/>} />
               <Route path="/profile" element={<Profile/>} />
-              <Route path="/login" element={<Login/>} />
             </Routes>
           </Col>
           <Col>
