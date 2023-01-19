@@ -6,10 +6,15 @@ import axios from 'axios';
 
 export default function MyVerticallyCenteredModal(props) {
 
-    const [email, setEmail] = useState(null);
+    const [loginPanel, setLoginPanel] = useState(true);
+
+    const [email, setEmail] = useState("string");
     const [emailError, setEmailError] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState("string");
     const [passwordError, setPasswordError] = useState(null);
+
+    const [birthDate, setBirthDate] = useState(null);
+    const [nick, setNick] = useState(null);
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,11 +33,10 @@ export default function MyVerticallyCenteredModal(props) {
     };
 
     const proccedLogin = () => {
-      
         try {
-            const response = axios.post(`/users/login`, {nick: email, password: password});
+            const response = axios.post(`/users/login`, {nick: "string", password: "string"});
             setData(response.data);
-            console.log(data);
+            console.log(response)
             setError(null);
         } catch(err) {
             setError(err.message);
@@ -40,12 +44,7 @@ export default function MyVerticallyCenteredModal(props) {
         } finally {
             setLoading(false);
         }
-
-        
     }
-
-
-
 
     return (
     <Modal
@@ -56,7 +55,7 @@ export default function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Zaloguj się
+          {loginPanel ? "Zaloguj się" : "Załóż konto"}
         </Modal.Title>
       </Modal.Header>
 
@@ -77,12 +76,26 @@ export default function MyVerticallyCenteredModal(props) {
                     We'll never share your email with anyone else.
                 </Form.Text>
             </Form.Group>
+
+            {!loginPanel && <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Hasło</Form.Label>
+                <Form.Control onChange={e => {setPassword(e.target.value)}} type="password" placeholder="Password" />
+                <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>}
+
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Zapamiętaj dane logowania" />
             </Form.Group>
+
             <Button variant="primary" type="submit">
-                Zaloguj się
+                {loginPanel ? "Zaloguj się" : "Wyślij"}
             </Button>
+            <br/>
+            <p1 style={{textAlign: "center;"}} onClick={() => setLoginPanel(!loginPanel)} >
+                {loginPanel ? "Załóż nowe konto" : "Zaloguj się"}
+            </p1>
         </Form>
       </Modal.Body>
 {/* 
