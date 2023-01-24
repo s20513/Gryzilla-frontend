@@ -9,6 +9,8 @@ import RightColumn from './components/RightColumn'
 import "./Styles/Global.scss";
 import "./Styles/DataContainer.scss";
 import "./Styles/Profile.scss";
+import "./Styles/TagInput.scss"
+
 import Profile from './components/Profile';
 
 function App() {

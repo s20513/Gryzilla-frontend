@@ -4,7 +4,12 @@ import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import Cookies from 'universal-cookie';
+import jwt_decode from 'jwt-decode';
+
 export default function MyVerticallyCenteredModal(props) {
+
+    const cookies = new Cookies();
 
     const [loginPanel, setLoginPanel] = useState(true);
 
@@ -20,6 +25,8 @@ export default function MyVerticallyCenteredModal(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [user, setUser] = useState(null);
+
     useEffect( ()=> {
         console.log({email : email, password : password});
     }, [email, password]);
@@ -27,12 +34,31 @@ export default function MyVerticallyCenteredModal(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onHide();
-        proccedLogin();
-        //console.log('submit')
-
+        //proccedLogin();
+        staticLogin("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN0cmluZyIsIm5iZiI6MTY3NDM4NTIwNSwiZXhwIjoxNjc0NDcxNjA1LCJpYXQiOjE2NzQzODUyMDV9.8Hpudcp6gu9BzolN1Bsnj0knIrGwnAwZazVRF2qMyb8");
     };
 
+    const staticLogin = (token) => {
+        var decoded = jwt_decode(token);
+        console.log(decoded);
+
+        cookies.set(
+            "jwt_auth",
+            token,
+            { expires: new Date(decoded.exp * 1000)}
+          );
+    }
+
     const proccedLogin = () => {
+    //   const { response, loading, error } = useAxios({
+    //     method: 'post',
+    //     url: '/users/login',
+    //     body: JSON.stringify({
+    //         nick: "string",
+    //         id: "string",
+    //     }),
+    // });
+
         try {
             const response = axios.post(`/users/login`, {nick: "string", password: "string"});
             setData(response.data);

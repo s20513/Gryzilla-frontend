@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import {Container, Dropdown} from 'react-bootstrap';
 import Post from './Posts/Post';
 import PostInput from './Posts/PostInput';
+import TagsInput from './TagsInput';
 
 
 export default function LeftColumn() {
@@ -39,7 +40,6 @@ export default function LeftColumn() {
 
     return (
         <Container className="main-panel">
-
             <Container className="d-flex justify-content-between">
                 <h3>Wszystkie posty</h3>
                 <Dropdown align="end">

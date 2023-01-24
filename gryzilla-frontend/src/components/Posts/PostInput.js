@@ -3,6 +3,8 @@ import { useState } from "react";
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
+import TagsInput from "../TagsInput";
+
 import { AiFillWarning, AiOutlinePicture } from "react-icons/ai"
 import { BsTypeBold, BsTypeItalic } from "react-icons/bs"
 import { GrBlockQuote } from "react-icons/gr"
@@ -20,7 +22,6 @@ export default function PostInput() {
     const handleFocusIn = () => {
         setIsFocused(true);
         console.log("focus in")
-        
     };
 
     const handleBlur = () => {
@@ -60,6 +61,7 @@ export default function PostInput() {
                     ],
                   }}
              />
+            <TagsInput/>
                 {/* <textarea onBlur={handleBlur} placeholder="Napisz nowy post..." onFocus={handleFocusIn} class="form-control content-input" id="exampleFormControlTextarea1" rows={isFocused ? "6" : "1"}></textarea>
                 
                 {isFocused && 
