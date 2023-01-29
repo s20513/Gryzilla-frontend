@@ -4,6 +4,7 @@ import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import TagsInput from "../TagsInput";
+import Tag from "../Tag";
 
 import { AiFillWarning, AiOutlinePicture } from "react-icons/ai"
 import { BsTypeBold, BsTypeItalic } from "react-icons/bs"
@@ -61,7 +62,8 @@ export default function PostInput() {
                     ],
                   }}
              />
-            <TagsInput/>
+             <Tag/>
+            {/* <TagsInput/> */}
                 {/* <textarea onBlur={handleBlur} placeholder="Napisz nowy post..." onFocus={handleFocusIn} class="form-control content-input" id="exampleFormControlTextarea1" rows={isFocused ? "6" : "1"}></textarea>
                 
                 {isFocused && 
