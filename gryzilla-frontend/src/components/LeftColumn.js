@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import {Container, Dropdown} from 'react-bootstrap';
 import Post from './Posts/Post';
 import PostInput from './Posts/PostInput';
-import TagsInput from './TagsInput';
+
 
 
 export default function LeftColumn() {
