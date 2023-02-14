@@ -7,14 +7,10 @@ import PostInput from './Posts/PostInput';
 
 
 export default function LeftColumn() {
-    //const [data, setData] = useState(null);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
     const [sortType, setSortType] = useState(() => {
         const savedSortType = localStorage.getItem('sortType');
         return savedSortType || "byDateDesc";
     });
-
     const [pageNumber, setPageNumber] = useState(5);
 
     const {
@@ -31,7 +27,7 @@ export default function LeftColumn() {
 
         observer.current = new IntersectionObserver(entries => {
           if (entries[0].isIntersecting && hasMore) {
-            console.log("jest wiecej")
+            console.log("inkrement")
             setPageNumber(prevPageNumber => prevPageNumber + 5)
           }
         })
@@ -41,7 +37,8 @@ export default function LeftColumn() {
 
     useEffect(() => {
         localStorage.setItem('sortType', sortType);
-        //setPageNumber(5);
+        setPageNumber(5);
+        console.log("zmiana na 5")
     }, [sortType]);
 
     return (

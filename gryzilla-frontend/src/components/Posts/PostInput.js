@@ -17,6 +17,7 @@ import { Container } from "react-bootstrap";
 
 export default function PostInput() {
     const [isFocused, setIsFocused] = useState(false);
+    const [showInput, setShowInput] = useState(false);
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
       );
@@ -33,42 +34,45 @@ export default function PostInput() {
 
     return (
         <div className="content-wrapper">
-            <div className="content-container">
-            <Editor
-                editorState={editorState}
-                onEditorStateChange={setEditorState}
+            {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
 
-                toolbarClassName="toolbar-class"
-                toolbar={{
-                    options : ['inline'],
-                    inline : {
-                        options : ['bold', 'italic', 'underline','strikethrough']
-                    }
-                }}
+            {showInput && 
+                <div className="content-container">
+                <Editor
+                    editorState={editorState}
+                    onEditorStateChange={setEditorState}
+                    placeholder="Wprowadź treść posta..."
+                    toolbarClassName="toolbar-class"
+                    toolbar={{
+                        options : ['inline'],
+                        inline : {
+                            options : ['bold', 'italic', 'underline','strikethrough']
+                        }
+                    }}
 
-                // hashtag={{
-                //     separator: ' ',
-                //     trigger: '#',
-                //     suggestions: [
-                //         { text: 'JavaScript', value: 'javascript', url: 'js' },
-                //         { text: 'Golang', value: 'golang', url: 'go' },
-                //       ]
-                // }}
+                    // hashtag={{
+                    //     separator: ' ',
+                    //     trigger: '#',
+                    //     suggestions: [
+                    //         { text: 'JavaScript', value: 'javascript', url: 'js' },
+                    //         { text: 'Golang', value: 'golang', url: 'go' },
+                    //       ]
+                    // }}
 
-                // mention={{
-                //     separator: ' ',
-                //     trigger: '@',
-                //     suggestions: [
-                //       { text: 'JavaScript', value: 'javascript', url: 'js' },
-                //       { text: 'Golang', value: 'golang', url: 'go' },
-                //     ],
-                //   }}
-             />
-             <div style={{marginTop : "8px"}}>
-                <Tag/>
-             </div>
-             
+                    // mention={{
+                    //     separator: ' ',
+                    //     trigger: '@',
+                    //     suggestions: [
+                    //       { text: 'JavaScript', value: 'javascript', url: 'js' },
+                    //       { text: 'Golang', value: 'golang', url: 'go' },
+                    //     ],
+                    //   }}
+                />
+                <div style={{marginTop : "8px"}}>
+                    <Tag/>
+                </div>
+                
+                </div>}
             </div>
-        </div>
     );
 }

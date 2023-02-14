@@ -34,11 +34,13 @@
     height: 31px;
     margin: 0;
     font-size: 12px;
-    border: none;
+    border: 2px solid rgb(0, 153, 255);
     min-width: 150px;
     outline: none;
-    border-radius: 2px;
+    border-radius: 4px;
     padding-left: 8px;
+    background-color: transparent;
+    color: white;
   }
   
   .ReactTags__editInput {
@@ -60,8 +62,8 @@
     margin: 0 5px;
     border-radius: 4px;
     -webkit-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
--moz-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
+    -moz-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
+    box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
   }
   .ReactTags__selected a.ReactTags__remove {
     color: #aaa;
@@ -73,6 +75,7 @@ box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
   .ReactTags__suggestions {
     position: absolute;
   }
+
   .ReactTags__suggestions ul {
     font-size: 12px;
     list-style-type: none;

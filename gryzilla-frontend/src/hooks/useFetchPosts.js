@@ -8,10 +8,12 @@ export default function useFetchPosts(sortType, pageNumber) {
   const [hasMore, setHasMore] = useState(false)
 
   useEffect(() => {
-    setPosts([])
+    //setLoading(true);
+    setPosts([]);
   }, [sortType])
 
   useEffect( () => {
+
     setLoading(true)
     setError(false)
     let cancel;
@@ -19,7 +21,7 @@ export default function useFetchPosts(sortType, pageNumber) {
     const fetchData = async () => {
       try {
         console.log("gettig post to " + pageNumber)
-        const response =  await axios.get(`/posts/qty/${pageNumber}`);
+        const response =  await axios.get(`/posts/qty/${sortType}/${pageNumber}`);
         setPosts( (prevPosts) => {
           return ([...prevPosts, ...response.data.posts]);
         });
@@ -35,7 +37,7 @@ export default function useFetchPosts(sortType, pageNumber) {
       }
     }
     fetchData();
-  }, [pageNumber])
+  }, [pageNumber, sortType])
 
   return { loading, error, posts, hasMore }
 }
