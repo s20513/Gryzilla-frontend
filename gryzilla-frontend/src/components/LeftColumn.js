@@ -1,42 +1,48 @@
 import axios from 'axios';
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef, useCallback } from "react";
 import {Container, Dropdown} from 'react-bootstrap';
+import useFetchPosts from '../hooks/useFetchPosts';
 import Post from './Posts/Post';
 import PostInput from './Posts/PostInput';
 
 
-
 export default function LeftColumn() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
+    //const [data, setData] = useState(null);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
     const [sortType, setSortType] = useState(() => {
         const savedSortType = localStorage.getItem('sortType');
         return savedSortType || "byDateDesc";
     });
 
-    
-    const fetchData = async () => {
-        setLoading(true);
-        setError(null);
+    const [pageNumber, setPageNumber] = useState(5);
 
-        try {
-            const response = await axios.get(`/posts/${sortType}`);
-            setData(response.data);
-            setError(null);
-        } catch(err) {
-            setError(err.message);
-            setData(null);
-        } finally {
-            setLoading(false);
-        }
-    }
+    const {
+        posts,
+        hasMore,
+        loading,
+        error
+      } = useFetchPosts(sortType, pageNumber);
+
+      const observer = useRef()
+      const lastPostRef = useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+
+        observer.current = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting && hasMore) {
+            console.log("jest wiecej")
+            setPageNumber(prevPageNumber => prevPageNumber + 5)
+          }
+        })
+        if (node) observer.current.observe(node)
+      }, [loading, hasMore])
+
 
     useEffect(() => {
         localStorage.setItem('sortType', sortType);
-        fetchData();
-       }, [sortType]);
+        //setPageNumber(5);
+    }, [sortType]);
 
     return (
         <Container className="main-panel">
@@ -77,6 +83,18 @@ export default function LeftColumn() {
 
             <PostInput></PostInput>
             
+            {posts && 
+                posts.map((post, index) => {
+                    if( index + 1== posts.length){
+                        return <Post key={post.idPost} postData={post} indexNumber={index}></Post>
+                    } else {
+                        return <Post key={post.idPost} postData={post} indexNumber={index}></Post>
+                    }
+                })
+            }
+
+            {!loading && <div ref={lastPostRef}></div>}
+
             {loading && 
                 <div className="loading-block">
                     Ładowanie postów...
@@ -86,12 +104,6 @@ export default function LeftColumn() {
                 <div className="error-loading">
                     {error}
                 </div>}
-            
-            {data && 
-                data.map((postData, index) => (
-                    <Post key={postData.idPost} postData={postData} indexNumber={index}></Post>
-                ))
-            }
         </Container>
     );
 }

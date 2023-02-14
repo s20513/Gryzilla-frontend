@@ -35,8 +35,8 @@ export default function Post(props) {
                 <span>{postData.content}</span>
                 
                 <div className="lower-tag-container">
-                    {postData.tags.map((tag) => (
-                                <span>#{tag.nameTag} </span>
+                    {postData.tags.map((tag, index) => (
+                                <span key={index}>#{tag.nameTag} </span>
                         ))
                     }
                 </div>
