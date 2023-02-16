@@ -12,8 +12,8 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-export default function Tag () {
-    const [tags, setTags] = useState([]);
+export default function Tag (props) {
+    const setTags = props.setTags; 
     const [suggestions, setSuggestions] = useState([]);
 
     const handleDelete = i => {

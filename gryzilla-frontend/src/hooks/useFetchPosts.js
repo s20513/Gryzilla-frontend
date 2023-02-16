@@ -8,19 +8,16 @@ export default function useFetchPosts(sortType, pageNumber) {
   const [hasMore, setHasMore] = useState(false)
 
   useEffect(() => {
-    //setLoading(true);
     setPosts([]);
   }, [sortType])
 
   useEffect( () => {
-
     setLoading(true)
     setError(false)
     let cancel;
 
     const fetchData = async () => {
       try {
-        console.log("gettig post to " + pageNumber)
         const response =  await axios.get(`/posts/qty/${sortType}/${pageNumber}`);
         setPosts( (prevPosts) => {
           return ([...prevPosts, ...response.data.posts]);

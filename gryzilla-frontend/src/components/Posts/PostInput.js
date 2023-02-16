@@ -1,7 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import { convertToHTML } from 'draft-convert';
 
 import Tag from "../Tag";
 
@@ -16,21 +17,17 @@ import '../../Styles/Editor.scss';
 import { Container } from "react-bootstrap";
 
 export default function PostInput() {
-    const [isFocused, setIsFocused] = useState(false);
     const [showInput, setShowInput] = useState(false);
+
+    const [tags, setTags] = useState([]);
     const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty(),
-      );
+            () => EditorState.createEmpty(),
+        );
 
-    const handleFocusIn = () => {
-        setIsFocused(true);
-        console.log("focus in")
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-        console.log("blur")
-    };
+    useEffect( ()=> {
+        let html = convertToHTML(editorState.getCurrentContent());
+        console.log(html)
+    }, [editorState])
 
     return (
         <div className="content-wrapper">
@@ -38,41 +35,41 @@ export default function PostInput() {
 
             {showInput && 
                 <div className="content-container">
-                <Editor
-                    editorState={editorState}
-                    onEditorStateChange={setEditorState}
-                    placeholder="Wprowadź treść posta..."
-                    toolbarClassName="toolbar-class"
-                    toolbar={{
-                        options : ['inline'],
-                        inline : {
-                            options : ['bold', 'italic', 'underline','strikethrough']
-                        }
-                    }}
+                    <form>
+                        <Editor
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        placeholder="Wprowadź treść posta..."
+                        toolbarClassName="toolbar-class"
+                        toolbar={{
+                            options : ['inline'],
+                            inline : {
+                                options : ['bold', 'italic', 'underline','strikethrough']
+                            }
+                        }}
+                            // hashtag={{
+                            //     separator: ' ',
+                            //     trigger: '#',
+                            //     suggestions: [
+                            //         { text: 'JavaScript', value: 'javascript', url: 'js' },
+                            //         { text: 'Golang', value: 'golang', url: 'go' },
+                            //       ]
+                            // }}
 
-                    // hashtag={{
-                    //     separator: ' ',
-                    //     trigger: '#',
-                    //     suggestions: [
-                    //         { text: 'JavaScript', value: 'javascript', url: 'js' },
-                    //         { text: 'Golang', value: 'golang', url: 'go' },
-                    //       ]
-                    // }}
-
-                    // mention={{
-                    //     separator: ' ',
-                    //     trigger: '@',
-                    //     suggestions: [
-                    //       { text: 'JavaScript', value: 'javascript', url: 'js' },
-                    //       { text: 'Golang', value: 'golang', url: 'go' },
-                    //     ],
-                    //   }}
-                />
-                <div style={{marginTop : "8px"}}>
-                    <Tag/>
-                </div>
-                
-                </div>}
-            </div>
+                            // mention={{
+                            //     separator: ' ',
+                            //     trigger: '@',
+                            //     suggestions: [
+                            //       { text: 'JavaScript', value: 'javascript', url: 'js' },
+                            //       { text: 'Golang', value: 'golang', url: 'go' },
+                            //     ],
+                            //   }}
+                        />
+                        <div style={{marginTop : "8px"}}>
+                            <Tag setTags={setTags}/>
+                        </div>
+                 </form>
+            </div>}
+        </div>
     );
 }

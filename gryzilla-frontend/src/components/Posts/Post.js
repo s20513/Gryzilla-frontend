@@ -9,7 +9,6 @@ import CommentInput from "./CommentInput";
 export default function Post(props) {
 
     const postData = props.postData;
-    const indexNumber = (props.indexNumber + 0.3) * 0.6;
 
     const [commentsLoading, setCommentsLoading] = useState(false);
     const [displayComments, setDisplayComments] = useState(false);
@@ -27,6 +26,7 @@ export default function Post(props) {
     return (
         <div className="content-wrapper">
             <div className="content-container">
+                <span>ID {postData.idPost}</span>
                 <span className="likes-count">+{postData.likes}</span>
                 <span className="user-nick">{postData.nick}</span>
                 <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>

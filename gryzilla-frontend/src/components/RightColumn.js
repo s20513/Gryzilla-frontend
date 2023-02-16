@@ -1,11 +1,12 @@
 import {Container} from 'react-bootstrap';
+import ArticleHit from './Posts/ArticleHit';
+import PostHit from './Posts/PostHit';
 
 export default function MainPage() {
     return (
         <>
-            <Container className="main-panel">
-                <h3>Znajomi</h3>
-            </Container>
+            <PostHit/>
+            <ArticleHit/>
             <Container className="main-panel">
                 <h3>Hity</h3>
             </Container>

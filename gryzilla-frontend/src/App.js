@@ -21,14 +21,14 @@ function App() {
       <NavBar></NavBar>
       <Container className="main-container">
         <Row>
-          <Col xs={8}>
+          <Col md={7} lg={8} >
             <Routes>
               <Route path="/" element={<LeftColumn/>} />
               <Route path="/profile" element={<Profile/>} />
             </Routes>
           </Col>
-          <Col>
-            <RightColumn></RightColumn>
+          <Col className="d-none d-md-block">
+            {/* <RightColumn></RightColumn> */}
           </Col>
         </Row>
       </Container>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useState, useEffect, useRef, useCallback } from "react";
 import {Container, Dropdown} from 'react-bootstrap';
 import useFetchPosts from '../hooks/useFetchPosts';
+import LoadingBanner from './LoadingBanner';
 import Post from './Posts/Post';
 import PostInput from './Posts/PostInput';
 
@@ -13,12 +14,21 @@ export default function LeftColumn() {
     });
     const [pageNumber, setPageNumber] = useState(5);
 
+    useEffect(() => {
+        localStorage.setItem('sortType', sortType);
+    }, [sortType]);
+
     const {
         posts,
         hasMore,
         loading,
         error
-      } = useFetchPosts(sortType, pageNumber);
+    } = useFetchPosts(sortType, pageNumber);
+
+    const changeSortType = (sortType) => {
+        setPageNumber(5);
+        setSortType(sortType);
+    }
 
       const observer = useRef()
       const lastPostRef = useCallback(node => {
@@ -27,24 +37,18 @@ export default function LeftColumn() {
 
         observer.current = new IntersectionObserver(entries => {
           if (entries[0].isIntersecting && hasMore) {
-            console.log("inkrement")
             setPageNumber(prevPageNumber => prevPageNumber + 5)
           }
         })
         if (node) observer.current.observe(node)
-      }, [loading, hasMore])
+        }, [loading, hasMore])
 
-
-    useEffect(() => {
-        localStorage.setItem('sortType', sortType);
-        setPageNumber(5);
-        console.log("zmiana na 5")
-    }, [sortType]);
-
+    
     return (
         <Container className="main-panel">
             <Container className="d-flex justify-content-between">
                 <h3>Wszystkie posty</h3>
+
                 <Dropdown align="end">
                     <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
                         Sortuj
@@ -52,24 +56,24 @@ export default function LeftColumn() {
 
                     <Dropdown.Menu className="dropdown-menu-right dropdown-menu-dark">
                         <Dropdown.Item
-                            onClick={() => {setSortType('byDateDesc')}}
+                            onClick={() => {changeSortType('byDateDesc')}}
                             active={sortType === "byDateDesc" ? true : false}
                             href="#/action-2">
                             Najnowsze
                         </Dropdown.Item>
                         <Dropdown.Item
-                            onClick={() => {setSortType("byDateAsc")}}
+                            onClick={() => {changeSortType("byDateAsc")}}
                             active={sortType === "byDateAsc" ? true : false}
                             href="#/action-3">
                             Najstarsze
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => {setSortType('byLikesDesc')}}
+                        <Dropdown.Item onClick={() => {changeSortType('byLikesDesc')}}
                             active={sortType === "byLikesDesc" ? true : false}
                             href="#/action-1">
                             Najpopularniejsze
                         </Dropdown.Item>
                         <Dropdown.Item
-                            onClick={() => {setSortType("byCommentsDesc")}}
+                            onClick={() => {changeSortType("byCommentsDesc")}}
                             active={sortType === "byCommentsDesc" ? true : false}
                             href="#/action-3">
                             Najwięcej komentarzy
@@ -78,29 +82,22 @@ export default function LeftColumn() {
                 </Dropdown>
             </Container>
 
-            <PostInput></PostInput>
+            <PostInput/>
             
             {posts && 
-                posts.map((post, index) => {
-                    if( index + 1== posts.length){
-                        return <Post key={post.idPost} postData={post} indexNumber={index}></Post>
-                    } else {
-                        return <Post key={post.idPost} postData={post} indexNumber={index}></Post>
-                    }
+                posts.map((post) => {
+                    return <Post key={post.idPost} postData={post}></Post>
                 })
             }
 
             {!loading && <div ref={lastPostRef}></div>}
-
-            {loading && 
-                <div className="loading-block">
+            
+            <LoadingBanner
+                loading={loading}
+                error={error}>
                     Ładowanie postów...
-                </div>}
-
-            {error && 
-                <div className="error-loading">
-                    {error}
-                </div>}
+            </LoadingBanner>
+           
         </Container>
     );
 }
