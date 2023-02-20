@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import axios from "axios";
@@ -13,13 +13,17 @@ const KeyCodes = {
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default function Tag (props) {
-    const setTags = props.setTags; 
+    const setParentTags = props.setTags;
+    const [tags, setTags] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+
+    useEffect(()=> {
+      setParentTags(tags);
+    },[tags])
 
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
       };
-
 
       const handleAddition = tag => {
         setTags([...tags, tag]);
@@ -52,10 +56,6 @@ export default function Tag (props) {
         newTags.splice(newPos, 0, tag);
         setTags(newTags);
       };
-
-    //   const handleTagClick = index => {
-    //     console.log('The tag at index ' + index + ' was clicked');
-    //   };
 
       return (
           <div>
