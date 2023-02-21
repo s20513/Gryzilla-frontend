@@ -1,6 +1,6 @@
 import {Container} from 'react-bootstrap';
-import ArticleHit from './Posts/ArticleHit';
-import PostHit from './Posts/PostHit';
+import ArticleHit from './ArticleHit';
+import PostHit from './PostHit';
 
 export default function MainPage() {
     return (

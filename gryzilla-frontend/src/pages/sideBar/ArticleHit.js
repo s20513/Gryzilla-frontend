@@ -4,10 +4,10 @@ import {BiText} from "react-icons/bi"
 import {AiFillWarning} from "react-icons/ai"
 import useAxios from "../../hooks/useAxios";
 import { Container } from "react-bootstrap";
-import Post from "./Post";
+import Post from "../posts/Post";
 
-import Comments from "./Comments";
-import CommentInput from "./CommentInput";
+import Comments from "../../components/Comments";
+import CommentInput from "../../components/CommentInput";
 
 export default function ArticleHit() {
 
@@ -20,13 +20,15 @@ export default function ArticleHit() {
 
     return (
         <Container className="main-panel">
-                <h3>Najlepsze artykuły</h3>
-                {posts && 
-                        posts.map((post, index) => {
-                            if(index < 3)
-                                return <div className="content-container">{post.title}</div>
-                        })
-                     }
+                <h3>Popularne artykuły</h3>
+                <div className="top-three">
+                    {posts && 
+                            posts.map((post, index) => {
+                                if(index < 3)
+                                    return <div className="content-container">{post.title}</div>
+                            })
+                        }
+                </div>
         </Container>
     );
 }

@@ -1,9 +1,9 @@
 import { Profiler, useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Post from './Posts/Post';
+import Post from '../posts/Post';
 import axios from "axios";
-import useFetchPhoto from "../hooks/useFetchPhoto";
-import useAxios from "../hooks/useAxios";
+import useFetchPhoto from "../../hooks/useFetchPhoto";
+import useAxios from "../../hooks/useAxios";
 
 export default function Profile() {
 

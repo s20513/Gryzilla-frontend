@@ -96,6 +96,19 @@
     }       
 }
 
+.top-three {
+    div:nth-child(1) {
+        border: 2px solid rgb(179, 160, 53);
+    }
+    div:nth-child(2) {
+        border: 2px solid rgb(121, 119, 119);
+    }
+    div:nth-child(3) {
+        border: 2px solid rgb(117, 79, 8);
+    }
+    
+}
+
 .profile-data-container {
     display: flex;
 }

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import axios from "axios";
 
-import "../Styles/Tag.css"
+import "../assets/Tag.css"
 
 const KeyCodes = {
     comma: 188,
@@ -18,7 +18,9 @@ export default function Tag (props) {
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(()=> {
-      setParentTags(tags);
+      setParentTags(tags.map((tag) => {
+        return tag.text;
+      }));
     },[tags])
 
     const handleDelete = i => {

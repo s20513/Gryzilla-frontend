@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToHTML } from 'draft-convert';
-import useAxios from "../../hooks/useAxios";
+import useAxios from "../hooks/useAxios";
 
-import Tag from "../Tag";
+import Tag from "./Tag";
 
 import { AiFillWarning, AiOutlinePicture } from "react-icons/ai"
 import { BsTypeBold, BsTypeItalic } from "react-icons/bs"
@@ -14,40 +14,46 @@ import { MdFormatListBulleted, MdEmojiEmotions } from "react-icons/md"
 import { FiAlertCircle } from "react-icons/fi"
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import '../../Styles/Editor.scss';
+import '../assets/Editor.scss';
 import { Container } from "react-bootstrap";
 
-export default function PostInput() {
+export default function PostInput(props) {
     const [showInput, setShowInput] = useState(false);
     const [tags, setTags] = useState([]);
     const [editorState, setEditorState] = useState(
             () => EditorState.createEmpty(),
         );
 
-    const [profile, errorProfile, loadingProfile, runRequest] = useAxios(false, {
+    const [newPost, error, loading, runRequest] = useAxios({
         method: 'POST',
         url: `posts`,
         headers: {accept: '*/*'},
         data: {
             idUser: "6",
-            title: "test",
+            title: "shoud_there_be_a_title?",
             content: convertToHTML(editorState.getCurrentContent()),
-            tags: [{"nameTag": "jakiś tag"}]
+            tags: tags
         }
     });
 
+    
 
     // useEffect( ()=> {
     //     let html = convertToHTML(editorState.getCurrentContent());
     //     console.log(html)
     // }, [editorState])
 
-    useEffect( ()=> {
-        if(profile){
-            console.log("przeładowanie")
-            window.location.reload(false);
-        }  
-    },[profile])
+    // useEffect( ()=> {
+    //     if(profile){
+    //         console.log("przeładowanie")
+    //         window.location.reload(false);
+    //     }  
+    // },[profile])
+
+    useEffect(()=>{
+        if(newPost != undefined && newPost != null)
+            props.addNew([newPost])
+    },[newPost])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -57,9 +63,6 @@ export default function PostInput() {
 
     return (
         <div className="content-wrapper">
-            {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
-
-            {showInput && 
                 <div className="content-container">
                     <form onSubmit={handleSubmit}>
                         <Editor
@@ -79,7 +82,7 @@ export default function PostInput() {
                         </div>
                         <input type="submit"/>
                  </form>
-            </div>}
+            </div>
         </div>
     );
 }

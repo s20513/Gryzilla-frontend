@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const useAxios = (runOnRender = true, axiosParams) => {
+export const useAxios = (axiosParams) => {
     const [response, setResponse] = useState();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -18,11 +18,15 @@ export const useAxios = (runOnRender = true, axiosParams) => {
     };
 
     useEffect(() => {
-      if(runOnRender)
-        fetchData(axiosParams);
+      if(axiosParams.method == 'POST'){
+        console.log("jest post")
+      } else {
+        runRequest(axiosParams);
+      }  
     }, []); // execute once only
 
     const runRequest = () => {
+      console.log(axiosParams.data)
       fetchData(axiosParams);
     }
 

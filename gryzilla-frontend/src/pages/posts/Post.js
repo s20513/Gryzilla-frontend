@@ -3,8 +3,9 @@ import {BsFillChatLeftTextFill} from "react-icons/bs"
 import {BiText} from "react-icons/bi"
 import {AiFillWarning} from "react-icons/ai"
 
-import Comments from "./Comments";
-import CommentInput from "./CommentInput";
+import Comments from "../../components/Comments";
+import CommentInput from "../../components/CommentInput";
+import PostInput from "../../components/TextInput";
 
 export default function Post(props) {
 
@@ -32,11 +33,11 @@ export default function Post(props) {
                 <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>
                 <hr className="hr-line"/>
 
-                <span>{postData.content}</span>
+                <span dangerouslySetInnerHTML={{__html: postData.content}}></span>
                 
                 <div className="lower-tag-container">
                     {postData.tags.map((tag, index) => (
-                                <span key={index}>#{tag.nameTag} </span>
+                                <span key={index}>#{tag} </span>
                         ))
                     }
                 </div>
@@ -53,7 +54,7 @@ export default function Post(props) {
                 </div> */}
             </div>
 
-            {displayInput && <CommentInput/>} 
+            {displayInput && <PostInput/>} 
 
             {commentsLoading && 
                 <div className="loading-block">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {Navbar, Nav, NavDropdown, Container, Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import gryzillaLogo from './logo.png';
+import gryzillaLogo from '../assets/logo.png';
 import {AiOutlineUser} from "react-icons/ai"
 import LoginModal from "./LoginModal"
 

@@ -1,6 +1,6 @@
 import { Profiler, useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Post from './Posts/Post';
+import Post from '../pages/posts/Post';
 import axios from "axios";
 import useFetchPhoto from "../hooks/useFetchPhoto";
 import useAxios from "../hooks/useAxios";

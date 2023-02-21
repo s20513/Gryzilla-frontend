@@ -1,13 +1,16 @@
 import axios from 'axios';
 import {useState, useEffect, useRef, useCallback } from "react";
 import {Container, Dropdown} from 'react-bootstrap';
-import useFetchPosts from '../hooks/useFetchPosts';
-import LoadingBanner from './LoadingBanner';
-import Post from './Posts/Post';
-import PostInput from './Posts/PostInput';
+import useFetchPosts from '../../hooks/useFetchPosts';
+import LoadingBanner from '../../components/LoadingBanner';
+import Post from './Post';
+import PostInput from '../../components/TextInput';
 
 
 export default function LeftColumn() {
+    const [showInput, setShowInput] = useState(false);
+    const [newPosts, setNewPosts] = useState(null);
+
     const [sortType, setSortType] = useState(() => {
         const savedSortType = localStorage.getItem('sortType');
         return savedSortType || "byDateDesc";
@@ -17,6 +20,10 @@ export default function LeftColumn() {
     useEffect(() => {
         localStorage.setItem('sortType', sortType);
     }, [sortType]);
+
+    useEffect( ()=> {
+        console.log(newPosts);
+    },[newPosts])
 
     const {
         posts,
@@ -82,7 +89,15 @@ export default function LeftColumn() {
                 </Dropdown>
             </Container>
 
-            <PostInput/>
+            {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
+
+            {showInput && <PostInput addNew={setNewPosts}/>}
+
+            {newPosts && 
+                newPosts.map((post) => {
+                    return <Post key={post.idPost} postData={post}></Post>
+                })
+            }
             
             {posts && 
                 posts.map((post) => {

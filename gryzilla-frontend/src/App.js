@@ -3,15 +3,15 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { Routes, Route } from 'react-router-dom'
 
 import NavBar from './components/NavBar';
-import LeftColumn from './components/LeftColumn';
-import RightColumn from './components/RightColumn'
+import LeftColumn from './pages/posts/LeftColumn';
+import RightColumn from './pages/sideBar/RightColumn'
 
-import "./Styles/Global.scss";
-import "./Styles/DataContainer.scss";
-import "./Styles/Profile.scss";
-import "./Styles/TagInput.scss"
+import "./assets/Global.scss";
+import "./assets/DataContainer.scss";
+import "./assets/Profile.scss";
+import "./assets/TagInput.scss"
 
-import Profile from './components/Profile';
+import Profile from './pages/profile/Profile';
 
 function App() {
   //document.body.style = 'background-color: #1E1F23 ;';
@@ -28,7 +28,7 @@ function App() {
             </Routes>
           </Col>
           <Col className="d-none d-md-block">
-            {/* <RightColumn></RightColumn> */}
+            <RightColumn></RightColumn>
           </Col>
         </Row>
       </Container>
