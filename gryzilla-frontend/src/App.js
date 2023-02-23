@@ -3,7 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { Routes, Route } from 'react-router-dom'
 
 import NavBar from './components/NavBar';
-import LeftColumn from './pages/posts/LeftColumn';
+import LeftColumn from './pages/posts/Posts';
 import RightColumn from './pages/sideBar/RightColumn'
 
 import "./assets/Global.scss";

@@ -17,8 +17,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../assets/Editor.scss';
 import { Container } from "react-bootstrap";
 
-export default function PostInput(props) {
+export default function TextInput(props) {
+    const textPlaceHolder = props.children;
     const [showInput, setShowInput] = useState(false);
+    //const isDataFetched = useRef(false);
+
     const [tags, setTags] = useState([]);
     const [editorState, setEditorState] = useState(
             () => EditorState.createEmpty(),
@@ -28,27 +31,7 @@ export default function PostInput(props) {
         method: 'POST',
         url: `posts`,
         headers: {accept: '*/*'},
-        data: {
-            idUser: "6",
-            title: "shoud_there_be_a_title?",
-            content: convertToHTML(editorState.getCurrentContent()),
-            tags: tags
-        }
     });
-
-    
-
-    // useEffect( ()=> {
-    //     let html = convertToHTML(editorState.getCurrentContent());
-    //     console.log(html)
-    // }, [editorState])
-
-    // useEffect( ()=> {
-    //     if(profile){
-    //         console.log("przeładowanie")
-    //         window.location.reload(false);
-    //     }  
-    // },[profile])
 
     useEffect(()=>{
         if(newPost != undefined && newPost != null)
@@ -58,7 +41,16 @@ export default function PostInput(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("postowanie");
-        runRequest();
+        runRequest({
+                data: {
+                    idUser: "6",
+                    title: "shoud_there_be_a_title?",
+                    content: convertToHTML(editorState.getCurrentContent()),
+                    tags: (tags.map((tag) => {
+                        return tag.text;
+                    }))
+                }
+            });
       }
 
     return (
@@ -66,19 +58,22 @@ export default function PostInput(props) {
                 <div className="content-container">
                     <form onSubmit={handleSubmit}>
                         <Editor
-                        editorState={editorState}
-                        onEditorStateChange={setEditorState}
-                        placeholder="Wprowadź treść posta..."
-                        toolbarClassName="toolbar-class"
-                        toolbar={{
-                            options : ['inline'],
-                            inline : {
-                                options : ['bold', 'italic', 'underline','strikethrough']
-                            }
-                        }}
+                            editorState={editorState}
+                            onEditorStateChange={setEditorState}
+                            placeholder={textPlaceHolder}
+                            toolbarClassName="toolbar-class"
+                            toolbar={{
+                                options : ['inline'],
+                                inline : {
+                                    options : ['bold', 'italic', 'underline','strikethrough']
+                                }
+                            }}
                         />
                         <div style={{marginTop : "8px"}}>
-                            <Tag setTags={setTags}/>
+                            <Tag
+                                tagsState={tags} 
+                                onTagStateChange={setTags}
+                            />
                         </div>
                         <input type="submit"/>
                  </form>

@@ -13,23 +13,25 @@ const KeyCodes = {
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default function Tag (props) {
-    const setParentTags = props.setTags;
-    const [tags, setTags] = useState([]);
+    const parentTags = props.tagsState;
+    const setParentTags = props.onTagStateChange;
+
+    //const [tags, setTags] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
 
-    useEffect(()=> {
-      setParentTags(tags.map((tag) => {
-        return tag.text;
-      }));
-    },[tags])
-
     const handleDelete = i => {
-        setTags(tags.filter((tag, index) => index !== i));
+        setParentTags(parentTags.filter((tag, index) => index !== i));
       };
 
       const handleAddition = tag => {
-        setTags([...tags, tag]);
+        setParentTags([...parentTags, tag]);
       };
+
+    // useEffect(()=> {
+    //     setParentTags(parentTags.map((tag) => {
+    //       return tag.text;
+    //     }));
+    //   },[parentTags])
 
       const handleInputChange = async tag => {
         //console.log(tag);
@@ -53,10 +55,10 @@ export default function Tag (props) {
       }
 
       const handleDrag = (tag, currPos, newPos) => {
-        const newTags = tags.slice();
+        const newTags = parentTags.slice();
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
-        setTags(newTags);
+        setParentTags(newTags);
       };
 
       return (
@@ -64,7 +66,7 @@ export default function Tag (props) {
             <ReactTags
               inputFieldPosition="inline"
               placeholder="Wprowadź tag..."
-              tags={tags}
+              tags={parentTags}
               suggestions={suggestions}
               delimiters={delimiters}
               handleDelete={handleDelete}
@@ -73,9 +75,8 @@ export default function Tag (props) {
               // handleTagClick={handleTagClick}
               handleInputChange={handleInputChange}
               autocomplete
-              minQueryLength={1}
+              minQueryLength={2}
               allowUnique
-    
             />
           </div>
       );

@@ -4,7 +4,7 @@ import {Container, Dropdown} from 'react-bootstrap';
 import useFetchPosts from '../../hooks/useFetchPosts';
 import LoadingBanner from '../../components/LoadingBanner';
 import Post from './Post';
-import PostInput from '../../components/TextInput';
+import TextInput from '../../components/TextInput';
 
 
 export default function LeftColumn() {
@@ -15,15 +15,16 @@ export default function LeftColumn() {
         const savedSortType = localStorage.getItem('sortType');
         return savedSortType || "byDateDesc";
     });
+
     const [pageNumber, setPageNumber] = useState(5);
 
     useEffect(() => {
         localStorage.setItem('sortType', sortType);
     }, [sortType]);
 
-    useEffect( ()=> {
-        console.log(newPosts);
-    },[newPosts])
+    // useEffect( ()=> {
+    //     console.log(newPosts);
+    // },[newPosts])
 
     const {
         posts,
@@ -91,7 +92,7 @@ export default function LeftColumn() {
 
             {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
 
-            {showInput && <PostInput addNew={setNewPosts}/>}
+            {showInput && <TextInput addNew={setNewPosts}>Wprowadź nowy post...</TextInput>}
 
             {newPosts && 
                 newPosts.map((post) => {
