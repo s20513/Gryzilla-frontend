@@ -4,7 +4,7 @@ import {Container, Dropdown} from 'react-bootstrap';
 import useFetchPosts from '../../hooks/useFetchPosts';
 import LoadingBanner from '../../components/LoadingBanner';
 import Post from './Post';
-import TextInput from '../../components/TextInput';
+import TextInput from './InputAddPost';
 
 
 export default function LeftColumn() {
@@ -18,13 +18,19 @@ export default function LeftColumn() {
 
     const [pageNumber, setPageNumber] = useState(5);
 
+    const addNewPost = (newPost) => {
+        setNewPosts(newPost);
+        setShowInput(false);
+    };
+
+    const changeSortType = (sortType) => {
+        setPageNumber(5);
+        setSortType(sortType);
+    }
+
     useEffect(() => {
         localStorage.setItem('sortType', sortType);
     }, [sortType]);
-
-    // useEffect( ()=> {
-    //     console.log(newPosts);
-    // },[newPosts])
 
     const {
         posts,
@@ -33,10 +39,6 @@ export default function LeftColumn() {
         error
     } = useFetchPosts(sortType, pageNumber);
 
-    const changeSortType = (sortType) => {
-        setPageNumber(5);
-        setSortType(sortType);
-    }
 
       const observer = useRef()
       const lastPostRef = useCallback(node => {
@@ -92,7 +94,7 @@ export default function LeftColumn() {
 
             {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
 
-            {showInput && <TextInput addNew={setNewPosts}>Wprowadź nowy post...</TextInput>}
+            {showInput && <TextInput addNew={addNewPost}>Wprowadź nowy post...</TextInput>}
 
             {newPosts && 
                 newPosts.map((post) => {

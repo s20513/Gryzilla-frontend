@@ -27,12 +27,6 @@ export default function Tag (props) {
         setParentTags([...parentTags, tag]);
       };
 
-    // useEffect(()=> {
-    //     setParentTags(parentTags.map((tag) => {
-    //       return tag.text;
-    //     }));
-    //   },[parentTags])
-
       const handleInputChange = async tag => {
         //console.log(tag);
         setSuggestions([]);

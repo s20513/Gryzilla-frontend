@@ -11,36 +11,29 @@ import {
     ContentState,
     convertFromHTML
   } from "draft-js"
+import TextEditor from "../../components/TextEditor";
 
-export default function EditPostInput(props) {
+export default function InputEditPost(props) {
     const postData = props.postData;
     const textPlaceHolder = props.children;
 
     const [showInput, setShowInput] = useState(false);
 
     const [tags, setTags] = useState(() => {
-        let arr =  postData.tags.map((tag) => {
+        return postData.tags.map((tag) => {
             return {id: tag, text: tag};
         });
-
-        if( arr == null ){
-            return ([]);
-        }
-           
     });
 
-    useEffect(() => {
-        console.log(tags)
-    },[tags])
 
-    const [editorState, setEditorState] = useState(() => {
-        const blocksFromHTML = convertFromHTML(postData.content)
-        const contentState = ContentState.createFromBlockArray(
-          blocksFromHTML.contentBlocks,
-          blocksFromHTML.entityMap
-        )
-        return EditorState.createWithContent(contentState)
-    })
+    // const [editorState, setEditorState] = useState(() => {
+    //     const blocksFromHTML = convertFromHTML(postData.content)
+    //     const contentState = ContentState.createFromBlockArray(
+    //       blocksFromHTML.contentBlocks,
+    //       blocksFromHTML.entityMap
+    //     )
+    //     return EditorState.createWithContent(contentState)
+    // })
 
     const [newPost, error, loading, runRequest] = useAxios({
         method: 'PUT',
@@ -51,21 +44,27 @@ export default function EditPostInput(props) {
     useEffect(()=>{
         if(newPost == undefined || newPost == null)
             return;
-
+        console.log(newPost)
         props.setNewPostData(newPost);
     },[newPost])
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("postowanie");
+
+        const tagi = (tags.map((tag) => {
+            return tag.text
+        }))
+
+        console.log(tagi)
+        
         runRequest({
                 data: {
                     idPost: postData.idPost,
                     title: "shoud_there_be_a_title?",
-                    content: convertToHTML(editorState.getCurrentContent()),
-                    tags: (tags.map((tag) => {
-                        return tag.text;
-                    }))
+                    // content: convertToHTML(editorState.getCurrentContent()),
+                    content: "xd",
+                    tags: (tagi),
                 }
             });
       }
@@ -73,18 +72,8 @@ export default function EditPostInput(props) {
     return (
         <div className="content-container">
             <form onSubmit={handleSubmit}>
-                <Editor
-                    editorState={editorState}
-                    defaultEditorState={editorState}
-                    onEditorStateChange={setEditorState}
-                    placeholder={textPlaceHolder}
-                    toolbarClassName="toolbar-class"
-                    toolbar={{
-                        options : ['inline'],
-                        inline : {
-                                options : ['bold', 'italic', 'underline','strikethrough']
-                            }
-                        }}
+                <TextEditor
+                    content={postData.content}
                 />
                 <div style={{marginTop : "8px"}}>
                     <Tag

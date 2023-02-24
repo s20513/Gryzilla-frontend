@@ -6,17 +6,12 @@ import useAxios from "../../hooks/useAxios";
 import { Container } from "react-bootstrap";
 import Post from "../posts/Post";
 
-import Comments from "../../components/Comments";
-import CommentInput from "../../components/CommentInput";
 
 export default function ArticleHit() {
 
     const [posts, errorPosts, loadingPosts] = useAxios({method: 'GET',url: `posts`,headers: {accept: '*/*'},
     });
 
-    useEffect(()=>{
-        console.log(posts)
-    },[posts])
 
     return (
         <Container className="main-panel">

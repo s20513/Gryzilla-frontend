@@ -28,7 +28,7 @@ function App() {
             </Routes>
           </Col>
           <Col className="d-none d-md-block">
-            <RightColumn></RightColumn>
+            {/* <RightColumn></RightColumn> */}
           </Col>
         </Row>
       </Container>

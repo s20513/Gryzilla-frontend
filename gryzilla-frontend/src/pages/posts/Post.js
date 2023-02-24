@@ -3,10 +3,10 @@ import {BsFillChatLeftTextFill} from "react-icons/bs"
 import {BiText} from "react-icons/bi"
 import {AiFillWarning} from "react-icons/ai"
 
-import Comments from "../../components/Comments";
+import Comments from "./Comments";
 import CommentInput from "../../components/CommentInput";
-import TextInput from "../../components/TextInput";
-import EditPostInput from "../profile/EditPostInput";
+import TextInput from "./InputAddPost";
+import InputEditPost from "./InputEditPost";
 
 export default function Post(props) {
 
@@ -31,7 +31,11 @@ export default function Post(props) {
     }
 
     const setNewPostData = (editedPost) => {
+        console.log(editedPost);
         postData.tags = editedPost.tags;
+        // if(postData.tags == undefined || postData.tags == null){
+        //     postData.tags = [];
+        // }
         postData.content = editedPost.content;
         changeDisplayEditor();
     }
@@ -57,7 +61,7 @@ export default function Post(props) {
                 </div>}
 
             {displayEditor &&
-                <EditPostInput setNewPostData={setNewPostData} postData={postData}/>}
+                <InputEditPost setNewPostData={setNewPostData} postData={postData}/>}
 
 
             {/* <div className="d-flex .justify-content-center .align-items-center"> */}

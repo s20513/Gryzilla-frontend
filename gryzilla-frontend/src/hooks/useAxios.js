@@ -25,6 +25,7 @@ export const useAxios = (axiosParams) => {
 
     const runRequest = (data) => {
       //console.log(axiosParams.data)
+      console.log("otrzymane dane " + data.data.tags)
       fetchData(Object.assign(axiosParams, data));
     }
 

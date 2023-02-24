@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToHTML } from 'draft-convert';
-import useAxios from "../hooks/useAxios";
+import useAxios from "../../hooks/useAxios";
 
-import Tag from "./Tag";
+import Tag from "../../components/Tag";
 
 import { AiFillWarning, AiOutlinePicture } from "react-icons/ai"
 import { BsTypeBold, BsTypeItalic } from "react-icons/bs"
@@ -14,7 +14,7 @@ import { MdFormatListBulleted, MdEmojiEmotions } from "react-icons/md"
 import { FiAlertCircle } from "react-icons/fi"
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import '../assets/Editor.scss';
+import '../../assets/Editor.scss';
 import { Container } from "react-bootstrap";
 
 export default function TextInput(props) {
@@ -41,14 +41,15 @@ export default function TextInput(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("postowanie");
+        console.log(tags);
         runRequest({
                 data: {
                     idUser: "6",
                     title: "shoud_there_be_a_title?",
                     content: convertToHTML(editorState.getCurrentContent()),
-                    tags: (tags.map((tag) => {
+                    tags: tags.map((tag) => {
                         return tag.text;
-                    }))
+                    })
                 }
             });
       }
