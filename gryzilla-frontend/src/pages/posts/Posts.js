@@ -5,6 +5,7 @@ import useFetchPosts from '../../hooks/useFetchPosts';
 import LoadingBanner from '../../components/LoadingBanner';
 import Post from './Post';
 import TextInput from './InputAddPost';
+import InputMockup from '../../components/InputMockup';
 
 
 export default function LeftColumn() {
@@ -92,7 +93,7 @@ export default function LeftColumn() {
                 </Dropdown>
             </Container>
 
-            {!showInput && <div className="content-container" onClick={() => setShowInput(true)}>Wprowadz nowego posta...</div>}
+            {!showInput && <InputMockup setDisplay={setShowInput}>Dodaj nowy post...</InputMockup>}
 
             {showInput && <TextInput addNew={addNewPost}>Wprowadź nowy post...</TextInput>}
 

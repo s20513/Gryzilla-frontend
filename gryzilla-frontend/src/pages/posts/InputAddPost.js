@@ -49,7 +49,7 @@ export default function TextInput(props) {
                     }))
                 }
             });
-      }
+    }
 
     return (
         <div className="content-wrapper">

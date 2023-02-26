@@ -7,6 +7,7 @@ import Comments from "./Comments";
 import CommentInput from "../../components/CommentInput";
 import TextInput from "./InputAddPost";
 import InputEditPost from "./InputEditPost";
+import InputAddComment from "./InputAddComment";
 
 export default function Post(props) {
 
@@ -19,8 +20,8 @@ export default function Post(props) {
     const [displayPostEditor, setDisplayPostEditor] = useState(false);
 
     const changeDisplayComments = async () => {
-        if(postData.comments > 0)
-            setDisplayComments(!displayComments);
+        // if(postData.comments > 0)
+        setDisplayComments(!displayComments);
     };
 
     const changeDisplayInput = () => {
@@ -62,36 +63,26 @@ export default function Post(props) {
                 </div>
                 ):(
                     <InputEditPost
-                    setNewPostData={setNewPostData}
-                    postData={postData}
+                        setNewPostData={setNewPostData}
+                        postData={postData}
                     /> 
                 )
             }
 
-        
-
-
-            {/* <div className="d-flex .justify-content-center .align-items-center"> */}
             <div className="widget-box">
                 <button type="button" onClick={changeDisplayComments} className={"btn action-button " + (displayComments ? "btn-success" : "btn-outline-success")}>{postData.comments} <BsFillChatLeftTextFill/></button>
                 <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button>
                 <button type="button" className="btn btn-outline-warning action-button"><AiFillWarning/></button>
                 <button type="button" onClick={changeDisplayEditor} className="btn btn-outline-warning action-button">Edit</button>
-                {/* <div onClick={changeDisplayComments} className={'' + ( displayComments ? 'comment-icon-enable' : 'comment-icon-disable' )}>
-                        {!commentsLoading ?  <>{postData.comments} <BsFillChatLeftTextFill/></> : (<div class="lds-dual-ring"></div>) }
-                </div> */}
-            </div>
-            
-            <div className="mx-3">
-                {displayCommentInput && <TextInput>Wprowadź komentarz</TextInput>} 
-            </div>
-            
-            {commentsLoading && 
-                <div className="loading-block">
-                    Ładowanie komentarzy...
-                </div>}          
+            </div>          
 
-            {displayComments && <Comments idPost={postData.idPost} onChangeLoading={setCommentsLoading}></Comments>}
+            {displayComments && 
+                <Comments
+                    idPost={postData.idPost}
+                    displayCommentInput={displayCommentInput}
+                    setDisplayCommentInput={setDisplayCommentInput}
+                />
+            }
 
         </div>
     );
