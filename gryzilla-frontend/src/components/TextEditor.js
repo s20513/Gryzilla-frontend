@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useState } from "react";
 
 import { Editor } from 'react-draft-wysiwyg';
@@ -13,14 +13,14 @@ import {
 
   /// JAK POBRAĆ Z STĄD TEXT DO InputEditPost ???
 
-export default function TextEditor(props){
+const TextEditor =  forwardRef((props, _ref) =>{
 
-    const content = props.content;
+    const initialContent = props.initialContent;
     const placeHolder = props.placeHolder;
 
     const [editorState, setEditorState] = useState( () => {
-        if( props.initialContent ){
-            const blocksFromHTML = convertFromHTML(content)
+        if( initialContent != undefined){
+            const blocksFromHTML = convertFromHTML(initialContent)
             const contentState = ContentState.createFromBlockArray(
                 blocksFromHTML.contentBlocks,
                 blocksFromHTML.entityMap
@@ -30,6 +30,18 @@ export default function TextEditor(props){
             return EditorState.createEmpty()
         }
     });
+
+    useImperativeHandle(_ref, () => ({
+        getPostContent: () => {
+            return convertToHTML(editorState.getCurrentContent());
+        }
+    }));
+
+    // useImperativeHandle(ref, () => {
+    //     const getContent = () => {
+    //         return convertToHTML(editorState.getCurrentContent());
+    //     }
+    // });
 
     return (
         <Editor
@@ -45,4 +57,6 @@ export default function TextEditor(props){
             }}
         />  
     );
-}
+})
+
+export default TextEditor;

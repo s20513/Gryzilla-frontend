@@ -10,12 +10,13 @@ import InputEditPost from "./InputEditPost";
 
 export default function Post(props) {
 
-    let postData = props.postData;
+    const postData = props.postData;
 
     const [commentsLoading, setCommentsLoading] = useState(false);
+
     const [displayComments, setDisplayComments] = useState(false);
-    const [displayInput, setDisplayInput] = useState(false);
-    const [displayEditor, setDisplayEditor] = useState(false);
+    const [displayCommentInput, setDisplayCommentInput] = useState(false);
+    const [displayPostEditor, setDisplayPostEditor] = useState(false);
 
     const changeDisplayComments = async () => {
         if(postData.comments > 0)
@@ -23,15 +24,14 @@ export default function Post(props) {
     };
 
     const changeDisplayInput = () => {
-        setDisplayInput(!displayInput);
+        setDisplayCommentInput(!displayCommentInput);
     }
 
     const changeDisplayEditor = () => {
-        setDisplayEditor(!displayEditor);
+        setDisplayPostEditor(!displayPostEditor);
     }
 
     const setNewPostData = (editedPost) => {
-        console.log(editedPost);
         postData.tags = editedPost.tags;
         // if(postData.tags == undefined || postData.tags == null){
         //     postData.tags = [];
@@ -42,8 +42,9 @@ export default function Post(props) {
 
     return (
         <div className="content-wrapper">
-            {!displayEditor &&
-                <div className="content-container">
+            
+            {!displayPostEditor ? (
+                    <div className="content-container">
                     <span>ID {postData.idPost}</span>
                     <span className="likes-count">+{postData.likes}</span>
                     <span className="user-nick">{postData.nick}</span>
@@ -58,16 +59,22 @@ export default function Post(props) {
                             ))
                         }
                     </div>
-                </div>}
+                </div>
+                ):(
+                    <InputEditPost
+                    setNewPostData={setNewPostData}
+                    postData={postData}
+                    /> 
+                )
+            }
 
-            {displayEditor &&
-                <InputEditPost setNewPostData={setNewPostData} postData={postData}/>}
+        
 
 
             {/* <div className="d-flex .justify-content-center .align-items-center"> */}
             <div className="widget-box">
                 <button type="button" onClick={changeDisplayComments} className={"btn action-button " + (displayComments ? "btn-success" : "btn-outline-success")}>{postData.comments} <BsFillChatLeftTextFill/></button>
-                <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button>
+                <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button>
                 <button type="button" className="btn btn-outline-warning action-button"><AiFillWarning/></button>
                 <button type="button" onClick={changeDisplayEditor} className="btn btn-outline-warning action-button">Edit</button>
                 {/* <div onClick={changeDisplayComments} className={'' + ( displayComments ? 'comment-icon-enable' : 'comment-icon-disable' )}>
@@ -76,7 +83,7 @@ export default function Post(props) {
             </div>
             
             <div className="mx-3">
-                {displayInput && <TextInput>Wprowadź komentarz</TextInput>} 
+                {displayCommentInput && <TextInput>Wprowadź komentarz</TextInput>} 
             </div>
             
             {commentsLoading && 

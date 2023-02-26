@@ -16,16 +16,14 @@ import { FiAlertCircle } from "react-icons/fi"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../../assets/Editor.scss';
 import { Container } from "react-bootstrap";
+import TextEditor from "../../components/TextEditor";
 
 export default function TextInput(props) {
     const textPlaceHolder = props.children;
     const [showInput, setShowInput] = useState(false);
-    //const isDataFetched = useRef(false);
 
+    const childPostContentRef = useRef();
     const [tags, setTags] = useState([]);
-    const [editorState, setEditorState] = useState(
-            () => EditorState.createEmpty(),
-        );
 
     const [newPost, error, loading, runRequest] = useAxios({
         method: 'POST',
@@ -40,16 +38,15 @@ export default function TextInput(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("postowanie");
-        console.log(tags);
+
         runRequest({
                 data: {
                     idUser: "6",
                     title: "shoud_there_be_a_title?",
-                    content: convertToHTML(editorState.getCurrentContent()),
-                    tags: tags.map((tag) => {
-                        return tag.text;
-                    })
+                    content: childPostContentRef.current.getPostContent(),
+                    tags: (tags.map((tag) => {
+                        return tag.text
+                    }))
                 }
             });
       }
@@ -58,17 +55,8 @@ export default function TextInput(props) {
         <div className="content-wrapper">
                 <div className="content-container">
                     <form onSubmit={handleSubmit}>
-                        <Editor
-                            editorState={editorState}
-                            onEditorStateChange={setEditorState}
-                            placeholder={textPlaceHolder}
-                            toolbarClassName="toolbar-class"
-                            toolbar={{
-                                options : ['inline'],
-                                inline : {
-                                    options : ['bold', 'italic', 'underline','strikethrough']
-                                }
-                            }}
+                        <TextEditor
+                            ref={childPostContentRef}
                         />
                         <div style={{marginTop : "8px"}}>
                             <Tag

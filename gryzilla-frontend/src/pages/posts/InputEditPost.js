@@ -1,23 +1,16 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Editor } from 'react-draft-wysiwyg';
-import { convertToHTML } from 'draft-convert';
+import { useState, useEffect, useRef } from "react";
 import Tag from "../../components/Tag";
 import useAxios from "../../hooks/useAxios";
-
-import {
-    EditorState,
-    convertToRaw,
-    ContentState,
-    convertFromHTML
-  } from "draft-js"
 import TextEditor from "../../components/TextEditor";
 
 export default function InputEditPost(props) {
+    
     const postData = props.postData;
-    const textPlaceHolder = props.children;
 
     const [showInput, setShowInput] = useState(false);
+
+    const childPostContentRef = useRef();
 
     const [tags, setTags] = useState(() => {
         return postData.tags.map((tag) => {
@@ -25,46 +18,30 @@ export default function InputEditPost(props) {
         });
     });
 
-
-    // const [editorState, setEditorState] = useState(() => {
-    //     const blocksFromHTML = convertFromHTML(postData.content)
-    //     const contentState = ContentState.createFromBlockArray(
-    //       blocksFromHTML.contentBlocks,
-    //       blocksFromHTML.entityMap
-    //     )
-    //     return EditorState.createWithContent(contentState)
-    // })
-
     const [newPost, error, loading, runRequest] = useAxios({
         method: 'PUT',
         url: `posts/${postData.idPost}`,
         headers: {accept: '*/*'},
     });
-
+    
+    //po zaladowaniu ustaw
     useEffect(()=>{
         if(newPost == undefined || newPost == null)
             return;
-        console.log(newPost)
         props.setNewPostData(newPost);
     },[newPost])
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("postowanie");
-
-        const tagi = (tags.map((tag) => {
-            return tag.text
-        }))
-
-        console.log(tagi)
         
         runRequest({
                 data: {
                     idPost: postData.idPost,
                     title: "shoud_there_be_a_title?",
-                    // content: convertToHTML(editorState.getCurrentContent()),
-                    content: "xd",
-                    tags: (tagi),
+                    content: childPostContentRef.current.getPostContent(),
+                    tags: (tags.map((tag) => {
+                        return tag.text
+                    }))
                 }
             });
       }
@@ -73,7 +50,8 @@ export default function InputEditPost(props) {
         <div className="content-container">
             <form onSubmit={handleSubmit}>
                 <TextEditor
-                    content={postData.content}
+                    initialContent={postData.content}
+                    ref={childPostContentRef}
                 />
                 <div style={{marginTop : "8px"}}>
                     <Tag
