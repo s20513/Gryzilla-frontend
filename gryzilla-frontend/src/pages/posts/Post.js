@@ -8,6 +8,7 @@ import CommentInput from "../../components/CommentInput";
 import TextInput from "./InputAddPost";
 import InputEditPost from "./InputEditPost";
 import InputAddComment from "./InputAddComment";
+import DataBar from "../../components/DataBarPost";
 
 export default function Post(props) {
 
@@ -45,15 +46,10 @@ export default function Post(props) {
         <div className="content-wrapper">
             
             {!displayPostEditor ? (
-                    <div className="content-container">
-                    <span>ID {postData.idPost}</span>
-                    <span className="likes-count">+{postData.likes}</span>
-                    <span className="user-nick">{postData.nick}</span>
-                    <span className="timestamp">{postData.createdAt.replace("T"," ")}</span>
+                <div className="content-container">
+                    <DataBar likes={postData.likes} nick={postData.nick} date={postData.createdAt.replace("T"," ")}/>
                     <hr className="hr-line"/>
-
                     <span dangerouslySetInnerHTML={{__html: postData.content}}></span>
-                    
                     <div className="lower-tag-container">
                         {postData.tags.map((tag, index) => (
                                     <span key={index}>#{tag} </span>

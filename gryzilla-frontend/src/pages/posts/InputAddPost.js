@@ -42,7 +42,6 @@ export default function TextInput(props) {
         runRequest({
                 data: {
                     idUser: "6",
-                    title: "shoud_there_be_a_title?",
                     content: childPostContentRef.current.getPostContent(),
                     tags: (tags.map((tag) => {
                         return tag.text

@@ -30,7 +30,7 @@ export default function Comments(props) {
 
                     {!displayCommentInput &&
                         <div className="m-3">
-                            <InputMockup setDisplay={setDisplayCommentInput}>
+                            <InputMockup handleClick={ () => setDisplayCommentInput(true)}>
                                 Dodaj nowy komentarz...
                             </InputMockup>
                         </div>

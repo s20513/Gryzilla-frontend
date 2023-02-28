@@ -24,6 +24,7 @@ export default function NavBar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     <Nav.Link as={Link} to="/">Posty</Nav.Link>
+                    <Nav.Link as={Link} to="/articles">Artykuły</Nav.Link>
                     <Nav.Link as={Link} to="/profile">Profil</Nav.Link>
                     <NavDropdown title="Ulubione" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

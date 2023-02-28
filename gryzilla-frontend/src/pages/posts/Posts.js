@@ -8,7 +8,7 @@ import TextInput from './InputAddPost';
 import InputMockup from '../../components/InputMockup';
 
 
-export default function LeftColumn() {
+export default function Posts() {
     const [showInput, setShowInput] = useState(false);
     const [newPosts, setNewPosts] = useState(null);
 
@@ -93,7 +93,7 @@ export default function LeftColumn() {
                 </Dropdown>
             </Container>
 
-            {!showInput && <InputMockup setDisplay={setShowInput}>Dodaj nowy post...</InputMockup>}
+            {!showInput && <InputMockup handleClick={() => {setShowInput(true)}}>Dodaj nowy post...</InputMockup>}
 
             {showInput && <TextInput addNew={addNewPost}>Wprowadź nowy post...</TextInput>}
 

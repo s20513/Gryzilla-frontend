@@ -37,7 +37,6 @@ export default function InputEditPost(props) {
         runRequest({
                 data: {
                     idPost: postData.idPost,
-                    title: "shoud_there_be_a_title?",
                     content: childPostContentRef.current.getPostContent(),
                     tags: (tags.map((tag) => {
                         return tag.text
