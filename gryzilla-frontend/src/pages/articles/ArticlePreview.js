@@ -11,7 +11,7 @@ export default function ArticlePreview({idArticle, title, content, nick, date, l
                 <div className="likes-box">
                     <span>+{likes}</span>
                 </div>
-                <Nav.Link as={Link} to={"10"} className="article-title">{title}</Nav.Link>
+                <Nav.Link as={Link} to={"" + idArticle} className="article-title">{title}</Nav.Link>
             </div>
             <span className="article-label">Artykuł użytkownika {nick}, utworzono {date}</span>
             {/* <hr className="hr-line"/> */}

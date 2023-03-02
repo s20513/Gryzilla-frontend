@@ -29,12 +29,12 @@ function App() {
               <Route path="/profile" element={<Profile/>} />
               <Route path="/articles">
                 <Route index element={<Articles/>} />
-                <Route path=":id" element={<ArticleDetails/>} />
+                <Route path=":idArticle" element={<ArticleDetails/>} />
               </Route>
             </Routes>
           </Col>
           <Col className="d-none d-md-block">
-            <RightColumn></RightColumn>
+            {/* <RightColumn></RightColumn> */}
           </Col>
         </Row>
       </Container>
