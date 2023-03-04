@@ -4,8 +4,7 @@ import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToHTML } from "draft-convert";
 import useAxios from "../../hooks/useAxios";
-
-import Tag from "../../components/Tag";
+import Tag from "./Tag";
 
 import { AiFillWarning, AiOutlinePicture } from "react-icons/ai";
 import { BsTypeBold, BsTypeItalic } from "react-icons/bs";
@@ -16,15 +15,16 @@ import { FiAlertCircle } from "react-icons/fi";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../assets/Editor.scss";
 import { Container } from "react-bootstrap";
-import TextEditor from "../../components/TextEditor";
+import TextEditor from "./TextEditor";
 
-export default function InputAddPost(props) {
+export default function ContentInput(props) {
 	const postData = props.initialContent;
 	const textPlaceHolder = props.placeHolder;
 	const url = props.url;
 	const enableTags = props.enableTags;
     const apiData = props.apiData;
     const method = props.method;
+	const contentAtributeName = props.atrName ? props.atrName : "content";
 
 	const [showInput, setShowInput] = useState(false);
 
@@ -39,7 +39,6 @@ export default function InputAddPost(props) {
 
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
-		console.log(newContent)
 		if (newContent != undefined && newContent != null)
 			props.addNew([newContent]);
 	}, [newContent]);
@@ -49,7 +48,7 @@ export default function InputAddPost(props) {
 		runRequest({
 			data: {
 				...apiData,
-				content: childTextContentRef.current.getPostContent(),
+				[contentAtributeName]: childTextContentRef.current.getPostContent(),
 				...(enableTags && {tags : (childTagsRef.current.getPostTags())}),
 			},
 		});

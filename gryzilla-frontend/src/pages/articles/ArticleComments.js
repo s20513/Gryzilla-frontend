@@ -3,6 +3,7 @@ import { React, useEffect, useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
 import InputAddArticleComment from "./InputAddArticleComment";
+import ContentInput from "../../components/Editor/ContentInput";
 
 
 export default function ArticleComments(props) {
@@ -36,12 +37,21 @@ export default function ArticleComments(props) {
 								Dodaj nowy komentarz...
 							</InputMockup>
 						) : (
-							<InputAddArticleComment
-								idArticle={data.idArticle}
-								placeHolder={"Wprowadź komentarz..."}
+							<ContentInput
 								addNew={addNewComment}
-								closeInput={() => setDisplayCommentInput(false)}
+								url={"comments"}
+								method={'POST'}
+								apiData={{ idUser: 6, idArticle: data.idArticle }}
+								enableTags={false}
+								placeHolder={"Wprowadz nowy komentarz..."}
+								atrName={"description"}
 							/>
+							// <InputAddArticleComment
+							// 	idArticle={data.idArticle}
+							// 	placeHolder={"Wprowadź komentarz..."}
+							// 	addNew={addNewComment}
+							// 	closeInput={() => setDisplayCommentInput(false)}
+							// />
 						)}
 					</div>
 

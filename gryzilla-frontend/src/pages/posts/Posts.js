@@ -4,10 +4,12 @@ import { Container, Dropdown } from "react-bootstrap";
 import useFetchPosts from "../../hooks/useFetchPosts";
 import LoadingBanner from "../../components/LoadingBanner";
 import Post from "./Post";
-import InputAddPost from "./InputAddPost";
+
+import ContentInput from "../../components/Editor/ContentInput";
 import InputMockup from "../../components/InputMockup";
 import DropdownList from "../../components/DropdownList";
 import useLocalStorage from "../../hooks/useLocalStorage";
+
 
 export default function Posts() {
 	const [sortType, setSortType] = useLocalStorage("sortType", "byDateDesc");
@@ -62,7 +64,7 @@ export default function Posts() {
 					placeHolder={"Dodaj nowy post..."}
 				/>
 			) : (
-				<InputAddPost
+				<ContentInput
 					addNew={addNewPost}
 					url={'posts'}
 					method={'POST'}

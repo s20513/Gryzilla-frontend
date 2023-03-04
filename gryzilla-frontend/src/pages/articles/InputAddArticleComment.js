@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useEffect } from "react";
 import useAxios from "../../hooks/useAxios";
-import TextEditor from "../../components/TextEditor";
+import TextEditor from "../../components/Editor/TextEditor";
 
 export default function InputAddArticleComment(props) {
 

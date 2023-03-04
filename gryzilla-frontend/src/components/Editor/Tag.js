@@ -3,8 +3,7 @@ import { useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 import axios from "axios";
 import { forwardRef, useImperativeHandle } from "react";
-
-import "../assets/Tag.css";
+import "../../assets/Tag.css";
 
 const KeyCodes = {
 	comma: 188,

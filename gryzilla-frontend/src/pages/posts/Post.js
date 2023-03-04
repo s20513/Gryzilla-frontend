@@ -4,11 +4,8 @@ import {BiText} from "react-icons/bi"
 import {AiFillWarning} from "react-icons/ai"
 
 import PostComments from "./PostComments";
-import CommentInput from "../../components/CommentInput";
-import TextInput from "./InputAddPost";
-import InputEditPost from "./InputEditPost";
 import DataBar from "../../components/DataBarPost";
-import InputAddPost from "./InputAddPost";
+import ContentInput from "../../components/Editor/ContentInput";
 
 export default function Post(props) {
 
@@ -51,7 +48,7 @@ export default function Post(props) {
                     </div>
                 </div>
                 ):(
-                    <InputAddPost
+                    <ContentInput
                         initialContent={postData}
                         addNew={setNewPostData}
                         url={`posts/${postData.idPost}`}

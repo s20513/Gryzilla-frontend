@@ -2,9 +2,8 @@ import axios from "axios";
 import { React, useEffect, useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
-import InputAddPostComment from "./InputAddPostComment";
 import Comment from "../../components/Comment";
-import InputAddPost from "./InputAddPost";
+import ContentInput from "../../components/Editor/ContentInput";
 
 export default function PostComments(props) {
 	const idPost = props.idPost;
@@ -36,7 +35,7 @@ export default function PostComments(props) {
 								Dodaj nowy komentarz...
 							</InputMockup>
 						) : (
-							<InputAddPost
+							<ContentInput
 								addNew={addNewComment}
 								url={"posts/comment"}
 								method={'POST'}
