@@ -15,6 +15,7 @@ export default function Articles() {
 
             {data && data.map((article) => {
                 return <ArticlePreview
+                            key={article.idArticle}
                             idArticle={article.idArticle}
                             title={article.title}
                             content={article.content}

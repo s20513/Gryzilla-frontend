@@ -11,7 +11,6 @@ import {
     convertFromHTML
   } from "draft-js";
 
-  /// JAK POBRAĆ Z STĄD TEXT DO InputEditPost ???
 
 const TextEditor =  forwardRef((props, _ref) =>{
 
@@ -36,12 +35,6 @@ const TextEditor =  forwardRef((props, _ref) =>{
             return convertToHTML(editorState.getCurrentContent());
         }
     }));
-
-    // useImperativeHandle(ref, () => {
-    //     const getContent = () => {
-    //         return convertToHTML(editorState.getCurrentContent());
-    //     }
-    // });
 
     return (
         <Editor

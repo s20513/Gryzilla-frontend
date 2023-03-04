@@ -9,7 +9,7 @@ export default function LoadingBanner(props) {
 
     const loading = props.loading;
     const error = props.error;
-    const loadingText = props.children;
+    const loadingText = props.children || props.placeHolder;
 
     return (
         <>

@@ -112,6 +112,10 @@ html {
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 20%, rgba(0,0,0,0));
 }
 
+.user-nick {
+    color: rgb(70, 172, 112);
+}
+
 .data-bar {
     display: flex;
 
@@ -129,15 +133,11 @@ html {
         font-weight: bold;
     }
 
-    .user-nick {
-        color: red;
-    }
-
     .label {
         font-size: 0.7rem;
         color: rgb(192, 183, 183);
         text-align: center;
-        line-height: 0.3;
+        line-height: 0.8;
     }
 }
 

@@ -1,71 +1,80 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-import { EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import { convertToHTML } from 'draft-convert';
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import { convertToHTML } from "draft-convert";
 import useAxios from "../../hooks/useAxios";
 
 import Tag from "../../components/Tag";
 
-import { AiFillWarning, AiOutlinePicture } from "react-icons/ai"
-import { BsTypeBold, BsTypeItalic } from "react-icons/bs"
-import { GrBlockQuote } from "react-icons/gr"
-import { MdFormatListBulleted, MdEmojiEmotions } from "react-icons/md"
-import { FiAlertCircle } from "react-icons/fi"
+import { AiFillWarning, AiOutlinePicture } from "react-icons/ai";
+import { BsTypeBold, BsTypeItalic } from "react-icons/bs";
+import { GrBlockQuote } from "react-icons/gr";
+import { MdFormatListBulleted, MdEmojiEmotions } from "react-icons/md";
+import { FiAlertCircle } from "react-icons/fi";
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import '../../assets/Editor.scss';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../assets/Editor.scss";
 import { Container } from "react-bootstrap";
 import TextEditor from "../../components/TextEditor";
 
-export default function TextInput(props) {
-    const textPlaceHolder = props.children;
-    const [showInput, setShowInput] = useState(false);
+export default function InputAddPost(props) {
+	const postData = props.initialContent;
+	const textPlaceHolder = props.placeHolder;
+	const url = props.url;
+	const enableTags = props.enableTags;
+    const apiData = props.apiData;
+    const method = props.method;
 
-    const childPostContentRef = useRef();
-    const [tags, setTags] = useState([]);
+	const [showInput, setShowInput] = useState(false);
 
-    const [newPost, error, loading, runRequest] = useAxios({
-        method: 'POST',
-        url: `posts`,
-        headers: {accept: '*/*'},
-    });
+	const childTextContentRef = useRef();
+	const childTagsRef = useRef();
 
-    useEffect(()=>{
-        if(newPost != undefined && newPost != null)
-            props.addNew([newPost])
-    },[newPost])
+	const [newContent, error, loading, runRequest] = useAxios({
+		method: method, 
+		url: url,
+		headers: { accept: "*/*" },
+	});
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+	//po otrzymaniu wartości z bazy
+	useEffect(() => {
+		console.log(newContent)
+		if (newContent != undefined && newContent != null)
+			props.addNew([newContent]);
+	}, [newContent]);
 
-        runRequest({
-                data: {
-                    idUser: "6",
-                    content: childPostContentRef.current.getPostContent(),
-                    tags: (tags.map((tag) => {
-                        return tag.text
-                    }))
-                }
-            });
-    }
+	const handleSubmit = (event) => {
+		event.preventDefault();        
+		runRequest({
+			data: {
+				...apiData,
+				content: childTextContentRef.current.getPostContent(),
+				...(enableTags && {tags : (childTagsRef.current.getPostTags())}),
+			},
+		});
+	};
 
-    return (
-        <div className="content-wrapper">
-                <div className="content-container">
-                    <form onSubmit={handleSubmit}>
-                        <TextEditor
-                            ref={childPostContentRef}
-                        />
-                        <div style={{marginTop : "8px"}}>
-                            <Tag
-                                tagsState={tags} 
-                                onTagStateChange={setTags}
-                            />
-                        </div>
-                        <input type="submit"/>
-                 </form>
-            </div>
-        </div>
-    );
+	return (
+		<div className="content-wrapper">
+			<div className="content-container">
+				<form onSubmit={handleSubmit}>
+					<TextEditor
+						initialContent={postData ? postData.content : undefined}
+						ref={childTextContentRef}
+					/>
+
+					{enableTags && (
+						<div style={{ marginTop: "8px" }}>
+							<Tag
+								initialContent={postData ? postData.tags : undefined}
+								ref={childTagsRef}
+							/>
+						</div>
+					)}
+					<input type="submit" />
+				</form>
+			</div>
+		</div>
+	);
 }

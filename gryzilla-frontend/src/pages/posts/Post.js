@@ -3,12 +3,12 @@ import {BsFillChatLeftTextFill} from "react-icons/bs"
 import {BiText} from "react-icons/bi"
 import {AiFillWarning} from "react-icons/ai"
 
-import Comments from "./Comments";
+import PostComments from "./PostComments";
 import CommentInput from "../../components/CommentInput";
 import TextInput from "./InputAddPost";
 import InputEditPost from "./InputEditPost";
-import InputAddComment from "./InputAddComment";
 import DataBar from "../../components/DataBarPost";
+import InputAddPost from "./InputAddPost";
 
 export default function Post(props) {
 
@@ -25,20 +25,13 @@ export default function Post(props) {
         setDisplayComments(!displayComments);
     };
 
-    const changeDisplayInput = () => {
-        setDisplayCommentInput(!displayCommentInput);
-    }
-
     const changeDisplayEditor = () => {
         setDisplayPostEditor(!displayPostEditor);
     }
 
     const setNewPostData = (editedPost) => {
-        postData.tags = editedPost.tags;
-        // if(postData.tags == undefined || postData.tags == null){
-        //     postData.tags = [];
-        // }
-        postData.content = editedPost.content;
+        postData.tags = editedPost[0].tags;
+        postData.content = editedPost[0].content;
         changeDisplayEditor();
     }
 
@@ -58,25 +51,28 @@ export default function Post(props) {
                     </div>
                 </div>
                 ):(
-                    <InputEditPost
-                        setNewPostData={setNewPostData}
-                        postData={postData}
-                    /> 
+                    <InputAddPost
+                        initialContent={postData}
+                        addNew={setNewPostData}
+                        url={`posts/${postData.idPost}`}
+                        method={'PUT'}
+                        apiData={ {idPost: postData.idPost} }
+                        enableTags={true}
+                        placeHolder={"Wprowadz nowy post..."}
+				    />
                 )
             }
 
             <div className="widget-box">
                 <button type="button" onClick={changeDisplayComments} className={"btn action-button " + (displayComments ? "btn-success" : "btn-outline-success")}>{postData.comments} <BsFillChatLeftTextFill/></button>
-                <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button>
+                {/* <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button> */}
                 <button type="button" className="btn btn-outline-warning action-button"><AiFillWarning/></button>
                 <button type="button" onClick={changeDisplayEditor} className="btn btn-outline-warning action-button">Edit</button>
             </div>          
 
             {displayComments && 
-                <Comments
+                <PostComments
                     idPost={postData.idPost}
-                    displayCommentInput={displayCommentInput}
-                    setDisplayCommentInput={setDisplayCommentInput}
                 />
             }
 

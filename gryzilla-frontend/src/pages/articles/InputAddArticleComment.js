@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import useAxios from "../../hooks/useAxios";
 import TextEditor from "../../components/TextEditor";
 
-export default function InputAddComment(props) {
+export default function InputAddArticleComment(props) {
 
     const textPlaceHolder = props.placeHolder;
     const idPost = props.idPost;
@@ -28,7 +28,7 @@ export default function InputAddComment(props) {
                 data: {
                     idUser: "6",
                     idPost: idPost,
-                    descriptionPost: childPostContentRef.current.getPostContent(),
+                    content: childPostContentRef.current.getPostContent(),
                 }
             });
     }

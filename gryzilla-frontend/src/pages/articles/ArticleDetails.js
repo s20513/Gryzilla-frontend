@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import ArticleComments from "./ArticleComments";
 
 export default function ArticleDetails() {
 
@@ -34,9 +35,11 @@ export default function ArticleDetails() {
                         }
                     </div>
                 </div>
-
-                
             }
+
+            <h3>Komentarze</h3>
+
+            <ArticleComments data={data}/>
         
         </Container>
         
