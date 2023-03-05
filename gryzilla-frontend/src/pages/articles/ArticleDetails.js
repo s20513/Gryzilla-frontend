@@ -30,7 +30,7 @@ export default function ArticleDetails() {
 
                     <div className="lower-tag-container">
                         {data && data.tags.map((tag, index) => (
-                                <span key={index}>#{tag.nameTag} </span>
+                                <span key={index}>#{tag} </span>
                             ))
                         }
                     </div>
