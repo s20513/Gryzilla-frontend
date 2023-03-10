@@ -18,7 +18,7 @@ export default function LikeButton(props) {
 	});
 
     useEffect(() => {
-		if(data && data == true) setIsLiked(true);
+		if(data && data.liked == true) setIsLiked(true);
 	}, [data]);
 
 	useEffect(() => {

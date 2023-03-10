@@ -12,7 +12,7 @@ export default function PostComments(props) {
 	//tutaj pobieranie samych komentarzy powinno być, nie całego posta z komentarzami
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
-		url: `posts/${idPost}`,
+		url: `/posts/${idPost}`,
 		headers: { accept: "*/*" },
 	});
 
@@ -59,7 +59,7 @@ export default function PostComments(props) {
 
 					{data && data.comments.length == 0 && (
 						<div className="comment-data-container">
-							Brak postów do wyświetlenia
+							Brak komentarzy do wyświetlenia
 						</div>
 					)}
 				</div>

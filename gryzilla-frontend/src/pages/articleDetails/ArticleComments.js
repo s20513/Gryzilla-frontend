@@ -2,7 +2,7 @@ import axios from "axios";
 import { React, useEffect, useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
-import InputAddArticleComment from "./InputAddArticleComment";
+import InputAddArticleComment from "../articles/InputAddArticleComment";
 import ContentInput from "../../components/Editor/ContentInput";
 import Comment from "../../components/Comment";
 
@@ -44,7 +44,6 @@ export default function ArticleComments(props) {
 								apiData={{ idUser: 6, idArticle: data.idArticle }}
 								enableTags={false}
 								placeHolder={"Wprowadz nowy komentarz..."}
-								atrName={"description"}
 							/>
 						)}
 					</div>

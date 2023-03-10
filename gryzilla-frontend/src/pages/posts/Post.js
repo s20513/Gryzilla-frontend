@@ -6,15 +6,13 @@ import {AiFillWarning} from "react-icons/ai"
 import PostComments from "./PostComments";
 import DataBar from "../../components/DataBarPost";
 import ContentInput from "../../components/Editor/ContentInput";
+import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 
 export default function Post(props) {
 
     const postData = props.postData;
-
-    const [commentsLoading, setCommentsLoading] = useState(false);
-
-    const [displayComments, setDisplayComments] = useState(false);
-    const [displayCommentInput, setDisplayCommentInput] = useState(false);
+    const [displayComments, setDisplayComments] = useState(() => props.displayComments ? true : false);
     const [displayPostEditor, setDisplayPostEditor] = useState(false);
 
     const changeDisplayComments = async () => {
@@ -51,7 +49,7 @@ export default function Post(props) {
                     <ContentInput
                         initialContent={postData}
                         addNew={setNewPostData}
-                        url={`posts/${postData.idPost}`}
+                        url={`/posts/${postData.idPost}`}
                         method={'PUT'}
                         apiData={ {idPost: postData.idPost} }
                         enableTags={true}
@@ -61,13 +59,14 @@ export default function Post(props) {
             }
 
             <div className="widget-box">
-                <button type="button" onClick={changeDisplayComments} className={"btn action-button " + (displayComments ? "btn-success" : "btn-outline-success")}>{postData.comments} <BsFillChatLeftTextFill/></button>
+                <button type="button" onClick={changeDisplayComments} className={"btn action-button " + (displayComments ? "btn-success" : "btn-outline-success")}>100 <BsFillChatLeftTextFill/></button>
                 {/* <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button> */}
                 <button type="button" className="btn btn-outline-warning action-button"><AiFillWarning/></button>
                 <button type="button" onClick={changeDisplayEditor} className="btn btn-outline-warning action-button">Edit</button>
-            </div>          
+                <Nav.Link as={Link} to={"" + postData.idPost}>details</Nav.Link>
+            </div>
 
-            {displayComments && 
+            {displayComments &&
                 <PostComments
                     idPost={postData.idPost}
                 />

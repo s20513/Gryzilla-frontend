@@ -23,6 +23,7 @@ export default function ContentInput(props) {
 	const textPlaceHolder = props.placeHolder;
 	const url = props.url;
 	const enableTags = props.enableTags;
+	const enableTitle = props.enableTitle;
     const apiData = props.apiData;
     const method = props.method;
 	const contentAtributeName = props.atrName ? props.atrName : "content";
@@ -30,14 +31,16 @@ export default function ContentInput(props) {
 
 	const [showInput, setShowInput] = useState(false);
 
+	const [title, setTitle] = useState("");
+
 	const childTextContentRef = useRef();
 	const childTagsRef = useRef();
 
 	const [newContent, error, loading, runRequest] = useAxios({
 		method: method, 
 		url: url,
-		headers: { accept: "*/*" ,
-				authorization: ("Bearer " + auth.response.token)},
+		headers: { accept: "*/*" },
+
 	});
 
 	//po otrzymaniu wartości z bazy
@@ -53,6 +56,7 @@ export default function ContentInput(props) {
 				...apiData,
 				[contentAtributeName]: childTextContentRef.current.getPostContent(),
 				...(enableTags && {tags : (childTagsRef.current.getPostTags())}),
+				...(enableTitle && {title : title}),
 			},
 		});
 	};
@@ -61,6 +65,9 @@ export default function ContentInput(props) {
 		<div className="content-wrapper">
 			<div className="content-container">
 				<form onSubmit={handleSubmit}>
+
+					{enableTitle && <input type="text" id="fname" name="fname"/>}
+
 					<TextEditor
 						initialContent={postData ? postData.content : undefined}
 						ref={childTextContentRef}

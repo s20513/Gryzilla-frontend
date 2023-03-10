@@ -14,9 +14,11 @@ import "./assets/TagInput.scss"
 
 import Profile from './pages/profile/Profile';
 import Articles from "./pages/articles/Articles";
-import ArticleDetails from "./pages/articles/ArticleDetails";
+import ArticleDetails from "./pages/articleDetails/ArticleDetails";
 import { AuthProvider } from "./context/AuthContext";
 import { RequireAuth } from "./components/RequireAuth";
+import PostDetails from "./pages/postDetails/PostDetails";
+import ArticleNew from "./pages/articleNew/ArticleNew";
 
 function App() {
   //document.body.style = 'background-color: #1E1F23 ;';
@@ -29,13 +31,17 @@ function App() {
         <Row>
           <Col md={7} lg={8} >
             <Routes>
-              <Route path="/posts" element={<Posts/>} />
-              <Route path="/profile" element={<RequireAuth><Profile/></RequireAuth>} />
+        
+              <Route path="/posts">
+                <Route index element={<Posts/>}/>
+                <Route path=":idPost" element={<PostDetails/>}/>
+              </Route>
               <Route path="/articles">
                 <Route index element={<Articles/>} />
                 <Route path=":idArticle" element={<ArticleDetails/>} />
-                <Route path="new" element={<ArticleDetails/>} />
+                <Route path="new" element={<ArticleNew/>} />
               </Route>
+              <Route path="/profile" element={<RequireAuth><Profile/></RequireAuth>} />
             </Routes>
           </Col>
           <Col className="d-none d-md-block">

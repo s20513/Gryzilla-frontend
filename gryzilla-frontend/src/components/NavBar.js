@@ -49,7 +49,7 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/articles">Główna</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="#action/3.4">Nowy</NavDropdown.Item>
+								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
 							</NavDropdown>
 
 							<Nav.Link as={Link} to="/groups">
