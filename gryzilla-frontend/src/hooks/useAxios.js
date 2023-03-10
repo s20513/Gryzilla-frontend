@@ -18,6 +18,7 @@ export const useAxios = (axiosParams) => {
     };
 
     useEffect(() => {
+      if(axiosParams.executeOnRender && axiosParams.executeOnRender == false) return;
       if(axiosParams.method == 'GET'){
         runRequest(axiosParams);
       } 

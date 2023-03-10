@@ -37,7 +37,7 @@ export default function Post(props) {
             
             {!displayPostEditor ? (
                 <div className="content-container">
-                    <DataBar likes={postData.likes} nick={postData.nick} date={postData.createdAt.replace("T"," ")}/>
+                    <DataBar id={postData.idPost} likes={postData.likes} nick={postData.nick} date={postData.createdAt.replace("T"," ")}/>
                     <hr className="hr-line"/>
                     <span dangerouslySetInnerHTML={{__html: postData.content}}></span>
                     <div className="lower-tag-container">

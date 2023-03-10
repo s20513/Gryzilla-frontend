@@ -56,7 +56,7 @@ export default function ArticleComments(props) {
 								<Comment
 									key={comment.idComment}
 									nick={comment.nick}
-									description={comment.description}
+									description={comment.content}
 								/>
 							))}
 

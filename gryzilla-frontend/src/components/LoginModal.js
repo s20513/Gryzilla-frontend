@@ -6,87 +6,38 @@ import axios from "axios";
 
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
+import useAxios from "../hooks/useAxios";
+import { useAuth } from "../context/AuthContext";
 
 export default function MyVerticallyCenteredModal(props) {
 	const cookies = new Cookies();
+	const auth = useAuth();
+	// const [loginPanel, setLoginPanel] = useState(true);
 
-	const [loginPanel, setLoginPanel] = useState(true);
-
-	const [email, setEmail] = useState("string");
-	const [emailError, setEmailError] = useState(null);
+	const [nick, setNick] = useState("string");
 	const [password, setPassword] = useState("string");
-	const [passwordError, setPasswordError] = useState(null);
 
-	// const [birthDate, setBirthDate] = useState(null);
-	// const [nick, setNick] = useState(null);
+	const [data, error, loading, runRequest] = useAxios({
+		method: "POST",
+		url: "/users/login",
+		headers: { accept: "*/*" },
+	});
 
-	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-
-	const [user, setUser] = useState(null);
-
-	// useEffect( ()=> {
-	//     console.log({email : email, password : password});
-	// }, [email, password]);
-
-	// const staticLogin = (token) => {
-	//     var decoded = jwt_decode(token);
-	//     console.log(decoded);
-
-	//     cookies.set(
-	//         "jwt_auth",
-	//         token,
-	//         { expires: new Date(decoded.exp * 1000)}
-	//       );
-	// }
-
-	const proccedLogin = () => {
-		// console.log("Login")
-		// try {
-		// 	const response = axios.post(`/users/login`, {
-		// 		nick: "string",
-		// 		password: "string",
-		// 	});
-		// 	setData(response.data);
-		// 	setError(null);
-		// } catch (err) {
-		//     console.log(err)
-		// 	setError(err.message);
-		// 	setData(null);
-		// } finally {
-		// 	setLoading(false);
-		// }
-
-		axios
-			.post("/users/login", {
-				nick: "string",
-				password: "string",
-			})
-			.then(function (response) {
-				//console.log(response);
-				setData(response.data);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	};
+	useEffect(() => {
+		if (data == null) return;
+		props.onHide();
+		auth.login(data);
+	}, [data]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		props.onHide();
-		proccedLogin();
-		//staticLogin("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN0cmluZyIsIm5iZiI6MTY3NDM4NTIwNSwiZXhwIjoxNjc0NDcxNjA1LCJpYXQiOjE2NzQzODUyMDV9.8Hpudcp6gu9BzolN1Bsnj0knIrGwnAwZazVRF2qMyb8");
+		runRequest({
+			data: {
+				nick: "string",
+				password: "string",
+			},
+		});
 	};
-
-	useEffect(() => {
-		if(data == undefined || data == null)
-            return;
-
-		var decoded = jwt_decode(data.token);
-		console.log(decoded);
-		//cookies.set("jwt_auth", token, { expires: new Date(decoded.exp * 1000) });
-	}, [data]);
 
 	return (
 		<Modal
@@ -97,17 +48,18 @@ export default function MyVerticallyCenteredModal(props) {
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="contained-modal-title-vcenter">
-					{loginPanel ? "Zaloguj się" : "Załóż konto"}
+					{/* {loginPanel ? "Zaloguj się" : "Załóż konto"} */}
+					Zaloguj sie
 				</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className="mb-3" controlId="formBasicEmail">
-						<Form.Label>Email</Form.Label>
+						<Form.Label>Nick</Form.Label>
 						<Form.Control
 							onChange={(e) => {
-								setEmail(e.target.value);
+								setNick(e.target.value);
 							}}
 							type="text"
 							placeholder="Enter email"
@@ -131,7 +83,7 @@ export default function MyVerticallyCenteredModal(props) {
 						</Form.Text>
 					</Form.Group>
 
-					{!loginPanel && (
+					{/* {!loginPanel && (
 						<Form.Group className="mb-3" controlId="formBasicPassword">
 							<Form.Label>Hasło</Form.Label>
 							<Form.Control
@@ -145,22 +97,23 @@ export default function MyVerticallyCenteredModal(props) {
 								We'll never share your email with anyone else.
 							</Form.Text>
 						</Form.Group>
-					)}
+					)} */}
 
 					<Form.Group className="mb-3" controlId="formBasicCheckbox">
 						<Form.Check type="checkbox" label="Zapamiętaj dane logowania" />
 					</Form.Group>
 
 					<Button variant="primary" type="submit">
-						{loginPanel ? "Zaloguj się" : "Wyślij"}
+						{/* {loginPanel ? "Zaloguj się" : "Wyślij"} */} zaloguj sie
 					</Button>
-					<br />
+					{/* <br />
 					<p1
 						style={{ textAlign: "center;" }}
 						onClick={() => setLoginPanel(!loginPanel)}
 					>
 						{loginPanel ? "Załóż nowe konto" : "Zaloguj się"}
-					</p1>
+					</p1> */}
+					{loading && <div className="loading-block">Logowanie...</div>}
 				</Form>
 			</Modal.Body>
 			{/* 

@@ -4,25 +4,28 @@ import Post from '../posts/Post';
 import axios from "axios";
 import useFetchPhoto from "../../hooks/useFetchPhoto";
 import useAxios from "../../hooks/useAxios";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Profile() {
 
     const [idPhoto, setIdPhoto] = useState(10);
     const [idUser, setIdUser] = useState(10);
 
+    const auth = useAuth();
+
     const [photo, errorPhoto, loadingPhoto] = useAxios({
-        method: 'GET', url: `/users/photo/${idPhoto}`, headers: { accept: '*/*'},
+        method: 'GET', url: `/users/photo/${auth.id}`, headers: { accept: '*/*'},
     });
 
-    const [profile, errorProfile, loadingProfile] = useAxios({method: 'GET',url: `users/${idUser}`,headers: {accept: '*/*'},
+    const [profile, errorProfile, loadingProfile] = useAxios({method: 'GET',url: `users/${auth.id}`,headers: {accept: '*/*'},
     });
 
     const [posts, errorPosts, loadingPosts] = useAxios({method: 'GET',url: `posts/qty/5`,headers: {accept: '*/*'},
     });
 
-    useEffect( () => {
-        console.log(posts)
-    },[posts])
+    // useEffect( () => {
+    //     console.log(posts)
+    // },[posts])
     
     function getBase64Img() {
         //console.log(photo.base64PhotoData)

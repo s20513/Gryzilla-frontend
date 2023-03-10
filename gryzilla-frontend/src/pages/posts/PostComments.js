@@ -53,7 +53,7 @@ export default function PostComments(props) {
 								<Comment
 									key={comment.idComment}
 									nick={comment.nick}
-									description={comment.description}
+									description={comment.content}
 								/>
 							))}
 

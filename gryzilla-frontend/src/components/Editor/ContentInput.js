@@ -16,6 +16,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../assets/Editor.scss";
 import { Container } from "react-bootstrap";
 import TextEditor from "./TextEditor";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ContentInput(props) {
 	const postData = props.initialContent;
@@ -25,6 +26,7 @@ export default function ContentInput(props) {
     const apiData = props.apiData;
     const method = props.method;
 	const contentAtributeName = props.atrName ? props.atrName : "content";
+	const auth = useAuth();
 
 	const [showInput, setShowInput] = useState(false);
 
@@ -34,7 +36,8 @@ export default function ContentInput(props) {
 	const [newContent, error, loading, runRequest] = useAxios({
 		method: method, 
 		url: url,
-		headers: { accept: "*/*" },
+		headers: { accept: "*/*" ,
+				authorization: ("Bearer " + auth.response.token)},
 	});
 
 	//po otrzymaniu wartości z bazy
