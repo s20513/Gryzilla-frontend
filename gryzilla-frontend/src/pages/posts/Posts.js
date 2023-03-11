@@ -9,15 +9,18 @@ import ContentInput from "../../components/Editor/ContentInput";
 import InputMockup from "../../components/InputMockup";
 import DropdownList from "../../components/DropdownList";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
+import { useNavigation } from "../../context/NavigationContext";
 
 
-export default function Posts() {
+export default function Posts(props) {
+	const navigation = useNavigation();
 	const [sortType, setSortType] = useLocalStorage("sortType", "byDateDesc");
 
-	const [showInput, setShowInput] = useState(false);
+	const [showInput, setShowInput] = useState(navigation.showInput);
 	const [pageNumber, setPageNumber] = useState(5);
 
-	const [newPosts, setNewPosts] = useState([]);
+	const [newPosts, setNewPosts] = useState(null);
 	const { posts, hasMore, loading, error } = useFetchPosts(
 		sortType,
 		pageNumber
@@ -25,6 +28,7 @@ export default function Posts() {
 
 	const addNewPost = (newPost) => {
 		setNewPosts(newPost);
+		console.log(newPost);
 		setShowInput(false);
 	};
 
@@ -56,7 +60,7 @@ export default function Posts() {
 				<DropdownList sortType={sortType} setSortType={changeSortType} />
 			</div>
 
-			{!showInput ? (
+			{!navigation.showInput ? (
 				<InputMockup
 					handleClick={() => {
 						setShowInput(true);
@@ -74,8 +78,11 @@ export default function Posts() {
 				/>
 			)}
 
+			{newPosts && 
+				<div className="content-container"><Link to={`/posts/${newPosts[0].idPost}`}>Dodano nowy post, sprawdź tutaj...</Link></div>}
+
 			{posts &&
-				newPosts.concat(posts).map((post) => {
+				posts.map((post) => {
 					return <Post key={post.idPost} postData={post}></Post>;
 				})}
 

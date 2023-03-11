@@ -25,7 +25,7 @@ export const useAxios = (axiosParams) => {
     }, []); // execute once only request is GET
 
     const runRequest = (data) => {
-      console.log(data.data)
+      //console.log(data.data)
       fetchData(Object.assign(axiosParams, data));
     }
 

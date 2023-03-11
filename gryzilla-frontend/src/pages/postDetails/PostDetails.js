@@ -22,7 +22,7 @@ export default function PostDetails() {
 			<h3>Post</h3>
 
 			{data && 
-				<Post postData={data} displayComments={true}></Post>
+				<Post postData={data} displayComments={true} detailsLink={false}></Post>
 			}
 
 			{/* <h3>Komentarze</h3> */}

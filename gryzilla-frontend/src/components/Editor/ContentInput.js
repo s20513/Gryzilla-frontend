@@ -66,7 +66,7 @@ export default function ContentInput(props) {
 			<div className="content-container">
 				<form onSubmit={handleSubmit}>
 
-					{enableTitle && <input type="text" id="fname" name="fname"/>}
+					{enableTitle && <input type="text" id="fname" name="fname" onChange={e => setTitle(e.target.value)}/>}
 
 					<TextEditor
 						initialContent={postData ? postData.content : undefined}

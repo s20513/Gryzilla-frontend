@@ -12,10 +12,13 @@ import gryzillaLogo from "../assets/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "../context/NavigationContext";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
 	const auth = useAuth();
+
+	const navigation = useNavigation();
 
 	return (
 		<>
@@ -42,7 +45,7 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/posts">Główna</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="#action/3.4">Nowy</NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="/posts" onClick={() => navigation.setShowInput(true)}>Nowy</NavDropdown.Item>
 							</NavDropdown>
 
 							<NavDropdown title="Artykuły" id="basic">

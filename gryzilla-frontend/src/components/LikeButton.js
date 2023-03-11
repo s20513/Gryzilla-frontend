@@ -56,7 +56,7 @@ export default function LikeButton(props) {
 	};
 
 	return (
-		<div onClick={() => handleClick()} className={ isLiked ? ("likes-box-liked") : ("likes-box")}>
+		<div onClick={() => handleClick()} className={ (isLiked && auth.isLogged) ? ("likes-box-liked") : ("likes-box")}>
             {/* {data == true ? "Tak" : "Nie" } */}
 			<span>+{likesNum}</span>
 		</div>

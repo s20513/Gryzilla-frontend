@@ -6,6 +6,7 @@ export default function useFetchPosts(sortType, pageNumber) {
   const [error, setError] = useState(false)
   const [posts, setPosts] = useState(null)
   const [hasMore, setHasMore] = useState(false)
+  const [timeStamp, setTimeStamp] = useState(Date.now())
 
   useEffect(() => {
     setPosts([]);
@@ -18,7 +19,8 @@ export default function useFetchPosts(sortType, pageNumber) {
 
     const fetchData = async () => {
       try {
-        const response =  await axios.get(`/posts/qty/${sortType}/${pageNumber}`);
+        console.log(timeStamp)
+        const response =  await axios.get(`/posts/qty/${sortType}/${pageNumber}`,{params: {time: timeStamp}});
         setPosts( (prevPosts) => {
           return ([...prevPosts, ...response.data.posts]);
         });

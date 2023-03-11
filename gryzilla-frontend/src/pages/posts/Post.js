@@ -12,6 +12,7 @@ import { Nav } from "react-bootstrap";
 export default function Post(props) {
 
     const postData = props.postData;
+    const detailsLink = (props.detailsLink || props.detailsLink == false) ? false : true;
     const [displayComments, setDisplayComments] = useState(() => props.displayComments ? true : false);
     const [displayPostEditor, setDisplayPostEditor] = useState(false);
 
@@ -63,7 +64,7 @@ export default function Post(props) {
                 {/* <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button> */}
                 <button type="button" className="btn btn-outline-warning action-button"><AiFillWarning/></button>
                 <button type="button" onClick={changeDisplayEditor} className="btn btn-outline-warning action-button">Edit</button>
-                <Nav.Link as={Link} to={"" + postData.idPost}>details</Nav.Link>
+                {detailsLink && <Nav.Link as={Link} to={"" + postData.idPost}>details</Nav.Link>}
             </div>
 
             {displayComments &&
