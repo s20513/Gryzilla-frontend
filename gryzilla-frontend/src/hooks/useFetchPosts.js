@@ -6,7 +6,10 @@ export default function useFetchPosts(sortType, pageNumber) {
   const [error, setError] = useState(false)
   const [posts, setPosts] = useState(null)
   const [hasMore, setHasMore] = useState(false)
-  const [timeStamp, setTimeStamp] = useState(Date.now())
+  const [timeStamp, setTimeStamp] = useState(() => {
+    const date = new Date(Date.now() + (60*60*1000));
+    return date.toISOString();
+  })
 
   useEffect(() => {
     setPosts([]);

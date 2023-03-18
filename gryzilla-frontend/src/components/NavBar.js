@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
 	Navbar,
 	Nav,
@@ -20,6 +20,10 @@ export default function NavBar() {
 
 	const navigation = useNavigation();
 
+	const handleClick = () => {
+		navigation.setShowInput(true);
+	};
+
 	return (
 		<>
 			<Navbar bg="black" expand="lg" sticky="top" variant="dark">
@@ -37,19 +41,32 @@ export default function NavBar() {
 
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
-						<Nav className="me-auto">
+						<Nav
+							className="me-auto my-2 my-lg-0"
+							style={{ maxHeight: "100px" }}
+						>
 							{/* <Nav.Link as={Link} to="/posts">
 								Posty
 							</Nav.Link> */}
 							<NavDropdown title="Posty" id="basic2">
-								<NavDropdown.Item as={Link} to="/posts">Główna</NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="/posts">
+									Główna
+								</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item as={Link} to="/posts" onClick={() => navigation.setShowInput(true)}>Nowy</NavDropdown.Item>
+								<NavDropdown.Item
+									as={Link}
+									to="/posts"
+									onClick={() => handleClick()}
+								>
+									Nowy
+								</NavDropdown.Item>
 							</NavDropdown>
 
 							<NavDropdown title="Artykuły" id="basic">
-								<NavDropdown.Item as={Link} to="/articles">Główna</NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="/articles">
+									Główna
+								</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
@@ -58,7 +75,6 @@ export default function NavBar() {
 							<Nav.Link as={Link} to="/groups">
 								Grupy
 							</Nav.Link>
-
 						</Nav>
 						<Nav className="d-flex">
 							<Form className="d-flex">
@@ -78,9 +94,26 @@ export default function NavBar() {
 							)}
 
 							{auth.isLogged && (
-								<Button variant="primary" onClick={() => auth.logout()}>
-									Wyloguj się
-								</Button>
+								// <Button variant="primary" onClick={() => auth.logout()}>
+								// 	Wyloguj się
+								// </Button>
+								<div className="d-flex align-items-center">
+									
+									<NavDropdown align="end" title={<><AiOutlineUser size={25} style={{ color: "white" }} />{auth.nick}{auth.id}</>} id="basic">
+										
+										<NavDropdown.Item as={Link} to="/profile">
+											Mój profil
+										</NavDropdown.Item>
+										<NavDropdown.Item href="#action/3.2">
+											....
+										</NavDropdown.Item>
+										<NavDropdown.Divider />
+										<NavDropdown.Item onClick={()=> {auth.logout()}}>
+											Wyloguj się
+										</NavDropdown.Item>
+									</NavDropdown>
+									
+								</div>
 							)}
 						</Nav>
 					</Navbar.Collapse>

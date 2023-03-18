@@ -29,6 +29,8 @@ export default function ContentInput(props) {
 	const contentAtributeName = props.atrName ? props.atrName : "content";
 	const auth = useAuth();
 
+	const scrollRef = useRef(null);
+
 	const [showInput, setShowInput] = useState(false);
 
 	const [title, setTitle] = useState("");
@@ -40,8 +42,11 @@ export default function ContentInput(props) {
 		method: method, 
 		url: url,
 		headers: { accept: "*/*" },
-
 	});
+
+	useEffect(() => {
+		scrollRef.current.scrollIntoView();
+	},[])
 
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
@@ -62,7 +67,7 @@ export default function ContentInput(props) {
 	};
 
 	return (
-		<div className="content-wrapper">
+		<div className="content-wrapper" ref={scrollRef}>
 			<div className="content-container">
 				<form onSubmit={handleSubmit}>
 

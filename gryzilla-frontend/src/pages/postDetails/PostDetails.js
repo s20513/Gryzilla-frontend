@@ -13,10 +13,6 @@ export default function PostDetails() {
 		headers: { accept: "*/*" },
 	});
 
-    useEffect(()=>{
-        console.log(data)
-    },[data])
-
 	return (
 		<Container className="main-panel">
 			<h3>Post</h3>
