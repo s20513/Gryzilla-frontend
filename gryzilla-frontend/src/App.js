@@ -19,7 +19,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { RequireAuth } from "./components/RequireAuth";
 import PostDetails from "./pages/postDetails/PostDetails";
 import ArticleNew from "./pages/articleNew/ArticleNew";
-import { NavigationProvider } from "./context/NavigationContext";
+import { NavbarProvider } from "./context/NavbarContext";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -27,7 +27,7 @@ function App() {
 
 	return (
 		<AuthProvider>
-			<NavigationProvider>
+			<NavbarProvider>
 				<NavBar></NavBar>
 
 				<Container className="main-container">
@@ -59,7 +59,7 @@ function App() {
 						</Col>
 					</Row>
 				</Container>
-			</NavigationProvider>
+			</NavbarProvider>
 		</AuthProvider>
 	);
 }

@@ -17,7 +17,6 @@ export default function DropdownList(props) {
 						setSortType("byDateDesc");
 					}}
 					active={sortType === "byDateDesc" ? true : false}
-					href="#/action-2"
 				>
 					Najnowsze
 				</Dropdown.Item>
@@ -27,7 +26,6 @@ export default function DropdownList(props) {
 						setSortType("byDateAsc");
 					}}
 					active={sortType === "byDateAsc" ? true : false}
-					href="#/action-3"
 				>
 					Najstarsze
 				</Dropdown.Item>
@@ -37,7 +35,6 @@ export default function DropdownList(props) {
 						setSortType("byLikesDesc");
 					}}
 					active={sortType === "byLikesDesc" ? true : false}
-					href="#/action-1"
 				>
 					Najpopularniejsze
 				</Dropdown.Item>
@@ -47,7 +44,6 @@ export default function DropdownList(props) {
 						setSortType("byCommentsDesc");
 					}}
 					active={sortType === "byCommentsDesc" ? true : false}
-					href="#/action-3"
 				>
 					Najwięcej komentarzy
 				</Dropdown.Item>

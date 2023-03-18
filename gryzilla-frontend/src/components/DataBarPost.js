@@ -11,8 +11,8 @@ export default function DataBar({ id, likes, nick, date }) {
 			</div>
 
 			<div className="d-flex flex-column">
-				<span>{date}</span>
-				<span className="label">Data powstania</span>
+				<span style={{textAlign:"center"}}>{date.time}</span>
+				<span className="label">{date.date}</span>
 			</div>
 		</div>
 	);

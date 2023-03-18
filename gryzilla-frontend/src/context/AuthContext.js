@@ -35,14 +35,13 @@ export const AuthProvider = ({ children }) => {
 		}
 
 		//jeżeli ważny jwtToken to zaloguj
-		if (refreshToken != null && jwtToken != null && chechValidJwt(jwtToken)) {
+		if ( jwtToken != null && chechValidJwt(jwtToken)) {
 			console.log("Zapisany ważny jwtToken i jest resfresh token");
 			relogin();
 			return;
 		}
 		
-		
-
+		//Jeżeli jest refreshToken ale brak ważnego jwtTokena, pobierz pakiet do logowania
 		console.log("Używanie refreshTokena");
 
 		const fetchData = async (params) => {

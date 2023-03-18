@@ -17,6 +17,7 @@ import "../../assets/Editor.scss";
 import { Container } from "react-bootstrap";
 import TextEditor from "./TextEditor";
 import { useAuth } from "../../context/AuthContext";
+import { useNavbar } from "../../context/NavbarContext";
 
 export default function ContentInput(props) {
 	const postData = props.initialContent;
@@ -24,10 +25,11 @@ export default function ContentInput(props) {
 	const url = props.url;
 	const enableTags = props.enableTags;
 	const enableTitle = props.enableTitle;
-    const apiData = props.apiData;
-    const method = props.method;
+	const apiData = props.apiData;
+	const method = props.method;
 	const contentAtributeName = props.atrName ? props.atrName : "content";
 	const auth = useAuth();
+	const navbar = useNavbar();
 
 	const scrollRef = useRef(null);
 
@@ -39,14 +41,14 @@ export default function ContentInput(props) {
 	const childTagsRef = useRef();
 
 	const [newContent, error, loading, runRequest] = useAxios({
-		method: method, 
+		method: method,
 		url: url,
 		headers: { accept: "*/*" },
 	});
 
 	useEffect(() => {
 		scrollRef.current.scrollIntoView();
-	},[])
+	}, []);
 
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
@@ -55,13 +57,15 @@ export default function ContentInput(props) {
 	}, [newContent]);
 
 	const handleSubmit = (event) => {
-		event.preventDefault();        
+		console.log("submit");
+		event.preventDefault();
 		runRequest({
 			data: {
+				iduser: auth.id,
 				...apiData,
 				[contentAtributeName]: childTextContentRef.current.getPostContent(),
-				...(enableTags && {tags : (childTagsRef.current.getPostTags())}),
-				...(enableTitle && {title : title}),
+				...(enableTags && { tags: childTagsRef.current.getPostTags() }),
+				...(enableTitle && { title: title }),
 			},
 		});
 	};
@@ -70,8 +74,14 @@ export default function ContentInput(props) {
 		<div className="content-wrapper" ref={scrollRef}>
 			<div className="content-container">
 				<form onSubmit={handleSubmit}>
-
-					{enableTitle && <input type="text" id="fname" name="fname" onChange={e => setTitle(e.target.value)}/>}
+					{enableTitle && (
+						<input
+							type="text"
+							id="fname"
+							name="fname"
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+					)}
 
 					<TextEditor
 						initialContent={postData ? postData.content : undefined}
@@ -86,7 +96,11 @@ export default function ContentInput(props) {
 							/>
 						</div>
 					)}
-					<input type="submit" />
+					<button type="submit">Wyślij post</button>
+
+					<button type="button" onClick={() => props.handleClose()}>
+						Zamknij
+					</button>
 				</form>
 			</div>
 		</div>

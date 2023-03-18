@@ -10,14 +10,17 @@ import InputMockup from "../../components/InputMockup";
 import DropdownList from "../../components/DropdownList";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
-import { useNavigation } from "../../context/NavigationContext";
+import { useNavbar } from "../../context/NavbarContext";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function Posts(props) {
-	const navigation = useNavigation();
+	const navigation = useNavbar();
+	const auth = useAuth();
+
 	const [sortType, setSortType] = useLocalStorage("sortType", "byDateDesc");
 
-	const [showInput, setShowInput] = useState(navigation.showInput);
+	// const [showInput, setShowInput] = useState(navigation.showInput);
 	const [pageNumber, setPageNumber] = useState(5);
 
 	const [newPosts, setNewPosts] = useState(null);
@@ -28,8 +31,7 @@ export default function Posts(props) {
 
 	const addNewPost = (newPost) => {
 		setNewPosts(newPost);
-		console.log(newPost);
-		setShowInput(false);
+		navigation.setShowInput(false);
 	};
 
 	const changeSortType = (sortType) => {
@@ -59,12 +61,10 @@ export default function Posts(props) {
 				<h3>Wszystkie posty</h3>
 				<DropdownList sortType={sortType} setSortType={changeSortType} />
 			</div>
-
-			{!navigation.showInput ? (
+			
+			{ !navigation.showInput ? (
 				<InputMockup
-					handleClick={() => {
-						setShowInput(true);
-					}}
+					handleClick={() => navigation.setShowInput(true)}
 					placeHolder={"Dodaj nowy post..."}
 				/>
 			) : (
@@ -72,9 +72,10 @@ export default function Posts(props) {
 					addNew={addNewPost}
 					url={'posts'}
 					method={'POST'}
-					apiData={ {idUser: 6} }
+					apiData={{}}
 					enableTags={true}
 					placeHolder={"Wprowadz nowy post..."}
+					handleClose={navigation.setShowInput(false)}
 				/>
 			)}
 

@@ -12,13 +12,13 @@ import gryzillaLogo from "../assets/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../context/AuthContext";
-import { useNavigation } from "../context/NavigationContext";
+import { useNavbar } from "../context/NavbarContext";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
 	const auth = useAuth();
 
-	const navigation = useNavigation();
+	const navigation = useNavbar();
 
 	const handleClick = () => {
 		navigation.setShowInput(true);

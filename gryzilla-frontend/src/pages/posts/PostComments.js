@@ -42,6 +42,7 @@ export default function PostComments(props) {
 								apiData={{ idUser: 6, idPost: idPost }}
 								enableTags={false}
 								placeHolder={"Wprowadz nowy komentarz..."}
+								handleClose={() => setDisplayCommentInput(false)}
 							/>
 						)}
 					</div>

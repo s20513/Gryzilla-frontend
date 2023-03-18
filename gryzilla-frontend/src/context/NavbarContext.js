@@ -3,18 +3,18 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-const NavigationContext = createContext(null);
+const NavbarContext = createContext(null);
 
-export const NavigationProvider = ({ children }) => {
+export const NavbarProvider = ({ children }) => {
 	const [showInput, setShowInput] = useState(false);
 
 	return (
-		<NavigationContext.Provider value={{ showInput, setShowInput }}>
+		<NavbarContext.Provider value={{ showInput, setShowInput }}>
 			{children}
-		</NavigationContext.Provider>
+		</NavbarContext.Provider>
 	);
 };
 
-export const useNavigation = () => {
-	return useContext(NavigationContext);
+export const useNavbar = () => {
+	return useContext(NavbarContext);
 };
