@@ -34,28 +34,25 @@ function App() {
 					<Row>
 						<Col md={7} lg={8}>
 							<Routes>
-								<Route path="/posts">
-									<Route index element={<Posts />} />
-									{/* <Route path="new" element={<Posts openInput={true} />} /> */}
-									<Route path=":idPost" element={<PostDetails />} />
+								<Route path="/">
+									<Route path="/posts">
+										<Route index element={<Posts />} />
+										{/* <Route path="new" element={<Posts openInput={true} />} /> */}
+										<Route path=":idPost" element={<PostDetails />} />
+									</Route>
+									<Route path="/articles">
+										<Route index element={<Articles />} />
+										<Route path=":idArticle" element={<ArticleDetails />} />
+										<Route path="new" element={<ArticleNew />} />
+									</Route>
+									<Route path="/profile">
+										<Route path=":idUser" element={<Profile />} />
+									</Route>
 								</Route>
-								<Route path="/articles">
-									<Route index element={<Articles />} />
-									<Route path=":idArticle" element={<ArticleDetails />} />
-									<Route path="new" element={<ArticleNew />} />
-								</Route>
-								<Route
-									path="/profile"
-									element={
-										<RequireAuth>
-											<Profile />
-										</RequireAuth>
-									}
-								/>
 							</Routes>
 						</Col>
 						<Col className="d-none d-md-block">
-							{/* <RightColumn></RightColumn> */}
+							<RightColumn></RightColumn>
 						</Col>
 					</Row>
 				</Container>

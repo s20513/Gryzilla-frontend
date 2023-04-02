@@ -149,6 +149,7 @@ html {
     //margin-right: 10px;
     font-weight: 600;
     height: 26px;
+    width: fit-content;
     color: #000; /* Fallback for older browsers */
     color: rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 4px 1px rgb(9, 9, 44);
@@ -164,8 +165,17 @@ html {
     border: 1px solid rgb(24, 236, 165);
 }
 
-
 .plus-sign {
     text-align: center;
 }
+
+.article-title-input {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #bfc8da;
+    border: 1px solid rgb(166, 166, 173);
+    border-radius: 4px;
+}
+
+
 

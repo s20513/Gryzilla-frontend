@@ -5,28 +5,27 @@ import axios from "axios";
 import useFetchPhoto from "../../hooks/useFetchPhoto";
 import useAxios from "../../hooks/useAxios";
 import { useAuth } from "../../context/AuthContext";
+import ProfilePotst from "./ProfilePosts";
+import ProfileArticles from "./ProfileArticles";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
-	const [idUser, setIdUser] = useState(10);
+	//const [idUser, setIdUser] = useState(10);
 
 	const auth = useAuth();
+	const {idUser} = useParams();
+	
 
 	const [photo, errorPhoto, loadingPhoto] = useAxios({
 		method: "GET",
-		url: `/users/photo/${auth.id}`,
+		url: `/users/photo/${idUser}`,
 		headers: { accept: "*/*" },
 	});
 
 	const [profile, errorProfile, loadingProfile] = useAxios({
 		method: "GET",
-		url: `users/${auth.id}`,
-		headers: { accept: "*/*" },
-	});
-
-	const [posts, errorPosts, loadingPosts] = useAxios({
-		method: "GET",
-		url: `posts/qty/5`,
+		url: `/users/${idUser}`,
 		headers: { accept: "*/*" },
 	});
 
@@ -48,7 +47,7 @@ export default function Profile() {
 				<Container>
 					<Row>
 						<Col>
-							<div className="content-container profile-data-container">
+							<div className="profile-data-container">
 								{photo && (
 									<img
 										className="profile-img"
@@ -119,11 +118,9 @@ export default function Profile() {
 			</Container>
 
 			<Container className="main-panel">
-				<h2>Moje posty</h2>
-				{posts &&
-					posts.posts.map((post, index) => {
-						return <Post key={post.idPost} postData={post}></Post>;
-					})}
+				<ProfilePotst idUser={idUser}/>
+				<hr className="hr-line" />
+				<ProfileArticles idUser={idUser}/>
 			</Container>
 		</>
 	);

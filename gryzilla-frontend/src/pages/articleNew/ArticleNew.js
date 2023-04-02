@@ -1,13 +1,16 @@
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import ContentInput from "../../components/Editor/ContentInput";
 
 export default function ArticleNew() {
 	const params = useParams();
+	const navigate = useNavigate();
 
-    const addNewArticle = () => {
+    const addNewArticle = (newArticle) => {
         console.log("dodano artykuł")
+		const idArticle = newArticle[0].idArticle;
+		navigate(`/articles/${idArticle}`)
     }
 
 	return (
@@ -18,13 +21,11 @@ export default function ArticleNew() {
 					addNew={addNewArticle}
 					url={'/articles'}
 					method={'POST'}
-					apiData={ {idUser: 6} }
+					apiData={ {} }
 					enableTags={true}
                     enableTitle={true}
 					placeHolder={"Wprowadz nowy artykuł..."}
 				/>
-
-			<h3>Komentarze</h3>
 		</Container>
 	);
 }

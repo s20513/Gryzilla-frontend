@@ -10,7 +10,6 @@
     //overflow: hidden;
     padding: 0.6rem;
     margin-bottom: 0.6rem;
-
 }
 
 .hr-line {
@@ -38,7 +37,7 @@
     padding-top: 0.5rem;
 
     .widget-box {
-        padding-top: 0.5rem;
+        padding-top: 0.2rem;
         display: flex;
         gap: 10px;
 
@@ -53,11 +52,6 @@
             height: 30px;
             border-color:rgb(90, 90, 165);
         }
-    }
-
-    .comment-data-container {
-        @extend .content-container;
-        margin: 1rem;    
     }
      
     .comment-input-wrapper {
@@ -83,6 +77,11 @@
 
 }
 
+.comment-data-container {
+    @extend .content-container;
+    margin: 1rem;    
+}
+
 .comments-vertical-line {
     background-color: $upper-data-container-color;
     width: 5px;
@@ -93,15 +92,15 @@
 }
 
 .top-three {
-    div:nth-child(1) {
-        border: 2px solid rgb(146, 130, 39);
-    }
-    div:nth-child(2) {
-        border: 2px solid rgb(121, 119, 119);
-    }
-    div:nth-child(3) {
-        border: 2px solid rgb(117, 79, 8);
-    }
+    // div:nth-child(1) {
+    //     border: 2px solid rgb(146, 130, 39);
+    // }
+    // div:nth-child(2) {
+    //     border: 2px solid rgb(121, 119, 119);
+    // }
+    // div:nth-child(3) {
+    //     border: 2px solid rgb(117, 79, 8);
+    // }
     
 }
 
@@ -130,13 +129,19 @@
     font-size: 0.9rem;
     font-weight: 400;
     height: 25px;
+    min-width: 50px;
     padding: 0rem 0.6rem;
     border-radius: 0.4rem;
     background-color: transparent;
     line-height: 1;
+    text-align: center;
 }
 
 .widget-button:hover {
     background-color: rgb(4, 79, 104);
+}
+
+.content-container-hover:hover {
+    background-color: $upper-data-container-color-hover;
 }
 

@@ -29,7 +29,7 @@ export default function ArticleDetails() {
 					</div>
 					<hr className="hr-line" />
 					<div>
-						<div>{data.content}</div>
+						<div dangerouslySetInnerHTML={{ __html: data.content }}></div>
 					</div>
 					<span className="article-label">
 						Artykuł użytkownika {data.author.nick}, utworzono {data.createdAt}

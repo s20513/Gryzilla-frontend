@@ -51,5 +51,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://localhost:5001/api/"
+  "proxy": "https://localhost:5001/api/",
+  "homepage" : "/posts"
 }

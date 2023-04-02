@@ -14,7 +14,7 @@
   .ReactTags__tags {
     position: relative;
   }
-  
+
   .ReactTags__clearAll {
     cursor: pointer;
     padding: 10px;
@@ -59,7 +59,7 @@
     font-size: 12px;
     display: inline-block;
     padding: 5px;
-    margin: 0 5px;
+    margin: 3px 5px;
     border-radius: 4px;
     -webkit-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);
     -moz-box-shadow: -1px 3px 20px 1px rgba(2, 2, 2, 1);

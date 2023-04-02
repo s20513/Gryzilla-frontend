@@ -44,6 +44,7 @@ export default function ArticleComments(props) {
 								apiData={{ idUser: 6, idArticle: data.idArticle }}
 								enableTags={false}
 								placeHolder={"Wprowadz nowy komentarz..."}
+								handleClose={() => setDisplayCommentInput(false)}
 							/>
 						)}
 					</div>
@@ -61,7 +62,7 @@ export default function ArticleComments(props) {
 
 					{data && data.comments.length == 0 && (
 						<div className="comment-data-container">
-							Brak postów do wyświetlenia
+							Brak komentarzy do wyświetlenia
 						</div>
 					)}
 				</div>

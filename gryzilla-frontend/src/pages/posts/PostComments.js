@@ -4,10 +4,12 @@ import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
 import Comment from "../../components/Comment";
 import ContentInput from "../../components/Editor/ContentInput";
+import { useAuth } from "../../context/AuthContext";
 
 export default function PostComments(props) {
 	const idPost = props.idPost;
 	const [displayCommentInput, setDisplayCommentInput] = useState(false);
+	const auth = useAuth()
 
 	//tutaj pobieranie samych komentarzy powinno być, nie całego posta z komentarzami
 	const [data, errorData, loadingData] = useAxios({
@@ -31,7 +33,7 @@ export default function PostComments(props) {
 				<div style={{ flexGrow: "1" }}>
 					<div className="m-3">
 						{!displayCommentInput ? (
-							<InputMockup handleClick={() => setDisplayCommentInput(true)}>
+							<InputMockup handleClick={() => auth.isLogged ? setDisplayCommentInput(true) : alert("Zaloguj się aby dodawać treści")}>
 								Dodaj nowy komentarz...
 							</InputMockup>
 						) : (

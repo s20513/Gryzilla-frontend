@@ -64,7 +64,7 @@ export default function Posts(props) {
 			
 			{ !navigation.showInput ? (
 				<InputMockup
-					handleClick={() => navigation.setShowInput(true)}
+					handleClick={() => auth.isLogged ? navigation.setShowInput(true) : alert("Zaloguj się aby dodawać treści")}
 					placeHolder={"Dodaj nowy post..."}
 				/>
 			) : (
@@ -75,7 +75,7 @@ export default function Posts(props) {
 					apiData={{}}
 					enableTags={true}
 					placeHolder={"Wprowadz nowy post..."}
-					handleClose={navigation.setShowInput(false)}
+					handleClose={() => navigation.setShowInput(false)}
 				/>
 			)}
 

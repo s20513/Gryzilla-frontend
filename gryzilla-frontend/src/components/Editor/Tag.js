@@ -18,18 +18,23 @@ const Tag = forwardRef((props, _ref) => {
 	const [suggestions, setSuggestions] = useState([]);
 
 	const [parentTags, setParentTags] = useState(() => {
-		if(initialContent == undefined) return [];
+		if (initialContent == undefined) return [];
 		return initialContent.map((tag) => {
 			return { id: tag, text: tag };
 		});
 	});
 
+	useEffect(()=> {
+		console.log(parentTags);
+	},[parentTags])
+
 	useImperativeHandle(_ref, () => ({
 		getPostTags: () => {
+			if(parentTags.length == 0) return [];
 			const tags = parentTags.map((tag) => {
 				return tag.text;
 			});
-      return tags;
+			return tags;
 		},
 	}));
 

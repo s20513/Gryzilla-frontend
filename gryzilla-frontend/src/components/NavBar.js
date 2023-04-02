@@ -101,7 +101,7 @@ export default function NavBar() {
 									
 									<NavDropdown align="end" title={<><AiOutlineUser size={25} style={{ color: "white" }} />{auth.nick}{auth.id}</>} id="basic">
 										
-										<NavDropdown.Item as={Link} to="/profile">
+										<NavDropdown.Item as={Link} to={"/profile/" + auth.id}>
 											Mój profil
 										</NavDropdown.Item>
 										<NavDropdown.Item href="#action/3.2">

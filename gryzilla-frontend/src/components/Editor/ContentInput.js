@@ -46,9 +46,9 @@ export default function ContentInput(props) {
 		headers: { accept: "*/*" },
 	});
 
-	useEffect(() => {
-		scrollRef.current.scrollIntoView();
-	}, []);
+	// useEffect(() => {
+	// 	scrollRef.current.scrollIntoView();
+	// }, []);
 
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
@@ -61,7 +61,7 @@ export default function ContentInput(props) {
 		event.preventDefault();
 		runRequest({
 			data: {
-				iduser: auth.id,
+				idUser: auth.id,
 				...apiData,
 				[contentAtributeName]: childTextContentRef.current.getPostContent(),
 				...(enableTags && { tags: childTagsRef.current.getPostTags() }),
@@ -76,9 +76,11 @@ export default function ContentInput(props) {
 				<form onSubmit={handleSubmit}>
 					{enableTitle && (
 						<input
+							className="article-title-input"
 							type="text"
 							id="fname"
 							name="fname"
+							placeholder="Wprowadz tytuł artykuły.."
 							onChange={(e) => setTitle(e.target.value)}
 						/>
 					)}
@@ -96,11 +98,19 @@ export default function ContentInput(props) {
 							/>
 						</div>
 					)}
-					<button type="submit">Wyślij post</button>
-
-					<button type="button" onClick={() => props.handleClose()}>
-						Zamknij
-					</button>
+					<hr className="hr-line" />
+					<div className="d-flex justify-content-center gap-2 mt-2">
+						<button
+							className="widget-button"
+							type="button"
+							onClick={() => props.handleClose()}
+						>
+							Zamknij
+						</button>
+						<button className="widget-button" type="submit">
+							Wyślij post
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>

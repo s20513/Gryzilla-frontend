@@ -7,7 +7,7 @@ export default function useFetchPosts(sortType, pageNumber) {
   const [posts, setPosts] = useState(null)
   const [hasMore, setHasMore] = useState(false)
   const [timeStamp, setTimeStamp] = useState(() => {
-    const date = new Date(Date.now() + (60*60*1000));
+    const date = new Date(Date.now() + (2*60*60*1000));
     return date.toISOString();
   })
 
@@ -21,8 +21,8 @@ export default function useFetchPosts(sortType, pageNumber) {
     let cancel;
 
     const fetchData = async () => {
+      console.log(timeStamp);
       try {
-        console.log(timeStamp)
         const response =  await axios.get(`/posts/qty/${sortType}/${pageNumber}`,{params: {time: timeStamp}});
         setPosts( (prevPosts) => {
           return ([...prevPosts, ...response.data.posts]);

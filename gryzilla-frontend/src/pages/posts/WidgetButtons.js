@@ -14,6 +14,7 @@ import { Dropdown } from "react-bootstrap";
 export default function WidgetButtons({
 	handleComments,
 	handleEdit,
+	handleDelete,
 	commentsNumber,
 	idPost,
 	showDetailsButton,
@@ -41,15 +42,21 @@ export default function WidgetButtons({
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu className="dropdown-menu-right dropdown-menu-dark">
+					<Dropdown.Item onClick={handleEdit}>Edytuj</Dropdown.Item>
+
 					<Dropdown.Item>Dodaj do ulubionych</Dropdown.Item>
+
 					{showDetailsButton && (
-						<Dropdown.Item>
-							<Nav.Link as={Link} to={"" + idPost}>
-								Widok w nowym oknie
-							</Nav.Link>
+						<Dropdown.Item as={Link} to={"" + idPost}>
+							Widok w nowym oknie
 						</Dropdown.Item>
 					)}
+
+					<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
+
 					<Dropdown.Item>Zgłoś</Dropdown.Item>
+
+					<Dropdown.Item>Info: Id-{idPost}</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
 

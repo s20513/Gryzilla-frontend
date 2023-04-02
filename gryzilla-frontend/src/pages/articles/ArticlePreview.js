@@ -12,12 +12,12 @@ export default function ArticlePreview({idArticle, title, content, nick, date, l
         <div className="content-container">
             <div className="data-bar">
                 <LikeButton likesNum={likes} id={idArticle} url={"likesArticle"}/>
-                <Nav.Link as={Link} to={"" + idArticle} className="article-title">{title}</Nav.Link>
+                <Nav.Link as={Link} to={"/articles/" + idArticle} className="article-title">{title}</Nav.Link>
             </div>
             <span className="article-label">Artykuł użytkownika {nick}, utworzono {dateReady.time} {dateReady.date}</span>
             {/* <hr className="hr-line"/> */}
             <div>
-                <div className="text-fade-out">{content}</div>
+                <div className="text-fade-out" dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
         </div>
     );
