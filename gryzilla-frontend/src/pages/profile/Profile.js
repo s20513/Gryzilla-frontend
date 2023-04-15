@@ -9,13 +9,19 @@ import ProfilePotst from "./ProfilePosts";
 import ProfileArticles from "./ProfileArticles";
 import { useParams } from "react-router-dom";
 
+
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import ProfileComments from "./ProfileComments";
+import ProfileFollowed from "./ProfileFollowed";
+import FollowButton from "./components/FollowButton";
+
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
 	//const [idUser, setIdUser] = useState(10);
 
 	const auth = useAuth();
-	const {idUser} = useParams();
-	
+	const { idUser } = useParams();
 
 	const [photo, errorPhoto, loadingPhoto] = useAxios({
 		method: "GET",
@@ -41,7 +47,7 @@ export default function Profile() {
 		<>
 			<Container className="main-panel">
 				<Container className="d-flex justify-content-between">
-					<h2>Mój profil</h2>
+					<h2>Mój profil {idUser}</h2>
 				</Container>
 
 				<Container>
@@ -109,6 +115,7 @@ export default function Profile() {
 										<Button variant="primary">Epic</Button>
 										<Button variant="primary">Discord</Button>
 										<Button variant="primary">PlayStation</Button>
+										<FollowButton idUser={idUser}/>
 									</div>
 								)}
 							</div>
@@ -118,9 +125,29 @@ export default function Profile() {
 			</Container>
 
 			<Container className="main-panel">
-				<ProfilePotst idUser={idUser}/>
+				<Tabs
+					defaultActiveKey="comments"
+					id="fill-tab-example"
+					transition={true}
+					className="tabs-style mb-3"
+					justify
+				>
+					<Tab eventKey="comments" title="Opinnie">
+						<ProfileComments idUser={idUser}/>
+					</Tab>
+					<Tab eventKey="posts" title="Posty">
+						<ProfilePotst idUser={idUser}/>
+					</Tab>
+					<Tab eventKey="articles" title="Artykuły">
+						<ProfileArticles idUser={idUser}/>
+					</Tab>
+					<Tab eventKey="fallowed" title="Obserwowani">
+						<ProfileFollowed idUser={idUser}/>
+					</Tab>
+				</Tabs>
+				{/* <ProfilePotst idUser={idUser}/>
 				<hr className="hr-line" />
-				<ProfileArticles idUser={idUser}/>
+				<ProfileArticles idUser={idUser}/> */}
 			</Container>
 		</>
 	);

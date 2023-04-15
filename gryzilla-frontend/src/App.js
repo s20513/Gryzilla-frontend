@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from "react-bootstrap";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, redirect } from "react-router-dom";
 import axios from "axios";
 
 import NavBar from "./components/NavBar";
@@ -20,6 +20,8 @@ import { RequireAuth } from "./components/RequireAuth";
 import PostDetails from "./pages/postDetails/PostDetails";
 import ArticleNew from "./pages/articleNew/ArticleNew";
 import { NavbarProvider } from "./context/NavbarContext";
+import NotFound from "./pages/NotFound";
+import ProfileRerender from "./pages/profile/components/ProfileRerender";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -34,21 +36,22 @@ function App() {
 					<Row>
 						<Col md={7} lg={8}>
 							<Routes>
-								<Route path="/">
-									<Route path="/posts">
-										<Route index element={<Posts />} />
-										{/* <Route path="new" element={<Posts openInput={true} />} /> */}
-										<Route path=":idPost" element={<PostDetails />} />
-									</Route>
-									<Route path="/articles">
-										<Route index element={<Articles />} />
-										<Route path=":idArticle" element={<ArticleDetails />} />
-										<Route path="new" element={<ArticleNew />} />
-									</Route>
-									<Route path="/profile">
-										<Route path=":idUser" element={<Profile />} />
-									</Route>
+								<Route path="/posts">
+									<Route index element={<Posts />} />
+									{/* <Route path="new" element={<Posts openInput={true} />} /> */}
+									<Route path=":idPost" element={<PostDetails />} />
 								</Route>
+								<Route path="/articles">
+									<Route index element={<Articles />} />
+									<Route path=":idArticle" element={<ArticleDetails />} />
+									<Route path="new" element={<ArticleNew />} />
+								</Route>
+								<Route path="/profile">
+									<Route exact path=":idUser" element={<Profile />} />
+									<Route path="rerender/:idUser" element={<ProfileRerender />} />
+								</Route>
+								{/* <Route path="/" element={<NotFound/>}/> */}
+								<Route path="*" element={<NotFound/>} />
 							</Routes>
 						</Col>
 						<Col className="d-none d-md-block">

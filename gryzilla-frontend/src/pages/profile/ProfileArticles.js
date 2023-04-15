@@ -10,14 +10,13 @@ export default function ProfileArticles({idUser}) {
 	});
 
 	const [showMore, setShowMore] = useState(false);
+	const limit = 3;
 
 	return (
 		<>
-			<h2>Moje artykuły</h2>
-
 			{articles &&
 				articles.map((article, index) => {
-					if (showMore === false && index > 1) return;
+					if (showMore === false && index > (limit - 1)) return;
 					return (
 						<ArticlePreview
 							key={article.idArticle}

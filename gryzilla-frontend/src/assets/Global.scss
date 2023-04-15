@@ -11,8 +11,17 @@ html {
 }
 
 a {
-    color: black;
+    color: white;
     text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.nav {
+    --bs-nav-link-hover-color: white !important;
 }
 
 .main-container {

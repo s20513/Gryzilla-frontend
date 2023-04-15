@@ -10,14 +10,13 @@ export default function ProfilePotst({ idUser }) {
 	});
 
 	const [showMore, setShowMore] = useState(false);
+	const limit = 3;
 
 	return (
 		<>
-			<h2>Moje posty</h2>
-
 			{posts &&
 				posts.map((post, index) => {
-					if (showMore === false && index > 1) return;
+					if (showMore === false && index > (limit - 1)) return;
 					return <Post key={post.idPost} postData={post}></Post>;
 				})}
 

@@ -3,7 +3,7 @@ import LikeButton from "./LikeButton";
 export default function DataBar({ id, likes, nick, date }) {
 	return (
 		<div className="data-bar">
-			<LikeButton likesNum={likes} id={id} url={"likesPost"} />
+			{likes && <LikeButton likesNum={likes} id={id} url={"likesPost"} />}
 
 			<div className="d-flex flex-column">
 				<span className="user-nick">{nick}</span>

@@ -145,3 +145,27 @@
     background-color: $upper-data-container-color-hover;
 }
 
+.tabs-style {
+    button {
+        color: white;
+        background-color: red;
+    }
+    // --bs-nav-tabs-border-color: red !important;
+    --bs-nav-tabs-link-active-border-color: transparent;
+
+    .active {
+        color: white !important;
+        background-color: $secondary-color !important;
+        border-color: red;
+    }
+
+    .nav-tabs {
+       border-bottom: 5px !important;
+    }
+
+    .nav-tabs .nav-link{
+        margin-bottom: 0px !important;
+     }
+   
+}
+
