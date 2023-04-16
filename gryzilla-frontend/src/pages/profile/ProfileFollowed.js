@@ -14,17 +14,15 @@ export default function ProfileFollowed({ idUser }) {
 
 	return (
 		<>
-			<div className="d-flex flex-wrap justify-content-between align-items-center">
+			<div className="d-flex flex-wrap">
 				{followed &&
 					followed.map((followedUser, index) => {
 						return (
-
-								<ProfileFollow
-									key={followedUser.idUser}
-									idUser={followedUser.idUser}
-									nick={followedUser.nick}
-								/>
-
+							<ProfileFollow
+								key={followedUser.idUser}
+								idUser={followedUser.idUser}
+								nick={followedUser.nick}
+							/>
 						);
 					})}
 			</div>

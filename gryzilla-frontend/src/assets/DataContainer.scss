@@ -104,10 +104,6 @@
     
 }
 
-.profile-data-container {
-    display: flex;
-}
-
 .flex-profile {
     display: flex;
     flex-direction: row;
@@ -145,6 +141,14 @@
     background-color: $upper-data-container-color-hover;
 }
 
+.profile-data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 220px;
+}
+
 .tabs-style {
     button {
         color: white;
@@ -169,3 +173,8 @@
    
 }
 
+.follow-container {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 2rem;
+}

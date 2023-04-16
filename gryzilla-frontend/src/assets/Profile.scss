@@ -1,11 +1,11 @@
 @import 'Variables';
 
 .profile-img {
-    width: 150px;
-    height: 150px;
+    width: $avatar-size;
+    height: $avatar-size;
     overflow: hidden;
     //border: 5px solid rgb(114, 43, 43);
-    padding: 4px;
     border-radius: 1rem;
+    box-shadow: 0 0 8px 0 rgb(0, 0, 0);
 }
 

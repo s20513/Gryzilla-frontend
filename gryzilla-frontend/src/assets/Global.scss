@@ -169,6 +169,12 @@ a:hover {
     box-shadow: 0px 0px 4px 1px rgb(9, 9, 44);
 }
 
+.likes-box-follow {
+    @extend .likes-box;
+    width: $avatar-size;
+    text-align: center;
+}
+
 .likes-box:hover {
     background-color: rgb(20, 187, 131);
 }
@@ -189,6 +195,47 @@ a:hover {
     background-color: #bfc8da;
     border: 1px solid rgb(166, 166, 173);
     border-radius: 4px;
+}
+
+.off-canvas {
+    color: white;
+    background-color: transparent;
+    overflow-x: scroll;   
+}
+
+.off-canvas::-webkit-scrollbar {
+    display: none;
+}
+
+
+.button-sidebar {
+    font-size: 1.3rem;
+    background-color: $secondary-color;
+    border: none;
+
+    width: 80px;
+    height: 40px !important;
+
+    box-shadow: 0px 0px 8px 2px rgb(1, 7, 22);
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+
+    position: relative;
+    left: -12px;
+    bottom: 40px;
+    height: 45px;
+}
+
+.button-web-link {
+    height: 38px;
+}
+
+.button-web-link-icon {
+    font-size: 1.2rem;
+    position: relative;
+    top: -2px;
 }
 
 

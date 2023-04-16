@@ -9,12 +9,14 @@ import ProfilePotst from "./ProfilePosts";
 import ProfileArticles from "./ProfileArticles";
 import { useParams } from "react-router-dom";
 
-
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import ProfileComments from "./ProfileComments";
 import ProfileFollowed from "./ProfileFollowed";
 import FollowButton from "./components/FollowButton";
+import ProfileAvatar from "./components/ProfileAvatar";
+import ProfileDataTable from "./components/ProfileDataTable";
+import ProfileLinkButtons from "./components/ProfileLinkButtons";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -23,25 +25,11 @@ export default function Profile() {
 	const auth = useAuth();
 	const { idUser } = useParams();
 
-	const [photo, errorPhoto, loadingPhoto] = useAxios({
-		method: "GET",
-		url: `/users/photo/${idUser}`,
-		headers: { accept: "*/*" },
-	});
-
 	const [profile, errorProfile, loadingProfile] = useAxios({
 		method: "GET",
 		url: `/users/${idUser}`,
 		headers: { accept: "*/*" },
 	});
-
-	// useEffect( () => {
-	//     console.log(posts)
-	// },[posts])
-
-	function getBase64Img() {
-		return `data:image/${photo.type};base64,${photo.base64PhotoData}`;
-	}
 
 	return (
 		<>
@@ -52,73 +40,21 @@ export default function Profile() {
 
 				<Container>
 					<Row>
-						<Col>
-							<div className="profile-data-container">
-								{photo && (
-									<img
-										className="profile-img"
-										src={getBase64Img()}
-										//src="https://picsum.photos/250"
-										alt="profile picture"
-									/>
-								)}
-							</div>
+						<Col lg={3} md={12} sm={12}>
+							<Row >
+								<div className="content-container profile-data-container">
+									<ProfileAvatar idUser={idUser} />
+									<FollowButton idUser={idUser} />
+								</div>
+							</Row>
 						</Col>
-						<Col xs={7}>
-							<Container className="content-container content-wrapper">
-								<Row>
-									<Col>
-										<span>Nick:</span>
-									</Col>
-									<Col>{profile && <span>{profile.nick}</span>}</Col>
-								</Row>
-								<Row>
-									<Col>
-										<hr className="hr-line" />
-									</Col>
-								</Row>
-								<Row>
-									<Col>
-										<span>Email:</span>
-									</Col>
-									<Col>{profile && <span>{profile.email}</span>}</Col>
-								</Row>
-								<Row>
-									<Col>
-										<hr className="hr-line" />
-									</Col>
-								</Row>
-								<Row>
-									<Col>
-										<span>Phone:</span>
-									</Col>
-									<Col>{profile && <span>{profile.phoneNumber}</span>}</Col>
-								</Row>
-								<Row>
-									<Col>
-										<hr className="hr-line" />
-									</Col>
-								</Row>
-								<Row>
-									<Col>
-										<span>User since:</span>
-									</Col>
-									<Col>{profile && <span>{profile.createdAt}</span>}</Col>
-								</Row>
-							</Container>
-						</Col>
-						<Col xs={2}>
-							<div className="content-container">
-								{profile && (
-									<div className="flex-items">
-										<Button variant="primary">Steam</Button>
-										<Button variant="primary">Epic</Button>
-										<Button variant="primary">Discord</Button>
-										<Button variant="primary">PlayStation</Button>
-										<FollowButton idUser={idUser}/>
-									</div>
-								)}
-							</div>
+						<Col lg={{ span: 8, offset: 1 }} md={12} sm={12}>
+							<Row>
+								<ProfileDataTable profile={profile} />
+							</Row>
+							<Row>
+								<ProfileLinkButtons />
+							</Row>
 						</Col>
 					</Row>
 				</Container>
@@ -133,21 +69,18 @@ export default function Profile() {
 					justify
 				>
 					<Tab eventKey="comments" title="Opinnie">
-						<ProfileComments idUser={idUser}/>
+						<ProfileComments idUser={idUser} />
 					</Tab>
 					<Tab eventKey="posts" title="Posty">
-						<ProfilePotst idUser={idUser}/>
+						<ProfilePotst idUser={idUser} />
 					</Tab>
 					<Tab eventKey="articles" title="Artykuły">
-						<ProfileArticles idUser={idUser}/>
+						<ProfileArticles idUser={idUser} />
 					</Tab>
 					<Tab eventKey="fallowed" title="Obserwowani">
-						<ProfileFollowed idUser={idUser}/>
+						<ProfileFollowed idUser={idUser} />
 					</Tab>
 				</Tabs>
-				{/* <ProfilePotst idUser={idUser}/>
-				<hr className="hr-line" />
-				<ProfileArticles idUser={idUser}/> */}
 			</Container>
 		</>
 	);

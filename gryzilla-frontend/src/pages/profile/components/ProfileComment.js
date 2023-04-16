@@ -10,6 +10,8 @@ export default function ProfileComment({ idComment, nick, createdAt, content }) 
 				nick={nick}
 				date={DbDateConvert(createdAt)}
 			/>
+			<hr className="hr-line"/>
+			<span dangerouslySetInnerHTML={{ __html: content }}></span>
 		</div>
 	);
 }

@@ -20,6 +20,7 @@ import { RequireAuth } from "./components/RequireAuth";
 import PostDetails from "./pages/postDetails/PostDetails";
 import ArticleNew from "./pages/articleNew/ArticleNew";
 import { NavbarProvider } from "./context/NavbarContext";
+import { ProSidebarProvider } from "react-pro-sidebar";
 import NotFound from "./pages/NotFound";
 import ProfileRerender from "./pages/profile/components/ProfileRerender";
 
@@ -29,37 +30,45 @@ function App() {
 
 	return (
 		<AuthProvider>
-			<NavbarProvider>
-				<NavBar></NavBar>
+			<ProSidebarProvider>
+				<NavbarProvider>
+					<NavBar></NavBar>
 
-				<Container className="main-container">
-					<Row>
-						<Col md={7} lg={8}>
-							<Routes>
-								<Route path="/posts">
-									<Route index element={<Posts />} />
-									{/* <Route path="new" element={<Posts openInput={true} />} /> */}
-									<Route path=":idPost" element={<PostDetails />} />
-								</Route>
-								<Route path="/articles">
-									<Route index element={<Articles />} />
-									<Route path=":idArticle" element={<ArticleDetails />} />
-									<Route path="new" element={<ArticleNew />} />
-								</Route>
-								<Route path="/profile">
-									<Route exact path=":idUser" element={<Profile />} />
-									<Route path="rerender/:idUser" element={<ProfileRerender />} />
-								</Route>
-								{/* <Route path="/" element={<NotFound/>}/> */}
-								<Route path="*" element={<NotFound/>} />
-							</Routes>
-						</Col>
-						<Col className="d-none d-md-block">
-							<RightColumn></RightColumn>
-						</Col>
-					</Row>
-				</Container>
-			</NavbarProvider>
+					<Container className="main-container">
+						<Row>
+							<Col
+								xl={{order: "last"}}
+							>
+								<RightColumn/>
+							</Col>
+
+							<Col xl={8} lg={12}>
+								<Routes>
+									<Route path="/posts">
+										<Route index element={<Posts />} />
+										{/* <Route path="new" element={<Posts openInput={true} />} /> */}
+										<Route path=":idPost" element={<PostDetails />} />
+									</Route>
+									<Route path="/articles">
+										<Route index element={<Articles />} />
+										<Route path=":idArticle" element={<ArticleDetails />} />
+										<Route path="new" element={<ArticleNew />} />
+									</Route>
+									<Route path="/profile">
+										<Route exact path=":idUser" element={<Profile />} />
+										<Route
+											path="rerender/:idUser"
+											element={<ProfileRerender />}
+										/>
+									</Route>
+									{/* <Route path="/" element={<NotFound/>}/> */}
+									<Route path="*" element={<NotFound />} />
+								</Routes>
+							</Col>
+						</Row>
+					</Container>
+				</NavbarProvider>
+			</ProSidebarProvider>
 		</AuthProvider>
 	);
 }

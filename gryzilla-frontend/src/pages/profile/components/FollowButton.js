@@ -53,7 +53,7 @@ export default function FollowButton({ idUser }) {
 	};
 
 	return (
-		<div onClick={()=> handleClick()}className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"}>
+		<div onClick={()=> handleClick()} className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"} style={{width: "150px", textAlign:"center"}}>
 			{!isLiked && <span>Obserwuj</span>}
 			{isLiked && <span>Od obserwuj</span>}
 		</div>
