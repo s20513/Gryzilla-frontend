@@ -18,7 +18,7 @@ export default function ProfileComments({ idUser }) {
 
 	const addNewComment = (newComment) => {
 		setNewComment(newComment);
-		console.log(newComment);
+		setShowInput(false)
 	};
 
 	return (

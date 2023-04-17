@@ -48,11 +48,9 @@ export default function RightColumn() {
 							Some text as placeholder. In real life you can have the elements
 							you have chosen. Like, text, images, lists, etc.
 						</Offcanvas.Body> */}
-						<Button
-							
-							variant="primary"
-							onClick={handleClose}
-						>X</Button>
+						<Button variant="primary" onClick={handleClose}>
+							X
+						</Button>
 
 						<PostHit />
 						<ArticleHit />

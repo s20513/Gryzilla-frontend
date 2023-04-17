@@ -8,6 +8,10 @@ import Post from "../posts/Post";
 import LikeButton from "../../components/LikeButton";
 import { DbDateConvert } from "../../utils/DataUtlis";
 import DataBar from "../../components/DataBarPost";
+import Skeleton from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import LoadingBlock from "../../components/LoadingBlock";
 
 export default function PostHit() {
 	const [posts, errorPosts, loadingPosts] = useAxios({
@@ -19,7 +23,16 @@ export default function PostHit() {
 	return (
 		<Container className="main-panel">
 			<h3>Popularne posty</h3>
+
+			{/* <div className="content-container">
+				<div style={{ height: "32px" }}></div>
+				<hr className="hr-line" />
+				<div style={{ height: "70px" }}></div>
+			</div> */}
+
 			<div className="top-three">
+				{!posts && <LoadingBlock blocksNum={3} topSize="25px" bottomLines={3} hrLine={true}/>}
+
 				{posts &&
 					posts.map((post, index) => {
 						return (
@@ -31,8 +44,11 @@ export default function PostHit() {
 									nick={post.nick}
 									date={DbDateConvert(post.createdAt)}
 								/>
-                                <hr className="hr-line" />
-                                <div className="text-fade-out" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+								<hr className="hr-line" />
+								<div
+									className="text-fade-out"
+									dangerouslySetInnerHTML={{ __html: post.content }}
+								></div>
 							</div>
 						);
 					})}

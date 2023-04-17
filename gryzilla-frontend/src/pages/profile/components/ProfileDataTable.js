@@ -1,4 +1,5 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { DbDateConvert } from "../../../utils/DataUtlis";
 
 export default function ProfileDataTable({profile}) {
 	return (
@@ -40,7 +41,7 @@ export default function ProfileDataTable({profile}) {
 				<Col>
 					<span>User since:</span>
 				</Col>
-				<Col>{profile && <span>{profile.createdAt}</span>}</Col>
+				<Col>{profile && <span>{DbDateConvert(profile.createdAt).date}</span>}</Col>
 			</Row>
 		</Container>
 	);

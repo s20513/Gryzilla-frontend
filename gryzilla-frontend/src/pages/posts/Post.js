@@ -67,7 +67,8 @@ export default function Post(props) {
 			{!displayPostEditor ? (
 				<div className="content-container">
 					<DataBar
-						id={postData.idPost}
+						idUser={postData.idUser}
+						idPost={postData.idPost}
 						likes={postData.likes}
 						nick={postData.nick}
 						date={DbDateConvert(postData.createdAt)}

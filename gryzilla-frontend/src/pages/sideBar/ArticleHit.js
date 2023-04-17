@@ -6,6 +6,7 @@ import useAxios from "../../hooks/useAxios";
 import { Container } from "react-bootstrap";
 import Post from "../posts/Post";
 import { DbDateConvert } from "../../utils/DataUtlis";
+import LoadingBlock from "../../components/LoadingBlock";
 
 export default function ArticleHit() {
 	const [article, errorArticle, loadingArticle] = useAxios({
@@ -18,13 +19,23 @@ export default function ArticleHit() {
 		<Container className="main-panel">
 			<h3>Popularne artykuły</h3>
 			<div className="top-three">
+				{!article && (
+					<LoadingBlock
+						blocksNum={3}
+						topSize="25px"
+						bottomLines={1}
+						hrLine={false}
+					/>
+				)}
 				{article &&
 					article.map((article, index) => {
 						return (
 							<div key={index} className="content-container">
 								<h5 className="mb-0">{article.title}</h5>
 								<span className="article-label">
-									Twórca {article.author.nick}, utworzono {DbDateConvert(article.createdAt).time} {DbDateConvert(article.createdAt).date}
+									Twórca {article.author.nick}, utworzono{" "}
+									{DbDateConvert(article.createdAt).time}{" "}
+									{DbDateConvert(article.createdAt).date}
 								</span>
 							</div>
 						);
