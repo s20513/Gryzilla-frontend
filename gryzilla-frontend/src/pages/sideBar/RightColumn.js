@@ -14,7 +14,7 @@ import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 
 export default function RightColumn() {
 	const { width } = useViewport();
-	const breakpoint = 1200;
+	const breakpoint = 1400;
 
 	const [show, setShow] = useState(false);
 

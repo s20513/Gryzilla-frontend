@@ -8,16 +8,9 @@ import useAxiosFile from "../../../hooks/useAxiosFile";
 
 export default function ProfileAvatar({ idUser }) {
 	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-
-	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
-		setIsFilePicked(true);
-	};
 
 	const [photo, errorPhoto, loadingPhoto] = useAxios({
 		method: "GET",
@@ -27,37 +20,46 @@ export default function ProfileAvatar({ idUser }) {
 
 	const [upload, erro, loading, runRequest] = useAxiosFile();
 
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+	const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+
 	function getBase64Img() {
 		return `data:image/${photo.type};base64,${photo.base64PhotoData}`;
 	}
 
 	const handleSubmit = (event) => {
-		event.preventDefault()
+		event.preventDefault();
 		const formData = new FormData();
 		formData.append("file", selectedFile);
 		runRequest(`/users/photo/${idUser}`, formData);
 	};
 
 	return (
-		<div onClick={() => handleShow()}>
-			{photo ? (
-				<img
-					className="profile-img"
-					src={getBase64Img()}
-					//src="https://picsum.photos/250"
-					alt="profile picture"
-				/>
-			) : (
-				<img
-					className="profile-img"
-					src={defaultAvatar}
-					alt="profile picture"
-				/>
-			)}
-
-			<Modal show={show} onHide={handleClose}>
+		<>
+			<div onClick={handleShow}>
+				{photo ? (
+					<img
+						className="profile-img"
+						src={getBase64Img()}
+						//src="https://picsum.photos/250"
+						alt="profile picture"
+					/>
+				) : (
+					<img
+						className="profile-img"
+						src={defaultAvatar}
+						alt="profile picture"
+					/>
+				)}
+			</div>
+			<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Modal heading</Modal.Title>
+					<Modal.Title>Zamiana zdjęcia profilu</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div>
@@ -71,6 +73,11 @@ export default function ProfileAvatar({ idUser }) {
 									lastModifiedDate:{" "}
 									{selectedFile.lastModifiedDate.toLocaleDateString()}
 								</p>
+								<img
+									className="profile-img"
+									src={URL.createObjectURL(selectedFile)}
+									alt="profile picture"
+								/>
 							</div>
 						) : (
 							<p>Select a file to show details</p>
@@ -89,6 +96,6 @@ export default function ProfileAvatar({ idUser }) {
 					</Button>
 				</Modal.Footer>
 			</Modal>
-		</div>
+		</>
 	);
 }

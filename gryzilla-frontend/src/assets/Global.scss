@@ -46,8 +46,17 @@ a:hover {
     border-radius: 0.8rem;
     border: 1px solid rgb(8, 8, 8);
 
-    padding: 1rem 2rem 1rem; 
-    margin-bottom: 2rem;  
+    padding: 1rem 2rem 1rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 500px) {
+        padding: 0.8rem 0.6rem 0.8rem;
+    }
+}
+
+.main-panel-modal {
+    @extend .main-panel;
+    color: white;
 }
 
 .info-block {
@@ -132,6 +141,7 @@ a:hover {
 
 .data-bar {
     display: flex;
+    align-items: center;
     gap: 10px;
 
     .label {

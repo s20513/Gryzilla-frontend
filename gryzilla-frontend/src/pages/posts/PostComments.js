@@ -31,7 +31,7 @@ export default function PostComments(props) {
 				<div className="comments-vertical-line"></div>
 
 				<div style={{ flexGrow: "1" }}>
-					<div className="m-3">
+					<div className="ms-2 m-md-3">
 						{!displayCommentInput ? (
 							<InputMockup handleClick={() => auth.isLogged ? setDisplayCommentInput(true) : alert("Zaloguj się aby dodawać treści")}>
 								Dodaj nowy komentarz...

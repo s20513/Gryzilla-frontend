@@ -37,12 +37,12 @@ function App() {
 					<Container className="main-container">
 						<Row>
 							<Col
-								xl={{order: "last"}}
+								xxl={{order: "last"}}
 							>
 								<RightColumn/>
 							</Col>
 
-							<Col xl={8} lg={12}>
+							<Col xxl={8} xl={12}>
 								<Routes>
 									<Route path="/posts">
 										<Route index element={<Posts />} />

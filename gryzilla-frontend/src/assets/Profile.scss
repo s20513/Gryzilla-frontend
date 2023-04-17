@@ -9,3 +9,26 @@
     box-shadow: 0 0 8px 0 rgb(0, 0, 0);
 }
 
+.profile-img-mini {
+    @extend .profile-img;
+    width: 36px;
+    height: 36px;
+    border-radius: 0.3rem;
+    margin-top: 2px;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    position: relative;
+    bottom: 0px;
+    padding-left: 4px;
+}
+
+.profile-button-nick {
+    padding-left: 0.5rem;
+    font-size: 1.17rem;
+    padding: 0 0.1rem;
+    // position: relative; 
+    // bottom: 0px;
+}

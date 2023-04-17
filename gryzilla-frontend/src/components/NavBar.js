@@ -6,6 +6,7 @@ import {
 	Container,
 	Form,
 	Button,
+	DropdownButton,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import gryzillaLogo from "../assets/logo.png";
@@ -13,6 +14,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../context/AuthContext";
 import { useNavbar } from "../context/NavbarContext";
+import useAxios from "../hooks/useAxios";
+import AvatarMini from "./AvatarMini";
+import { Dropdown } from "react-bootstrap";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
@@ -39,15 +43,10 @@ export default function NavBar() {
 						/>
 					</Navbar.Brand>
 
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse id="basic-navbar-nav">
-						<Nav
-							className="me-auto my-2 my-lg-0"
-							style={{ maxHeight: "100px" }}
-						>
-							{/* <Nav.Link as={Link} to="/posts">
-								Posty
-							</Nav.Link> */}
+					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
+					<Navbar.Collapse id="responsive-navbar-nav">
+						<Nav className="me-auto">
 							<NavDropdown title="Posty" id="basic2">
 								<NavDropdown.Item as={Link} to="/posts">
 									Główna
@@ -76,43 +75,54 @@ export default function NavBar() {
 								Grupy
 							</Nav.Link>
 						</Nav>
-						<Nav className="d-flex">
-							<Form className="d-flex">
-								<Form.Control
-									type="search"
-									placeholder="Search"
-									className="me-2"
-									aria-label="Search"
-								/>
-								<Button variant="outline-success">Search</Button>
-							</Form>
+						<Form className="d-flex ">
+							<Form.Control
+								type="search"
+								placeholder="Search"
+								aria-label="Search"
+							/>
+							<Button variant="outline-success" className="ms-1">Search</Button>
+						</Form>
+						<Nav>
 							{/* <AiOutlineUser/> */}
 							{!auth.isLogged && (
-								<Button variant="primary" onClick={() => setModalShow(true)}>
-									Login
-								</Button>
+								<Nav.Link onClick={() => setModalShow(true)}>
+										Zaloguj się
+								</Nav.Link>
 							)}
 
 							{auth.isLogged && (
-								// <Button variant="primary" onClick={() => auth.logout()}>
-								// 	Wyloguj się
-								// </Button>
-								<div className="d-flex align-items-center">
-									
-									<NavDropdown align="end" title={<><AiOutlineUser size={25} style={{ color: "white" }} />{auth.nick}{auth.id}</>} id="basic">
-										
-										<NavDropdown.Item as={Link} to={`/profile/rerender/${auth.id}`}>
-											Mój profil
-										</NavDropdown.Item>
-										<NavDropdown.Item href="#action/3.2">
-											....
-										</NavDropdown.Item>
-										<NavDropdown.Divider />
-										<NavDropdown.Item onClick={()=> {auth.logout()}}>
-											Wyloguj się
-										</NavDropdown.Item>
-									</NavDropdown>
-									
+								<div className="d-flex ms-2 flex">
+									<AvatarMini idUser={auth.id} />
+
+									<Dropdown>
+										<Dropdown.Toggle
+											className="profile-button ms-1"
+											variant="success"
+											id="dropdown-basic"
+										>
+											<span className="profile-button-nick">{auth.nick}</span>
+										</Dropdown.Toggle>
+
+										<Dropdown.Menu>
+											<Dropdown.Item
+												as={Link}
+												to={`/profile/rerender/${auth.id}`}
+											>
+												Mój profil
+											</Dropdown.Item>
+
+											<Dropdown.Divider />
+
+											<Dropdown.Item
+												onClick={() => {
+													auth.logout();
+												}}
+											>
+												Wyloguj się
+											</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
 								</div>
 							)}
 						</Nav>
