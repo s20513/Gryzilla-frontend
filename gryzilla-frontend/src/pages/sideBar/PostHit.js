@@ -39,7 +39,8 @@ export default function PostHit() {
 							<div key={index} className="content-container content-wrapper">
 								{/* <span className="likes-count">+{post.likes} </span> */}
 								<DataBar
-									id={post.idPost}
+									
+									idPost={post.idPost}
 									likes={post.likes}
 									nick={post.nick}
 									date={DbDateConvert(post.createdAt)}

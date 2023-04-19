@@ -97,7 +97,8 @@ export default function NavBar() {
 
 									<Dropdown>
 										<Dropdown.Toggle
-											className="profile-button ms-1"
+											className="profile-button
+											 ms-1"
 											variant="success"
 											id="dropdown-basic"
 										>

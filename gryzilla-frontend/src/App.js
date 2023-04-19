@@ -26,7 +26,8 @@ import ProfileRerender from "./pages/profile/components/ProfileRerender";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
-	//axios.defaults.baseURL = '';
+	//axios.defaults.baseURL = 'http://89.68.200.216:7056/api';
+	//axios.defaults.baseURL = 'https://localhost:5001/api';
 
 	return (
 		<AuthProvider>
@@ -46,7 +47,6 @@ function App() {
 								<Routes>
 									<Route path="/posts">
 										<Route index element={<Posts />} />
-										{/* <Route path="new" element={<Posts openInput={true} />} /> */}
 										<Route path=":idPost" element={<PostDetails />} />
 									</Route>
 									<Route path="/articles">
@@ -61,7 +61,6 @@ function App() {
 											element={<ProfileRerender />}
 										/>
 									</Route>
-									{/* <Route path="/" element={<NotFound/>}/> */}
 									<Route path="*" element={<NotFound />} />
 								</Routes>
 							</Col>
