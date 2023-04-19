@@ -2,7 +2,7 @@ import defaultAvatar from "../../../assets/avatar-default.png";
 import useAxios from "../../../hooks/useAxios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import useAxiosFile from "../../../hooks/useAxiosFile";
 
@@ -38,6 +38,11 @@ export default function ProfileAvatar({ idUser }) {
 		formData.append("file", selectedFile);
 		runRequest(`/users/photo/${idUser}`, formData);
 	};
+	
+	useEffect(()=>{
+		if(upload == null) return;
+		handleClose();
+	},[upload])
 
 	return (
 		<>
@@ -82,9 +87,9 @@ export default function ProfileAvatar({ idUser }) {
 						) : (
 							<p>Select a file to show details</p>
 						)}
-						<div>
+						{/* <div>
 							<button onClick={handleSubmit}>Submit</button>
-						</div>
+						</div> */}
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
