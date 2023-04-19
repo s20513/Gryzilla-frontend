@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Gryzilla-frontend/static/css/main.817f8d62.css",
+    "main.js": "/Gryzilla-frontend/static/js/main.314d114a.js",
+    "static/js/787.40a45510.chunk.js": "/Gryzilla-frontend/static/js/787.40a45510.chunk.js",
+    "index.html": "/Gryzilla-frontend/index.html",
+    "main.817f8d62.css.map": "/Gryzilla-frontend/static/css/main.817f8d62.css.map",
+    "main.314d114a.js.map": "/Gryzilla-frontend/static/js/main.314d114a.js.map",
+    "787.40a45510.chunk.js.map": "/Gryzilla-frontend/static/js/787.40a45510.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.817f8d62.css",
+    "static/js/main.314d114a.js"
+  ]
+}
