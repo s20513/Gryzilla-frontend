@@ -33,7 +33,7 @@ export default function MyVerticallyCenteredModal(props) {
 		event.preventDefault();
 		runRequest({
 			data: {
-				nick: "string",
+				nick: "TestModerator",
 				password: "string",
 			},
 		});

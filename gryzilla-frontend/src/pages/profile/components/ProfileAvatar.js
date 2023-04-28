@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import useAxiosFile from "../../../hooks/useAxiosFile";
+import { Form } from "react-bootstrap";
 
 export default function ProfileAvatar({ idUser }) {
 	const [show, setShow] = useState(false);
@@ -20,7 +21,11 @@ export default function ProfileAvatar({ idUser }) {
 
 	const [upload, erro, loading, runRequest] = useAxiosFile();
 
-	const handleClose = () => setShow(false);
+	const handleClose = () => {
+		setShow(false);
+		setIsFilePicked(false);
+		//setSelectedFile(null);
+	};
 	const handleShow = () => setShow(true);
 
 	const changeHandler = (event) => {
@@ -33,16 +38,17 @@ export default function ProfileAvatar({ idUser }) {
 	}
 
 	const handleSubmit = (event) => {
+		if (!selectedFile) handleClose();
 		event.preventDefault();
 		const formData = new FormData();
 		formData.append("file", selectedFile);
 		runRequest(`/users/photo/${idUser}`, formData);
 	};
-	
-	useEffect(()=>{
-		if(upload == null) return;
+
+	useEffect(() => {
+		if (upload == null) return;
 		handleClose();
-	},[upload])
+	}, [upload]);
 
 	return (
 		<>
@@ -62,22 +68,40 @@ export default function ProfileAvatar({ idUser }) {
 					/>
 				)}
 			</div>
-			<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
+			<Modal
+				contentClassName="main-panel-modal"
+				show={show}
+				onHide={handleClose}
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>Zamiana zdjęcia profilu</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<div>
-						<input type="file" name="file" onChange={changeHandler} />
+					<div className="d-flex flex-center flex-column">
+						<input
+							type="file"
+							id="file"
+							name="file"
+							onChange={changeHandler}
+							style={{ display: "none" }}
+						/>
+						<label for="file" className="button-web-link btn btn-primary">
+							{!isFilePicked ? "Wybierz obraz" : "Wybierz inny obraz"}
+						</label>
+
 						{isFilePicked ? (
-							<div>
-								<p>Filename: {selectedFile.name}</p>
-								<p>Filetype: {selectedFile.type}</p>
-								<p>Size in bytes: {selectedFile.size}</p>
-								<p>
+							<div className="d-flex justify-content-between align-items-center mt-3">
+								<div className="d-flex flex-column">
+									<span>Nazwa: {selectedFile.name}</span>
+									<span>Rozmiar: {selectedFile.size}KB</span>
+								</div>
+
+								{/* <p>Filetype: {selectedFile.type}</p> */}
+
+								{/* <p>
 									lastModifiedDate:{" "}
 									{selectedFile.lastModifiedDate.toLocaleDateString()}
-								</p>
+								</p> */}
 								<img
 									className="profile-img"
 									src={URL.createObjectURL(selectedFile)}
@@ -85,20 +109,24 @@ export default function ProfileAvatar({ idUser }) {
 								/>
 							</div>
 						) : (
-							<p>Select a file to show details</p>
+							<Form.Text className="text-muted">
+								Wybierz plik aby wyświetlić szczegóły
+							</Form.Text>
 						)}
 						{/* <div>
 							<button onClick={handleSubmit}>Submit</button>
 						</div> */}
 					</div>
 				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handleSubmit}>
-						Save Changes
-					</Button>
+				<Modal.Footer className="d-flex justify-content-center">
+					
+						<Button variant="secondary" onClick={handleClose}>
+							Zamknij
+						</Button>
+						<Button variant="primary" onClick={handleSubmit}>
+							Zapisz zmiany
+						</Button>
+					
 				</Modal.Footer>
 			</Modal>
 		</>

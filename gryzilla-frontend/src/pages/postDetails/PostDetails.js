@@ -9,7 +9,7 @@ export default function PostDetails() {
 
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
-		url: `${params.idPost}`,
+		url: `/posts/${params.idPost}`,
 		headers: { accept: "*/*" },
 	});
 

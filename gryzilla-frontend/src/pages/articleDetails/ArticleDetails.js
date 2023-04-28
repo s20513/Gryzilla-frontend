@@ -9,7 +9,7 @@ export default function ArticleDetails() {
 
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
-		url: `${params.idArticle}`,
+		url: `/articles/${params.idArticle}`,
 		headers: { accept: "*/*" },
 	});
 

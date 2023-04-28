@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { SortUp } from "react-bootstrap-icons";
 
 export const useAxios = (axiosParams) => {
 	const [response, setResponse] = useState(null);
@@ -19,14 +20,22 @@ export const useAxios = (axiosParams) => {
 	};
 
 	useEffect(() => {
-		if (axiosParams.executeOnRender && axiosParams.executeOnRender == false)
-		  return;
+
+		console.log(axiosParams)
+
+		if (axiosParams.executeOnRender == false) {
+			console.log("czekaj")
+			return;
+		}
+
 		if (axiosParams.method == "GET") {
 			runRequest(axiosParams);
 		}
+
 	}, []); // execute once only request is GET
 
 	const runRequest = (data) => {
+		console.log(data)
 		fetchData(Object.assign(axiosParams, data));
 	};
 

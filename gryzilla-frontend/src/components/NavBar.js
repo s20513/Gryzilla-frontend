@@ -113,6 +113,13 @@ export default function NavBar() {
 												Mój profil
 											</Dropdown.Item>
 
+											<Dropdown.Item
+												as={Link}
+												to={`/adminPanel`}
+											>
+												Panel zarządzania
+											</Dropdown.Item>
+
 											<Dropdown.Divider />
 
 											<Dropdown.Item

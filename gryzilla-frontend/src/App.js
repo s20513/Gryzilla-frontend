@@ -23,6 +23,7 @@ import { NavbarProvider } from "./context/NavbarContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import NotFound from "./pages/NotFound";
 import ProfileRerender from "./pages/profile/components/ProfileRerender";
+import AdminPanel from "./pages/adminPanel/AdminPanel";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -61,6 +62,7 @@ function App() {
 											element={<ProfileRerender />}
 										/>
 									</Route>
+									<Route path="/adminPanel" element={<AdminPanel/>}/>
 									<Route path="*" element={<NotFound />} />
 								</Routes>
 							</Col>

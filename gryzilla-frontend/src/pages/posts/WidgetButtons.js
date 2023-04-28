@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../utils/DataUtlis";
 import { Dropdown } from "react-bootstrap";
+import ReportModal from "../../components/ReportModal";
 
 export default function WidgetButtons({
 	handleComments,
@@ -54,7 +55,7 @@ export default function WidgetButtons({
 
 					<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
 
-					<Dropdown.Item>Zgłoś</Dropdown.Item>
+					<Dropdown.Item><ReportModal url="/reportPost" reportedContentId={{idPost: idPost}} /></Dropdown.Item>
 
 					<Dropdown.Item>Info: Id-{idPost}</Dropdown.Item>
 				</Dropdown.Menu>
