@@ -11,9 +11,8 @@ export default function ReportModal({ url, reportedContentId }) {
 	const [idReason, setIdReason] = useState();
 	const [reportComment, setReportComment] = useState();
 
-    const[errorIdReason, setErrorIdReason] = useState();
-    const[errorReportComment, setErrirReportComment] = useState();
-
+	const [errorIdReason, setErrorIdReason] = useState();
+	const [errorReportComment, setErrirReportComment] = useState();
 
 	const auth = useAuth();
 
@@ -30,15 +29,16 @@ export default function ReportModal({ url, reportedContentId }) {
 		headers: { accept: "*/*" },
 	});
 
-    useEffect(()=>{
-        console.log("poszło")
-    },[reasonsPost])
+	useEffect(() => {
+		if (!reasonsPost) return;
+		setShow(false);
+	}, [reasonsPost]);
 
 	const handleClose = () => {
-        setIdReason(null);
-        setReportComment(null);
-        setErrirReportComment(null);
-        setErrorIdReason(null);
+		setIdReason(null);
+		setReportComment(null);
+		setErrirReportComment(null);
+		setErrorIdReason(null);
 
 		setShow(false);
 	};
@@ -49,30 +49,30 @@ export default function ReportModal({ url, reportedContentId }) {
 	};
 
 	const handleSubmit = () => {
-		console.log(reportComment + " " + idReason);
+		//console.log(reportComment + " " + idReason);
 
-        if(!idReason){
-            setErrorIdReason("wybierz powod zgloszenia");
-            return;
-        } else {
-            setErrorIdReason("")
-        }
+		if (!idReason) {
+			setErrorIdReason("wybierz powod zgloszenia");
+			return;
+		} else {
+			setErrorIdReason("");
+		}
 
-        if(!reportComment){
-            setErrirReportComment("Napisz komentarz do zgloszenia")
-            return;
-        } else {
-            setErrirReportComment("")
-        }
+		if (!reportComment) {
+			setErrirReportComment("Napisz komentarz do zgloszenia");
+			return;
+		} else {
+			setErrirReportComment("");
+		}
 
-        runRequestPost({
-            data: {
-                idUser: auth.id,
-                idReason: idReason,
-                content: reportComment,
-                ...reportedContentId
-            }
-        })
+		runRequestPost({
+			data: {
+				idUser: auth.id,
+				idReason: idReason,
+				content: reportComment,
+				...reportedContentId,
+			},
+		});
 	};
 
 	return (
@@ -111,19 +111,17 @@ export default function ReportModal({ url, reportedContentId }) {
 												);
 											})}
 									</Form.Select>
-									<Form.Text className="text-muted">
-										{errorIdReason}
-									</Form.Text>
+									<Form.Text className="text-muted">{errorIdReason}</Form.Text>
 								</Form.Group>
+
 								<Form.Group
 									className="mb-3"
-									controlId="exampleForm.ControlTextarea1"
+									controlId=""
 								>
 									<Form.Label>Komentarz do zgłoszenia</Form.Label>
 									<Form.Control
 										as="textarea"
-										rows={3}
-										onChange={(event) => setReportComment(event.target.value)}
+										rows={3}				 						
 									/>
                                     <Form.Text className="text-muted">
 										{errorReportComment}

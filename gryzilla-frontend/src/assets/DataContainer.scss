@@ -9,7 +9,12 @@
     border-radius: 0.6rem;
     //overflow: hidden;
     padding: 0.6rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+.content-container-highlight {
+    border: 2px solid rgb(134, 28, 28);
+    background-color: $upper-data-container-color-highlight;
 }
 
 .hr-line {

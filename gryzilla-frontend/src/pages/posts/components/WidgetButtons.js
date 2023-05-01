@@ -3,14 +3,14 @@ import { BsFillChatLeftTextFill } from "react-icons/bs";
 import { BiText } from "react-icons/bi";
 import { AiFillWarning } from "react-icons/ai";
 
-import PostComments from "./PostComments";
-import DataBar from "../../components/DataBarPost";
-import ContentInput from "../../components/Editor/ContentInput";
+import PostComments from "../PostComments";
+import DataBar from "../../../components/DataBarPost";
+import ContentInput from "../../../components/Editor/ContentInput";
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import { DbDateConvert } from "../../utils/DataUtlis";
+import { DbDateConvert } from "../../../utils/DataUtlis";
 import { Dropdown } from "react-bootstrap";
-import ReportModal from "../../components/ReportModal";
+import ReportModal from "../../../components/ReportModal";
 
 export default function WidgetButtons({
 	handleComments,

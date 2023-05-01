@@ -6,6 +6,7 @@ import LikeButton from "../../components/LikeButton";
 
 export default function ArticleDetails() {
 	const params = useParams();
+	const idCommentHighlight = params.idComment ? params.idComment : null;
 
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
@@ -44,7 +45,7 @@ export default function ArticleDetails() {
 
 			<h3>Komentarze</h3>
 
-			<ArticleComments data={data} />
+			<ArticleComments data={data} idHighlight={idCommentHighlight} />
 		</Container>
 	);
 }

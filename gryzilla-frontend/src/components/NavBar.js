@@ -93,7 +93,7 @@ export default function NavBar() {
 
 							{auth.isLogged && (
 								<div className="d-flex ms-2 flex">
-									<AvatarMini idUser={auth.id} />
+									{/* <AvatarMini idUser={auth.id} /> */}
 
 									<Dropdown>
 										<Dropdown.Toggle

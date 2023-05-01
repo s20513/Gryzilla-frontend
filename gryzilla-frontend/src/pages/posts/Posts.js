@@ -12,6 +12,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 import { useNavbar } from "../../context/NavbarContext";
 import { useAuth } from "../../context/AuthContext";
+import PostAndComments from "./PostAndComments";
 
 
 export default function Posts(props) {
@@ -84,7 +85,8 @@ export default function Posts(props) {
 
 			{posts &&
 				posts.map((post) => {
-					return <Post key={post.idPost} postData={post}></Post>;
+					//return <Post key={post.idPost} postData={post}></Post>;
+					return <PostAndComments key={post.idPost} postData={post}/>
 				})}
 
 			{!loading && <div ref={lastPostRef}></div>}

@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Post from "../posts/Post";
 import { useEffect } from "react";
+import PostComments from "../posts/PostComments";
 
 export default function PostDetails() {
 	const params = useParams();
+	const idCommentHighlight = params.idComment ? params.idComment : null;
 
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
@@ -15,15 +17,21 @@ export default function PostDetails() {
 
 	return (
 		<Container className="main-panel">
-			<h3>Post</h3>
+			<div className="content-wrapper">
+				<h3>Post</h3>
 
-			{data && 
-				<Post postData={data} displayComments={true} detailsLink={false}></Post>
-			}
+				{data && (
+					<Post
+						postData={data}
+						displayComments={true}
+						detailsLink={false}
+					></Post>
+				)}
 
-			{/* <h3>Komentarze</h3> */}
-
-			{/* <ArticleComments data={data} /> */}
+				{data && (
+					<PostComments idPost={data.idPost} idHighlight={idCommentHighlight} />
+				)}
+			</div>
 		</Container>
 	);
 }

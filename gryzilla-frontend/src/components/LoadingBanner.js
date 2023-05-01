@@ -20,7 +20,7 @@ export default function LoadingBanner(props) {
 
             {error && 
                 <div className="error-loading">
-                    {error}
+                    {error.message}
                 </div>}
         </>
     );

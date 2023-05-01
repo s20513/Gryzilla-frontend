@@ -39,11 +39,11 @@ export default function PostHit() {
 							<div key={index} className="content-container content-wrapper">
 								{/* <span className="likes-count">+{post.likes} </span> */}
 								<DataBar
-									
 									idPost={post.idPost}
 									likes={post.likes}
 									nick={post.nick}
 									date={DbDateConvert(post.createdAt)}
+									avatar={{type: post.type, base64PhotoData: post.base64PhotoData}}
 								/>
 								<hr className="hr-line" />
 								<div

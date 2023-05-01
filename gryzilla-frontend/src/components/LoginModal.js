@@ -8,6 +8,8 @@ import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import useAxios from "../hooks/useAxios";
 import { useAuth } from "../context/AuthContext";
+import LoadingBanner from "./LoadingBanner";
+import ErrorBanner from "./ErrorBanner";
 
 export default function MyVerticallyCenteredModal(props) {
 	const cookies = new Cookies();
@@ -33,8 +35,8 @@ export default function MyVerticallyCenteredModal(props) {
 		event.preventDefault();
 		runRequest({
 			data: {
-				nick: "TestModerator",
-				password: "string",
+				nick: nick,
+				password: password,
 			},
 		});
 	};
@@ -54,7 +56,7 @@ export default function MyVerticallyCenteredModal(props) {
 			</Modal.Header>
 
 			<Modal.Body>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<Form.Group className="mb-3" controlId="formBasicEmail">
 						<Form.Label>Nick</Form.Label>
 						<Form.Control
@@ -103,9 +105,9 @@ export default function MyVerticallyCenteredModal(props) {
 						<Form.Check type="checkbox" label="Zapamiętaj dane logowania" />
 					</Form.Group>
 
-					<Button variant="primary" type="submit">
-						{/* {loginPanel ? "Zaloguj się" : "Wyślij"} */} zaloguj sie
-					</Button>
+					{/* <Button variant="primary" type="submit">
+						{loginPanel ? "Zaloguj się" : "Wyślij"} zaloguj sie
+					</Button> */}
 					{/* <br />
 					<p1
 						style={{ textAlign: "center;" }}
@@ -113,13 +115,18 @@ export default function MyVerticallyCenteredModal(props) {
 					>
 						{loginPanel ? "Załóż nowe konto" : "Zaloguj się"}
 					</p1> */}
-					{loading && <div className="loading-block">Logowanie...</div>}
+					<LoadingBanner placeHolder={"logowanie"} loading={loading}/>
+					{error && <ErrorBanner placeholder={"Zły login lub hasło"}/>}
 				</Form>
 			</Modal.Body>
-			{/* 
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer> */}
+			<Modal.Footer className="d-flex justify-content-center">
+				<Button variant="secondary" onClick={()=>props.onHide()}>
+					Zamknij
+				</Button>
+				<Button variant="primary" onClick={handleSubmit}>
+					Zaloguj się
+				</Button>
+			</Modal.Footer>
 		</Modal>
 	);
 }

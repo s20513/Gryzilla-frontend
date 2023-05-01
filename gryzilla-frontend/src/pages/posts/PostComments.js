@@ -57,6 +57,7 @@ export default function PostComments(props) {
 									key={comment.idComment}
 									nick={comment.nick}
 									description={comment.content}
+									highlight={comment.idComment == props.idHighlight ? true : false}
 								/>
 							))}
 

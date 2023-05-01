@@ -49,10 +49,12 @@ function App() {
 									<Route path="/posts">
 										<Route index element={<Posts />} />
 										<Route path=":idPost" element={<PostDetails />} />
+										<Route path=":idPost/:idComment" element={<PostDetails />} />
 									</Route>
 									<Route path="/articles">
 										<Route index element={<Articles />} />
 										<Route path=":idArticle" element={<ArticleDetails />} />
+										<Route path=":idArticle/:idComment" element={<ArticleDetails />} />
 										<Route path="new" element={<ArticleNew />} />
 									</Route>
 									<Route path="/profile">

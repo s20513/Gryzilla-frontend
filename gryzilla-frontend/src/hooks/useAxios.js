@@ -20,11 +20,7 @@ export const useAxios = (axiosParams) => {
 	};
 
 	useEffect(() => {
-
-		console.log(axiosParams)
-
 		if (axiosParams.executeOnRender == false) {
-			console.log("czekaj")
 			return;
 		}
 
@@ -35,7 +31,6 @@ export const useAxios = (axiosParams) => {
 	}, []); // execute once only request is GET
 
 	const runRequest = (data) => {
-		console.log(data)
 		fetchData(Object.assign(axiosParams, data));
 	};
 

@@ -1,22 +1,25 @@
 import useAxios from "../hooks/useAxios";
 import { GetBase64Img } from "../utils/PictureUtils";
 import defaultAvatar from "../assets/avatar-default.png";
+import { useState } from "react";
 
-export default function AvatarMini({idUser}) {
+export default function AvatarMini({avatar}) {
 
-    const [photo, errorPhoto, loadingPhoto] = useAxios({
-		method: "GET",
-		url: `/users/photo/${idUser}`,
-		headers: { accept: "*/*" },
-	});
-
+	const [useAvatar, setUseAvatar] = useState(()=>{
+		if(avatar.type != null && avatar.base64PhotoData != null){
+			console.log(false);
+			return true;
+		}
+		console.log(true)
+		return false;
+	})
 
     return (
         <div style={{display:"inline-block"}}>
-				{photo ? (
+				{useAvatar ? (
 					<img
 						className="profile-img-mini"
-						src={GetBase64Img(photo)}
+						src={GetBase64Img(avatar)}
 						//src="https://picsum.photos/250"
 						alt="profile picture"
 					/>

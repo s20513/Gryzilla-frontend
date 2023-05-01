@@ -9,18 +9,18 @@ import ContentInput from "../../components/Editor/ContentInput";
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../utils/DataUtlis";
-import WidgetButtons from "./WidgetButtons";
+import WidgetButtons from "./components/WidgetButtons";
 import useAxios from "../../hooks/useAxios";
 
-export default function Post(props) {
-	const postData = props.postData;
+export default function Post({postData, detailsLink, toggleComments}) {
+	//const postData = postData;
 
-	const detailsLink =
-		props.detailsLink || props.detailsLink == false ? false : true;
+	const detailsLink2 =
+		detailsLink || detailsLink == false ? false : true;
 
-	const [displayComments, setDisplayComments] = useState(() =>
-		props.displayComments ? true : false
-	);
+	// const [displayComments, setDisplayComments] = useState(() =>
+	// 	props.displayComments ? true : false
+	// );
 
 	const [displayPostEditor, setDisplayPostEditor] = useState(false);
 
@@ -37,11 +37,6 @@ export default function Post(props) {
 		if(data == null) return;
 		setDeletedPost(true);
 	},[data])
-
-	const changeDisplayComments = () => {
-		// if(postData.comments > 0)
-		setDisplayComments(!displayComments);
-	};
 
 	const changeDisplayEditor = () => {
 		setDisplayPostEditor(!displayPostEditor);
@@ -63,7 +58,7 @@ export default function Post(props) {
 		return <div className="content-container" style={{color:"red"}}>Post został usunięty</div>
 
 	return (
-		<div className="content-wrapper">
+		<>
 			{!displayPostEditor ? (
 				<div className="content-container">
 					<DataBar
@@ -72,6 +67,7 @@ export default function Post(props) {
 						likes={postData.likes}
 						nick={postData.nick}
 						date={DbDateConvert(postData.createdAt)}
+						avatar={{type: postData.type, base64PhotoData: postData.base64PhotoData}}
 					/>
 					<hr className="hr-line" />
 					{!deletedPost && <span dangerouslySetInnerHTML={{ __html: postData.content }}></span>}
@@ -82,12 +78,12 @@ export default function Post(props) {
 						))}
 					</div>
 					<WidgetButtons
-						handleComments={changeDisplayComments}
+						handleComments={toggleComments}
 						handleEdit={changeDisplayEditor}
 						handleDelete={deleteContent}
 						commentsNumber={postData.commentsNumber}
 						idPost={postData.idPost}
-						showDetailsButton={detailsLink}
+						showDetailsButton={detailsLink2}
 					/>
 				</div>
 			) : (
@@ -102,8 +98,6 @@ export default function Post(props) {
 					handleClose={changeDisplayEditor}
 				/>
 			)}
-
-			{displayComments && <PostComments idPost={postData.idPost} />}
-		</div>
+		</>
 	);
 }
