@@ -71,9 +71,14 @@ export default function NavBar() {
 								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
 							</NavDropdown>
 
-							<Nav.Link as={Link} to="/groups">
-								Grupy
-							</Nav.Link>
+							<NavDropdown title="Grupy" id="basic">
+								<NavDropdown.Item as={Link} to="/groups">
+									Główna
+								</NavDropdown.Item>
+								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
+								<NavDropdown.Divider />
+								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
+							</NavDropdown>
 						</Nav>
 						<Form className="d-flex ">
 							<Form.Control

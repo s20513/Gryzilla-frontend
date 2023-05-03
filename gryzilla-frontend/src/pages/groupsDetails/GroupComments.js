@@ -2,17 +2,18 @@ import { useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import { useAuth } from "../../context/AuthContext";
 import ContentInput from "../../components/Editor/ContentInput";
-import ProfileComment from "./components/ProfileComment";
 import useAxios from "../../hooks/useAxios";
+import Comment from "../../components/Comment";
 
-export default function ProfileComments({ idUser }) {
+export default function GroupComments({ idGroup }) {
 	const auth = useAuth();
+
 	const [showInput, setShowInput] = useState(false);
 	const [newComment, setNewComment] = useState(null);
 
-	const [reviews, error, loading] = useAxios({
+	const [message, error, loading] = useAxios({
 		method: "GET",
-		url: `/profileComments/${idUser}`,
+		url: `/groupsMessage/${idGroup}`,
 		headers: { accept: "*/*" },
 	});
 
@@ -30,17 +31,17 @@ export default function ProfileComments({ idUser }) {
 							? setShowInput(true)
 							: alert("Zaloguj się aby dodawać treści")
 					}
-					placeHolder={"Dodaj nowy komentarz o użytkowniku..."}
+					placeHolder={"Dodaj nową wiadomość na grupie..."}
 				/>
 			) : (
 				<ContentInput
 					addNew={addNewComment}
-					url={`/profileComments`}
+					url={`/groupsMessage`}
 					method={"POST"}
-					apiData={{ idUserComment: idUser }}
+					apiData={{ idGroup: idGroup }}
 					enableTags={false}
 					enableTitle={false}
-					placeHolder={"Wprowadz komentarz o użytkowniku..."}
+					placeHolder={"Wprowadz nową wiadomość..."}
 					handleClose={() => setShowInput(false)}
 				/>
 			)}
@@ -54,17 +55,18 @@ export default function ProfileComments({ idUser }) {
 				</div>
 			)}
 
-			{reviews &&
-				reviews.map((review) => {
+			{message &&
+				message.map((msg) => {
 					return (
-						<ProfileComment
-							key={review.idProfileComment}
-							idComment={review.idProfileComment}
-							nick={review.nick}
-							createdAt={review.createdAt}
-							content={review.content}
-							avatar={{type: review.type, base64PhotoData: review.base64PhotoData}}
-						/>
+						// <ProfileComment
+						// 	key={review.idProfileComment}
+						// 	idComment={review.idProfileComment}
+						// 	nick={review.nick}
+						// 	createdAt={review.createdAt}
+						// 	content={review.content}
+						// 	avatar={{type: review.type, base64PhotoData: review.base64PhotoData}}
+						// />
+                        <Comment nick={msg.nick} description={msg.content} />
 					);
 				})}
 		</>

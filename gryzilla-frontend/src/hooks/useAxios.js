@@ -20,15 +20,10 @@ export const useAxios = (axiosParams) => {
 	};
 
 	useEffect(() => {
-		if (axiosParams.executeOnRender == false) {
-			return;
-		}
-
-		if (axiosParams.method == "GET") {
-			runRequest(axiosParams);
-		}
-
+		if (axiosParams.executeOnRender == false) return;
+		if (axiosParams.method == "GET") runRequest(axiosParams);
 	}, []); // execute once only request is GET
+
 
 	const runRequest = (data) => {
 		fetchData(Object.assign(axiosParams, data));

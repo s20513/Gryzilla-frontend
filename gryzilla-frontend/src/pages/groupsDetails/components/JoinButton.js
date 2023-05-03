@@ -3,10 +3,10 @@ import useAxios from "../../../hooks/useAxios";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function FollowButton({ idUser }) {
+export default function JoinButton({ idGroup }) {
 	const auth = useAuth();
 
-	const [isLiked, setIsLiked] = useState(false);
+	const [isJoin, setIsJoin] = useState(false);
 
 	const [data, error, loading, runRequest] = useAxios({
 		method: "GET",
@@ -14,21 +14,15 @@ export default function FollowButton({ idUser }) {
 		executeOnRender: false,
 	});
 
-	useEffect(() => {
+    useEffect(() => {
 		if (!auth.isLogged) return;
-		runRequest({ url: `/friends/${auth.id}/` });
+		runRequest({ url: `/groups/${auth.id}/${idGroup}` });
 	}, [auth.isLogged]);
 
 	useEffect(() => {
 		if (!data) return;
-		data.map((fallowed) => {
-			if (fallowed.idUser == idUser) {
-				//console.log("liked");
-				setIsLiked(true);
-			}
-		});
+        setIsJoin(data.member);
 	}, [data]);
-
 
 	const handleClick = async () => {
 		if (!auth.isLogged) {
@@ -37,26 +31,30 @@ export default function FollowButton({ idUser }) {
 		}
 
 		try {
-			const method = isLiked ? "DELETE" : "POST";
+			const method = isJoin ? "DELETE" : "POST";
 			const result = await axios.request({
 				method: method,
-				url: `/friends/${auth.id}/${idUser}`,
+				url: `/groups/user/${idGroup}`,
 				headers: { accept: "*/*" },
+                data: {
+                    idGroup: idGroup,
+                    idUser: auth.id
+                }
 			});
 			//setResponse(result.data);
 		} catch (error) {
 			//setError(error);
 		} finally {
-			setIsLiked((prev) => {
+			setIsJoin((prev) => {
 				return !prev;
 			});
 		}
 	};
 
 	return (
-		<div onClick={()=> handleClick()} className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"} style={{width: "150px", textAlign:"center"}}>
-			{!isLiked && <span>Obserwuj</span>}
-			{isLiked && <span>Od obserwuj</span>}
+		<div onClick={()=> handleClick()} className={isJoin && auth.isLogged ? "likes-box-liked" : "likes-box"} style={{width: "150px", textAlign:"center"}}>
+			{!isJoin && <span>Dołącz</span>}
+			{isJoin && <span>Opuść</span>}
 		</div>
 	);
 }

@@ -8,14 +8,14 @@ import useAxiosFile from "../../../hooks/useAxiosFile";
 import { Form } from "react-bootstrap";
 import PhotoModal from "../../../components/PhotoModal";
 
-export default function ProfileAvatar({ idUser }) {
+export default function GroupAvatar({ idGroup }) {
 	
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	
 	const [photo, errorPhoto, loadingPhoto, runRequest] = useAxios({
 		method: "GET",
-		url: `/users/photo/${idUser}`,
+		url: `/groups/photo/${idGroup}`,
 		headers: { accept: "*/*" },
 	});
 
@@ -43,7 +43,7 @@ export default function ProfileAvatar({ idUser }) {
 					/>
 				)}
 			</div>
-			<PhotoModal show={show} setShow={setShow} urlPOST={`/users/photo/${idUser}`} afterSubmit={afterSubmit}/>
+			<PhotoModal show={show} setShow={setShow} urlPOST={`/groups/photo/${idGroup}`} afterSubmit={afterSubmit}/>
 		</>
 	);
 }
