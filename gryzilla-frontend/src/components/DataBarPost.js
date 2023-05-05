@@ -1,10 +1,10 @@
 import AvatarMini from "./AvatarMini";
 import LikeButton from "./LikeButton";
 
-export default function DataBar({ idUser, idPost, likes, nick, date, avatar }) {
+export default function DataBar({ nick, date, avatar }) {
 	return (
 		<div className="data-bar">
-			{ likes != null && <LikeButton likesNum={likes} id={idPost} url={"likesPost"} />}
+			{/* { likes != null && <LikeButton likesNum={likes} id={idPost} url={"likesPost"} />} */}
 
 			<div>
 				<AvatarMini avatar={avatar}/>

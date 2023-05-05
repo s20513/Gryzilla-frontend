@@ -81,7 +81,7 @@ export default function Posts(props) {
 			)}
 
 			{newPosts && 
-				<div className="content-container"><Link to={`/posts/${newPosts[0].idPost}`}>Dodano nowy post, sprawdź tutaj...</Link></div>}
+				<div className="content-container"><Link to={`/posts/${newPosts.idPost}`}>Dodano nowy post, sprawdź tutaj...</Link></div>}
 
 			{posts &&
 				posts.map((post) => {

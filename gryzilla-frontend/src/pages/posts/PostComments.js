@@ -5,6 +5,8 @@ import useAxios from "../../hooks/useAxios";
 import Comment from "../../components/Comment";
 import ContentInput from "../../components/Editor/ContentInput";
 import { useAuth } from "../../context/AuthContext";
+import VerticalLineWrapper from "./components/VerticalLineWrapper";
+import CommentPost from "./components/CommentPost";
 
 export default function PostComments(props) {
 	const idPost = props.idPost;
@@ -14,7 +16,7 @@ export default function PostComments(props) {
 	//tutaj pobieranie samych komentarzy powinno być, nie całego posta z komentarzami
 	const [data, errorData, loadingData] = useAxios({
 		method: "GET",
-		url: `/posts/${idPost}`,
+		url: `/posts/comment/${idPost}`,
 		headers: { accept: "*/*" },
 	});
 
@@ -27,11 +29,8 @@ export default function PostComments(props) {
 
 	return (
 		<>
-			<div className="d-flex">
-				<div className="comments-vertical-line"></div>
-
-				<div style={{ flexGrow: "1" }}>
-					<div className="ms-2 m-md-3">
+		<VerticalLineWrapper>
+					<div className="mt-3">
 						{!displayCommentInput ? (
 							<InputMockup handleClick={() => auth.isLogged ? setDisplayCommentInput(true) : alert("Zaloguj się aby dodawać treści")}>
 								Dodaj nowy komentarz...
@@ -41,7 +40,7 @@ export default function PostComments(props) {
 								addNew={addNewComment}
 								url={"posts/comment"}
 								method={'POST'}
-								apiData={{ idUser: 6, idPost: idPost }}
+								apiData={{ idPost: idPost }}
 								enableTags={false}
 								placeHolder={"Wprowadz nowy komentarz..."}
 								handleClose={() => setDisplayCommentInput(false)}
@@ -53,12 +52,7 @@ export default function PostComments(props) {
 						data.comments
 							.concat(newComment)
 							.map((comment) => (
-								<Comment
-									key={comment.idComment}
-									nick={comment.nick}
-									description={comment.content}
-									highlight={comment.idComment == props.idHighlight ? true : false}
-								/>
+								<CommentPost commentData={comment} />
 							))}
 
 					{data && data.comments.length == 0 && (
@@ -66,8 +60,7 @@ export default function PostComments(props) {
 							Brak komentarzy do wyświetlenia
 						</div>
 					)}
-				</div>
-			</div>
+			</VerticalLineWrapper>
 
 			{loadingData && (
 				<div className="loading-block">Ładowanie komentarzy...</div>

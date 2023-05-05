@@ -1,6 +1,5 @@
 {
   "proxy": "https://localhost:5001/api/",
-  "homepage__": "http://s20513.github.io/Gryzilla-frontend/#",
   "name": "inzynierka",
   "version": "0.1.0",
   "private": true,

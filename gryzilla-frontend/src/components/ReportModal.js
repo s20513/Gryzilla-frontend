@@ -5,8 +5,8 @@ import useAxios from "../hooks/useAxios";
 import Form from "react-bootstrap/Form";
 import { useAuth } from "../context/AuthContext";
 
-export default function ReportModal({ url, reportedContentId }) {
-	const [show, setShow] = useState(false);
+export default function ReportModal({ show, setShow, url, reportedContentId }) {
+	// const [show, setShow] = useState(false);
 
 	const [idReason, setIdReason] = useState();
 	const [reportComment, setReportComment] = useState();
@@ -29,10 +29,11 @@ export default function ReportModal({ url, reportedContentId }) {
 		headers: { accept: "*/*" },
 	});
 
+	//pobierz liste zgłoszen kiedy modal zostanie wyświetlony i nie ma wczytanej listy
 	useEffect(() => {
-		if (!reasonsPost) return;
-		setShow(false);
-	}, [reasonsPost]);
+		if(!show || reasonsGet) return;
+		runRequestGet();
+	}, [show]);
 
 	const handleClose = () => {
 		setIdReason(null);
@@ -65,6 +66,12 @@ export default function ReportModal({ url, reportedContentId }) {
 			setErrirReportComment("");
 		}
 
+		console.log({data: {
+			idUser: auth.id,
+			idReason: idReason,
+			content: reportComment,
+			...reportedContentId,
+		}})
 		runRequestPost({
 			data: {
 				idUser: auth.id,
@@ -77,7 +84,7 @@ export default function ReportModal({ url, reportedContentId }) {
 
 	return (
 		<>
-			<div onClick={() => handleShow()}>Zgłoś</div>
+			{/* <div onClick={() => handleShow()}>Zgłoś</div> */}
 
 			<Modal
 				contentClassName="main-panel-modal"
@@ -121,7 +128,8 @@ export default function ReportModal({ url, reportedContentId }) {
 									<Form.Label>Komentarz do zgłoszenia</Form.Label>
 									<Form.Control
 										as="textarea"
-										rows={3}				 						
+										rows={3}
+										onChange={(event) => setReportComment(event.target.value)}			 						
 									/>
                                     <Form.Text className="text-muted">
 										{errorReportComment}

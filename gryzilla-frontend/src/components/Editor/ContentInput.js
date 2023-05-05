@@ -53,7 +53,7 @@ export default function ContentInput(props) {
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
 		if (newContent != undefined && newContent != null)
-			props.addNew([newContent]);
+			props.addNew(newContent);
 	}, [newContent]);
 
 	const handleSubmit = (event) => {

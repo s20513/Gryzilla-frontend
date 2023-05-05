@@ -43,6 +43,7 @@
 
     .widget-box {
         padding-top: 0.2rem;
+        margin-left: 8px;
         display: flex;
         gap: 10px;
 
@@ -141,6 +142,20 @@
 .widget-button:hover {
     background-color: rgb(4, 79, 104);
 }
+
+.widget-button-comment {
+    @extend .widget-button;
+    border: none;
+    position: relative;
+    top: -15px;
+}
+
+.widget-button-comment:hover {
+    color: white;
+    background-color: transparent;
+}
+
+
 
 .content-container-hover:hover {
     background-color: $upper-data-container-color-hover;

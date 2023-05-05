@@ -11,12 +11,12 @@ import { Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../utils/DataUtlis";
 import WidgetButtons from "./components/WidgetButtons";
 import useAxios from "../../hooks/useAxios";
+import LikeButton from "../../components/LikeButton";
 
-export default function Post({postData, detailsLink, toggleComments}) {
+export default function Post({ postData, detailsLink, toggleComments }) {
 	//const postData = postData;
 
-	const detailsLink2 =
-		detailsLink || detailsLink == false ? false : true;
+	const detailsLink2 = detailsLink || detailsLink == false ? false : true;
 
 	// const [displayComments, setDisplayComments] = useState(() =>
 	// 	props.displayComments ? true : false
@@ -33,49 +33,73 @@ export default function Post({postData, detailsLink, toggleComments}) {
 		executeOnRender: false,
 	});
 
-	useEffect(()=>{
-		if(data == null) return;
+	useEffect(() => {
+		if (data == null) return;
 		setDeletedPost(true);
-	},[data])
+	}, [data]);
 
 	const changeDisplayEditor = () => {
 		setDisplayPostEditor(!displayPostEditor);
 	};
 
 	const deleteContent = () => {
-		if(!window.confirm("Czy na pewno chcesz usunąć posta?")) return
+		if (!window.confirm("Czy na pewno chcesz usunąć posta?")) return;
 		runRequest();
-	}
+	};
 
 	const setNewPostData = (editedPost) => {
-		console.log(editedPost)
-		postData.tags = editedPost[0].tags;
-		postData.content = editedPost[0].content;
+		console.log(editedPost);
+		postData.tags = editedPost.tags;
+		postData.content = editedPost.content;
 		changeDisplayEditor();
 	};
 
-	if(deletedPost)
-		return <div className="content-container" style={{color:"red"}}>Post został usunięty</div>
+	if (deletedPost)
+		return (
+			<div className="content-container" style={{ color: "red" }}>
+				Post został usunięty
+			</div>
+		);
 
 	return (
 		<>
 			{!displayPostEditor ? (
-				<div className="content-container">
-					<DataBar
-						idUser={postData.idUser}
-						idPost={postData.idPost}
-						likes={postData.likes}
-						nick={postData.nick}
-						date={DbDateConvert(postData.createdAt)}
-						avatar={{type: postData.type, base64PhotoData: postData.base64PhotoData}}
-					/>
-					<hr className="hr-line" />
-					{!deletedPost && <span dangerouslySetInnerHTML={{ __html: postData.content }}></span>}
-					{deletedPost && <span>Post został usunięty</span>}
-					<div className="lower-tag-container">
-						{postData.tags.map((tag, index) => (
-							<span key={index}>#{tag} </span>
-						))}
+				<>
+					<div className="content-container mb-1">
+						<div className="d-flex align-items-center gap-2">
+							<LikeButton
+								likesNum={postData.likes}
+								id={postData.idPost}
+								url={"likesPost"}
+							/>
+							<DataBar
+								idUser={postData.idUser}
+								idPost={postData.idPost}
+								likes={postData.likes}
+								nick={postData.nick}
+								date={DbDateConvert(postData.createdAt)}
+								avatar={{
+									type: postData.type,
+									base64PhotoData: postData.base64PhotoData,
+								}}
+							/>
+						</div>
+
+						<hr className="hr-line" />
+
+						{!deletedPost ? (
+							<span
+								dangerouslySetInnerHTML={{ __html: postData.content }}
+							></span>
+						) : (
+							<span>Post został usunięty</span>
+						)}
+
+						<div className="lower-tag-container">
+							{postData.tags.map((tag, index) => (
+								<span key={index}>#{tag} </span>
+							))}
+						</div>
 					</div>
 					<WidgetButtons
 						handleComments={toggleComments}
@@ -85,7 +109,7 @@ export default function Post({postData, detailsLink, toggleComments}) {
 						idPost={postData.idPost}
 						showDetailsButton={detailsLink2}
 					/>
-				</div>
+				</>
 			) : (
 				<ContentInput
 					initialContent={postData}

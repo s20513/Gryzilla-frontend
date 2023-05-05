@@ -6,14 +6,10 @@ import { useState } from "react";
 
 export default function AvatarMini({avatar, isGroup}) {
 
-	console.log(isGroup)
-
 	const isPhotoGroup = isGroup && isGroup == true ? true : false;
 
-	console.log(isPhotoGroup);
-
 	const [useAvatar, setUseAvatar] = useState(()=>{
-		if(avatar.type != null && avatar.base64PhotoData != null){
+		if(avatar && avatar.type != null && avatar.base64PhotoData != null){
 			return true;
 		}
 		return false;
