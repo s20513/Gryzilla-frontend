@@ -67,15 +67,13 @@ export default function Post({ postData, detailsLink, toggleComments }) {
 				<>
 					<div className="content-container mb-1">
 						<div className="d-flex align-items-center gap-2">
-							<LikeButton
+							{/* <LikeButton
 								likesNum={postData.likes}
 								id={postData.idPost}
 								url={"likesPost"}
-							/>
+							/> */}
 							<DataBar
 								idUser={postData.idUser}
-								idPost={postData.idPost}
-								likes={postData.likes}
 								nick={postData.nick}
 								date={DbDateConvert(postData.createdAt)}
 								avatar={{
@@ -108,6 +106,8 @@ export default function Post({ postData, detailsLink, toggleComments }) {
 						commentsNumber={postData.commentsNumber}
 						idPost={postData.idPost}
 						showDetailsButton={detailsLink2}
+						likes={postData.likes}
+						url={"likesPost"}
 					/>
 				</>
 			) : (

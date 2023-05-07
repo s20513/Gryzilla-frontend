@@ -15,11 +15,6 @@ export default function Comment({ avatar, nick, createdAt, content }) {
 	// }, []);
 
 	return (
-		// <div className={ (highlight ? ("content-container-highlight") : "") + " content-container ms-2 m-md-3"} ref={scrollRef}>
-		// 	<span className="user-nick">{nick}</span>
-		// 	<br />
-		// 	<span dangerouslySetInnerHTML={{ __html: description }} />
-		// </div>
 		<div className="content-container" ref={scrollRef}>
 			<DataBar
 				nick={nick}

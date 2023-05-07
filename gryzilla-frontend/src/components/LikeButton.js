@@ -2,6 +2,8 @@ import { useAuth } from "../context/AuthContext";
 import useAxios from "../hooks/useAxios";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { MdThumbUp } from "react-icons/md";
 
 export default function LikeButton(props) {
 	const auth = useAuth();
@@ -9,7 +11,7 @@ export default function LikeButton(props) {
 	const [likesNum, setLikesNum] = useState(props.likesNum);
 	const idContent = props.id;
 	const url = props.url;
-    const [isLiked, setIsLiked] = useState(false);
+	const [isLiked, setIsLiked] = useState(false);
 
 	const [data, error, loading, runRequest] = useAxios({
 		method: "GET",
@@ -17,8 +19,8 @@ export default function LikeButton(props) {
 		executeOnRender: false,
 	});
 
-    useEffect(() => {
-		if(data && data.liked == true) setIsLiked(true);
+	useEffect(() => {
+		if (data && data.liked == true) setIsLiked(true);
 	}, [data]);
 
 	useEffect(() => {
@@ -32,33 +34,43 @@ export default function LikeButton(props) {
 			//tuaj alert że potrzebne zalogowanie
 		}
 
-        try {
-            const method = isLiked ? "DELETE" : "POST";
-            const result = await axios.request({
-                method: method,
-		        url: `/${url}/${auth.id}/${idContent}`,
-		        headers: { accept: "*/*" },
-            });
-            //setResponse(result.data);
+		try {
+			const method = isLiked ? "DELETE" : "POST";
+			const result = await axios.request({
+				method: method,
+				url: `/${url}/${auth.id}/${idContent}`,
+				headers: { accept: "*/*" },
+			});
+			//setResponse(result.data);
+		} catch (error) {
+			//setError(error);
+		} finally {
+			setLikesNum((prev) => {
+				if (isLiked) return --prev;
+				return ++prev;
+			});
 
-          } catch( error ) {
-            //setError(error);
-          } finally {
-            setLikesNum((prev) => {
-                if(isLiked) return --prev;
-                return ++prev;
-            })
-
-           setIsLiked( (prev)=> {
-                return !prev;
-           })
-          }
+			setIsLiked((prev) => {
+				return !prev;
+			});
+		}
 	};
 
 	return (
-		<div onClick={() => handleClick()} className={ (isLiked && auth.isLogged) ? ("likes-box-liked") : ("likes-box")}>
-            {/* {data == true ? "Tak" : "Nie" } */}
-			<span>+{likesNum}</span>
-		</div>
+		// <div onClick={() => handleClick()} className={ (isLiked && auth.isLogged) ? ("likes-box-liked") : ("likes-box")}>
+		//     {/* {data == true ? "Tak" : "Nie" } */}
+		// 	<span>+{likesNum}</span>
+		// </div>
+		// <div onClick={() => handleClick()} className="widget-button">
+		//     {/* {data == true ? "Tak" : "Nie" } */}
+		// 	+{likesNum}
+		// </div>
+		<Button
+			onClick={() => handleClick()}
+			type="button"
+			className="widget-button"
+		>
+			<span style={{position: "relative", top:"-2px", color: (isLiked && auth.isLogged) ? "green" : ""}}><MdThumbUp/></span> {likesNum}
+		</Button>
 	);
 }

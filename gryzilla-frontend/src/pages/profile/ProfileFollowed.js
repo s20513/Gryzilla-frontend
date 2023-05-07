@@ -26,24 +26,6 @@ export default function ProfileFollowed({ idUser }) {
 						);
 					})}
 			</div>
-
-			{/* {followed && !showMore && (
-				<div
-					className="content-container content-container-hover text-center"
-					onClick={() => setShowMore(true)}
-				>
-					Pokaż więcej
-				</div>
-			)}
-
-			{followed && showMore && (
-				<div
-					className="content-container content-container-hover text-center"
-					onClick={() => setShowMore(false)}
-				>
-					Pokaż mniej
-				</div>
-			)} */}
 		</>
 	);
 }

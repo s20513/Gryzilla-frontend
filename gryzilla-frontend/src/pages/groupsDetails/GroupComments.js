@@ -58,15 +58,8 @@ export default function GroupComments({ idGroup }) {
 			{message &&
 				message.map((msg) => {
 					return (
-						// <ProfileComment
-						// 	key={review.idProfileComment}
-						// 	idComment={review.idProfileComment}
-						// 	nick={review.nick}
-						// 	createdAt={review.createdAt}
-						// 	content={review.content}
-						// 	avatar={{type: review.type, base64PhotoData: review.base64PhotoData}}
-						// />
-                        <Comment nick={msg.nick} description={msg.content} />
+                        <Comment avatar={null} nick={msg.nick} content={msg.content} createdAt={msg.createdAt} />
+						
 					);
 				})}
 		</>

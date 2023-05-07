@@ -7,10 +7,12 @@ import PostComments from "../PostComments";
 import DataBar from "../../../components/DataBarPost";
 import ContentInput from "../../../components/Editor/ContentInput";
 import { Link } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../../utils/DataUtlis";
 import { Dropdown } from "react-bootstrap";
 import ReportModal from "../../../components/ReportModal";
+import LikeButton from "../../../components/LikeButton";
+import { MdThumbUp } from "react-icons/md";
 
 export default function WidgetButtons({
 	handleComments,
@@ -19,23 +21,22 @@ export default function WidgetButtons({
 	commentsNumber,
 	idPost,
 	showDetailsButton,
+	likes,
+	url
 }) {
 	return (
 		<div className="widget-box">
-			{/* <button
-				type="button"
-				onClick={handleComments}
-				className={
-					"btn action-button " + (false ? "btn-success" : "btn-outline-success")
-				}
-			> */}
-			<button type="button" onClick={handleComments} className="widget-button">
-				{commentsNumber} <BsFillChatLeftTextFill />
-			</button>
-			{/* <button type="button" onClick={changeDisplayInput} className={"btn action-button " + (displayCommentInput ? "btn-primary" : "btn-outline-primary")}><BiText/></button> */}
-			{/* <button type="button" className="btn btn-outline-warning action-button">
-				<AiFillWarning />
-			</button> */}
+			
+			<LikeButton
+				likesNum={likes}
+				id={idPost}
+				url={"likesPost"}
+			/>
+
+			<Button type="button" onClick={handleComments} className="widget-button">
+				<BsFillChatLeftTextFill /> {commentsNumber} 
+			</Button>
+			
 
 			<Dropdown align="start">
 				<Dropdown.Toggle className="widget-button" id="dropdown-basic">
@@ -55,7 +56,12 @@ export default function WidgetButtons({
 
 					<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
 
-					<Dropdown.Item><ReportModal url="/reportPost" reportedContentId={{idPost: idPost}} /></Dropdown.Item>
+					<Dropdown.Item>
+						<ReportModal
+							url="/reportPost"
+							reportedContentId={{ idPost: idPost }}
+						/>
+					</Dropdown.Item>
 
 					<Dropdown.Item>Info: Id-{idPost}</Dropdown.Item>
 				</Dropdown.Menu>

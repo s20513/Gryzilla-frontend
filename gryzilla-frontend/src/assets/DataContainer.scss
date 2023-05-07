@@ -42,7 +42,7 @@
     padding-top: 0.5rem;
 
     .widget-box {
-        padding-top: 0.2rem;
+        //padding-top: 0.2rem;
         margin-left: 8px;
         display: flex;
         gap: 10px;
@@ -97,19 +97,6 @@
     border-radius: 1rem;
 }
 
-.top-three {
-    // div:nth-child(1) {
-    //     border: 2px solid rgb(146, 130, 39);
-    // }
-    // div:nth-child(2) {
-    //     border: 2px solid rgb(121, 119, 119);
-    // }
-    // div:nth-child(3) {
-    //     border: 2px solid rgb(117, 79, 8);
-    // }
-    
-}
-
 .flex-profile {
     display: flex;
     flex-direction: row;
@@ -126,21 +113,22 @@
 
 .widget-button {
     all: unset;
-    border: solid 1px rgb(63, 150, 179);
-    color: rgb(63, 150, 179);
+    //background-color: rgb(206, 159, 159);
+    //border: solid 1px rgb(63, 150, 179);
+    color: rgb(56, 145, 175);
     font-size: 0.9rem;
     font-weight: 400;
     height: 25px;
-    min-width: 50px;
+
     padding: 0rem 0.6rem;
-    border-radius: 0.4rem;
-    background-color: transparent;
-    line-height: 1;
+    //border-radius: 0.4rem;
+    //background-color: transparent;
     text-align: center;
 }
 
 .widget-button:hover {
     background-color: rgb(4, 79, 104);
+    color: white;
 }
 
 .widget-button-comment {

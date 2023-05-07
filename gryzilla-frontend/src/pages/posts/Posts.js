@@ -18,6 +18,7 @@ import PostAndComments from "./PostAndComments";
 export default function Posts(props) {
 	const navigation = useNavbar();
 	const auth = useAuth();
+	const observer = useRef();
 
 	const [sortType, setSortType] = useLocalStorage("sortType", "byDateDesc");
 
@@ -25,7 +26,10 @@ export default function Posts(props) {
 	const [pageNumber, setPageNumber] = useState(5);
 
 	const [newPosts, setNewPosts] = useState(null);
-	const { posts, hasMore, loading, error } = useFetchPosts(
+	
+	const [posts, loading, error, hasMore] = useFetchPosts(
+		"posts",
+		"/posts/qty/",
 		sortType,
 		pageNumber
 	);
@@ -40,7 +44,6 @@ export default function Posts(props) {
 		setSortType(sortType);
 	};
 
-	const observer = useRef();
 	const lastPostRef = useCallback(
 		(node) => {
 			if (loading) return;

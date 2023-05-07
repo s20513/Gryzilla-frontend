@@ -13,6 +13,7 @@ import GroupAvatar from "./components/GroupAvatar";
 import JoinButton from "./components/JoinButton";
 import GroupDataTable from "./components/GroupDataTable";
 import GroupComments from "./GroupComments";
+import GroupMembers from "./GroupMembers";
 
 export default function GroupDetials() {
 
@@ -63,7 +64,7 @@ export default function GroupDetials() {
 						<GroupComments idGroup={idGroup} />
 					</Tab>
 					<Tab eventKey="members" title="Członkowie">
-
+						<GroupMembers groupData={group} />
 					</Tab>
 					
 				</Tabs>

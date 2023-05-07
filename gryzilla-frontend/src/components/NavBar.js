@@ -68,7 +68,7 @@ export default function NavBar() {
 								</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
+								<NavDropdown.Item><Link to={"/articles/new"}>Nowy</Link></NavDropdown.Item>
 							</NavDropdown>
 
 							<NavDropdown title="Grupy" id="basic">
@@ -77,7 +77,7 @@ export default function NavBar() {
 								</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="/articles/new">Nowy</NavDropdown.Item>
+								<NavDropdown.Item><Link to={"/groups/new"}>Nowy</Link></NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
 						<Form className="d-flex ">

@@ -9,7 +9,7 @@ export default function ArticleNew() {
 
     const addNewArticle = (newArticle) => {
         console.log("dodano artykuł")
-		const idArticle = newArticle[0].idArticle;
+		const idArticle = newArticle.idArticle;
 		navigate(`/articles/${idArticle}`)
     }
 

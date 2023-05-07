@@ -26,6 +26,7 @@ import ProfileRerender from "./pages/profile/components/ProfileRerender";
 import AdminPanel from "./pages/adminPanel/AdminPanel";
 import Groups from "./pages/groups/Groups";
 import GroupDetials from "./pages/groupsDetails/GroupDetails";
+import GroupNew from "./pages/groupsNew/GroupNew";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -62,6 +63,7 @@ function App() {
 									<Route path="/groups">
 										<Route index element={<Groups />} />
 										<Route path=":idGroup" element={<GroupDetials />} />
+										<Route path="new" element={<GroupNew/>} />
 									</Route>
 									<Route path="/profile">
 										<Route exact path=":idUser" element={<Profile />} />

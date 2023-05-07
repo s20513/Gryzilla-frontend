@@ -5,6 +5,7 @@ import useAxios from "../../hooks/useAxios";
 import InputAddArticleComment from "../articles/InputAddArticleComment";
 import ContentInput from "../../components/Editor/ContentInput";
 import Comment from "../../components/Comment";
+import VerticalLineWrapper from "../posts/components/VerticalLineWrapper";
 
 export default function ArticleComments(props) {
 	const data = props.data;
@@ -27,11 +28,8 @@ export default function ArticleComments(props) {
 
 	return (
 		<>
-			<div className="d-flex">
-				<div className="comments-vertical-line"></div>
-
-				<div style={{ flexGrow: "1" }}>
-					<div className="m-3">
+			<VerticalLineWrapper>
+					<div className="mt-3">
 						{!displayCommentInput ? (
 							<InputMockup handleClick={() => setDisplayCommentInput(true)}>
 								Dodaj nowy komentarz...
@@ -55,8 +53,10 @@ export default function ArticleComments(props) {
 							.map((comment) => (
 								<Comment
 									key={comment.idComment}
+									avatar={{type: comment.niema, base: "xd"}}
 									nick={comment.nick}
-									description={comment.content}
+									createdAt={comment.createdAt}
+									content={comment.content}
 									highlight={comment.idComment == props.idHighlight ? true : false}
 								/>
 							))}
@@ -66,8 +66,7 @@ export default function ArticleComments(props) {
 							Brak komentarzy do wyświetlenia
 						</div>
 					)}
-				</div>
-			</div>
+			</VerticalLineWrapper>
 
 			{/* {loadingData && (
 				<div className="loading-block">Ładowanie komentarzy...</div>

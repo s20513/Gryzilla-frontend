@@ -3,21 +3,63 @@ import { Container } from "react-bootstrap";
 import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
 import ArticlePreview from "./ArticlePreview";
+import { Link } from "react-router-dom";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import DropdownList from "../../components/DropdownList";
+import { useState } from "react";
+import useFetchPosts from "../../hooks/useFetchPosts";
+import { useRef } from "react";
+import { useCallback } from "react";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function Articles() {
-	const [data, error, loading] = useAxios({
-		method: "GET",
-		url: `articles`,
-		headers: { accept: "*/*" },
-	});
+	const observer = useRef();
+
+	const [sortType, setSortType] = useLocalStorage(
+		"sortTypeArticles",
+		"byDateDesc"
+	);
+	const [pageNumber, setPageNumber] = useState(5);
+
+	const [ articles, loading, error, hasMore ] = useFetchPosts(
+		"articles",
+		"/articles/qty/",
+		sortType,
+		pageNumber
+	);
+
+	const changeSortType = (sortType) => {
+		setPageNumber(5);
+		setSortType(sortType);
+	};
+
+	const lastArticleRef = useCallback(
+		(node) => {
+			if (loading) return;
+			if (observer.current) observer.current.disconnect();
+
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasMore) {
+					setPageNumber((prevPageNumber) => prevPageNumber + 5);
+				}
+			});
+			if (node) observer.current.observe(node);
+		},
+		[loading, hasMore]
+	);
 
 	return (
 		<Container className="main-panel">
-			<h3>Wszystkie artykuły</h3>
-			<InputMockup>Dodaj nowy artykuł...</InputMockup>
+			<div className="d-flex justify-content-between">
+				<h3>Wszystkie artykuły</h3>
+				<DropdownList sortType={sortType} setSortType={changeSortType} />
+			</div>
+			<Link to={"/articles/new"}>
+				<InputMockup>Dodaj nowy artykuł...</InputMockup>
+			</Link>
 
-			{data &&
-				data.map((article) => {
+			{articles &&
+				articles.map((article) => {
 					return (
 						<ArticlePreview
 							key={article.idArticle}
@@ -30,6 +72,15 @@ export default function Articles() {
 						/>
 					);
 				})}
+
+			{!loading && <div ref={lastArticleRef}></div>}
+
+			<LoadingBanner
+                loading={loading}
+                error={error}
+				placeHolder={"Ładowanie artykułów"}
+			/>
+
 		</Container>
 	);
 }
