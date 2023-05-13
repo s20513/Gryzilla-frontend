@@ -5,6 +5,7 @@ import ArticleComments from "./ArticleComments";
 import LikeButton from "../../components/LikeButton";
 
 export default function ArticleDetails() {
+	
 	const params = useParams();
 	const idCommentHighlight = params.idComment ? params.idComment : null;
 

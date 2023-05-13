@@ -9,14 +9,15 @@ import {
 	DropdownButton,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import gryzillaLogo from "../assets/logo.png";
+import gryzillaLogo from "../../assets/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import LoginModal from "./LoginModal";
-import { useAuth } from "../context/AuthContext";
-import { useNavbar } from "../context/NavbarContext";
-import useAxios from "../hooks/useAxios";
-import AvatarMini from "./AvatarMini";
+import LoginModal from "../../components/LoginModal";
+import { useAuth } from "../../context/AuthContext";
+import { useNavbar } from "../../context/NavbarContext";
+import useAxios from "../../hooks/useAxios";
+import AvatarMini from "../../components/AvatarMini";
 import { Dropdown } from "react-bootstrap";
+import SearchBar from "./SearchBar";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
@@ -80,14 +81,7 @@ export default function NavBar() {
 								<NavDropdown.Item><Link to={"/groups/new"}>Nowy</Link></NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
-						<Form className="d-flex ">
-							<Form.Control
-								type="search"
-								placeholder="Search"
-								aria-label="Search"
-							/>
-							<Button variant="outline-success" className="ms-1">Search</Button>
-						</Form>
+						<SearchBar />
 						<Nav>
 							{/* <AiOutlineUser/> */}
 							{!auth.isLogged && (

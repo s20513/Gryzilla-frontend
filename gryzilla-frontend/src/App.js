@@ -3,7 +3,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import { Routes, Route, redirect } from "react-router-dom";
 import axios from "axios";
 
-import NavBar from "./components/NavBar";
+import NavBar from "./pages/navbar/NavBar";
 import Posts from "./pages/posts/Posts";
 import RightColumn from "./pages/sideBar/RightColumn";
 
@@ -27,6 +27,7 @@ import AdminPanel from "./pages/adminPanel/AdminPanel";
 import Groups from "./pages/groups/Groups";
 import GroupDetials from "./pages/groupsDetails/GroupDetails";
 import GroupNew from "./pages/groupsNew/GroupNew";
+import SearchPage from "./pages/search/SearchPage";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -71,6 +72,11 @@ function App() {
 											path="rerender/:idUser"
 											element={<ProfileRerender />}
 										/>
+									</Route>
+									<Route path="/search">
+										<Route index element={<SearchPage />}/>
+										<Route path="phrase/:searchPhrase" element={<SearchPage/>}/>
+										<Route path="tag/:searchPhrase" element={<SearchPage/>}/>
 									</Route>
 									<Route path="/adminPanel" element={<AdminPanel/>}/>
 									<Route path="*" element={<NotFound />} />
