@@ -27,7 +27,7 @@ export default function Posts(props) {
 
 	const [newPosts, setNewPosts] = useState(null);
 	
-	const [posts, loading, error, hasMore] = useFetchPosts(
+	const [posts, loading, error, isCancel, hasMore] = useFetchPosts(
 		"posts",
 		"/posts/qty/",
 		sortType,
@@ -46,12 +46,13 @@ export default function Posts(props) {
 
 	const lastPostRef = useCallback(
 		(node) => {
-			if (loading) return;
+			if (loading || isCancel) return;
 			if (observer.current) observer.current.disconnect();
 
 			observer.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting && hasMore) {
 					setPageNumber((prevPageNumber) => prevPageNumber + 5);
+					console.log("1. dodaje 5")
 				}
 			});
 			if (node) observer.current.observe(node);

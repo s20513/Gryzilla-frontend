@@ -10,29 +10,35 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";
+import ArticlesSearch from "./ArticlesSearch";
+import ProfileSearch from "./ProfilesSearch";
+import GroupSearch from "./GroupSearch";
 
 export default function SearchPage() {
 	const params = useParams();
 	const navigate = useNavigate();
 
-	const [searchType, setSearchType] = useState(() => {return params.searchType ? params.searchType : "phrase"});
-	const [searchPhrase, setSearchPhrase] = useState(() => {return params.searchPhrase ? params.searchPhrase : ""});
+	const [searchType, setSearchType] = useState(() => {
+		return params.searchType ? params.searchType : "phrase";
+	});
+	const [searchPhrase, setSearchPhrase] = useState(() => {
+		return params.searchPhrase ? params.searchPhrase : "";
+	});
 	const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
-	useEffect(()=>{
-		setSearchPhrase(params.searchPhrase);
-	},[navigate])
+	useEffect(() => {
+		setSearchPhrase(params.searchPhrase ? params.searchPhrase : "");
+	}, [navigate]);
 
 	useEffect(() => {
-		if(searchPhrase)
+		if (searchPhrase)
 			navigate(`/search/${searchType}/${debouncedSearchPhrase}`);
-		else
-			navigate('/search')
+		else navigate("/search");
 	}, [debouncedSearchPhrase, searchType]);
 
 	const getPolishSearchtype = () => {
 		return searchType === "phrase" ? "fraza" : "tag";
-	}
+	};
 
 	return (
 		<Container className="main-panel">
@@ -45,10 +51,10 @@ export default function SearchPage() {
 						id="input-group-dropdown-1"
 					>
 						<Dropdown.Item onClick={() => setSearchType("phrase")}>
-							Wyszukiwanie po słowie kluczowym
+							Wyszukiwanie po frazie i tagu
 						</Dropdown.Item>
 						<Dropdown.Item onClick={() => setSearchType("tag")}>
-							Wyszukiwanie po tagu
+							Wyszukiwanie po tagu lub frazie
 						</Dropdown.Item>
 					</DropdownButton>
 
@@ -73,9 +79,30 @@ export default function SearchPage() {
 						searchType={searchType}
 					/>
 				</Tab>
-				<Tab eventKey="articles" title="Artykuły"></Tab>
-				<Tab eventKey="users" title="Użytkownicy"></Tab>
+				<Tab eventKey="articles" title="Artykuły">
+					<ArticlesSearch
+						searchPhrase={debouncedSearchPhrase}
+						searchType={searchType}
+					/>
+				</Tab>
+				<Tab eventKey="users" title="Użytkownicy">
+					<ProfileSearch
+						searchPhrase={debouncedSearchPhrase}
+						searchType={searchType}
+					/>
+				</Tab>
+				<Tab eventKey="groups" title="Grupy">
+					<GroupSearch
+						searchPhrase={debouncedSearchPhrase}
+						searchType={searchType}
+					/>
+				</Tab>
 			</Tabs>
+			{!debouncedSearchPhrase && (
+				<div className="content-container text-center">
+					Wprowadz dane do wyszukiwania aby uzyskać wyniki
+				</div>
+			)}
 		</Container>
 	);
 }

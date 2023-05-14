@@ -3,15 +3,16 @@ import useFetchPosts from "../../hooks/useFetchPosts";
 import PostAndComments from "../posts/PostAndComments"
 import LoadingBanner from "../../components/LoadingBanner";
 import useAxiosSearch from "../../hooks/useAxiosSearch";
+import ArticlePreview from "../articles/ArticlePreview";
 
-export default function PostsSearch({searchType, searchPhrase}) {
+export default function ArticlesSearch({searchType, searchPhrase}) {
 
     const observer = useRef();
     const [pageNumber, setPageNumber] = useState(5);
 
-    const [posts, loading, error, hasMore] = useAxiosSearch({
-		content: "posts",
-		url: searchType === "phrase" ? `/search/getPostsByWord/` : `/search/getPostsByTag`,
+    const [articles, loading, error, hasMore] = useAxiosSearch({
+		content: "articles",
+		url: searchType === "phrase" ? `/search/getArticlesByWord/` : `/search/getArticlesByTag`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,
 		pageNumber: pageNumber
@@ -38,10 +39,19 @@ export default function PostsSearch({searchType, searchPhrase}) {
 
 	return (
 		<div>
-			{posts &&
-				posts.map((post) => {
-					//return <Post key={post.idPost} postData={post}></Post>;
-					return <PostAndComments key={post.idPost} postData={post} />;
+			{articles &&
+				articles.map((article) => {
+					return (
+						<ArticlePreview
+							key={article.idArticle}
+							idArticle={article.idArticle}
+							title={article.title}
+							content={article.content}
+							nick={article.author.nick}
+							date={article.createdAt}
+							likes={article.likesNum}
+						/>
+					);
 				})}
 
 			{!loading && <div ref={lastPostRef}></div>}

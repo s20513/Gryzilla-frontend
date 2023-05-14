@@ -3,15 +3,16 @@ import useFetchPosts from "../../hooks/useFetchPosts";
 import PostAndComments from "../posts/PostAndComments"
 import LoadingBanner from "../../components/LoadingBanner";
 import useAxiosSearch from "../../hooks/useAxiosSearch";
+import GroupPreview from "../groups/GroupPreview";
 
-export default function PostsSearch({searchType, searchPhrase}) {
+export default function GroupSearch({searchType, searchPhrase}) {
 
     const observer = useRef();
     const [pageNumber, setPageNumber] = useState(5);
 
-    const [posts, loading, error, hasMore] = useAxiosSearch({
-		content: "posts",
-		url: searchType === "phrase" ? `/search/getPostsByWord/` : `/search/getPostsByTag`,
+    const [groups, loading, error, hasMore] = useAxiosSearch({
+		content: "groups",
+		url:  `/search/getGroupsByWord/`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,
 		pageNumber: pageNumber
@@ -38,11 +39,9 @@ export default function PostsSearch({searchType, searchPhrase}) {
 
 	return (
 		<div>
-			{posts &&
-				posts.map((post) => {
-					//return <Post key={post.idPost} postData={post}></Post>;
-					return <PostAndComments key={post.idPost} postData={post} />;
-				})}
+			{groups && groups.map((group) => {
+                return <GroupPreview data={group}/>
+            })}
 
 			{!loading && <div ref={lastPostRef}></div>}
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
 
-export default function useAxiosSearch(content, queryWord, url, searchType, searchPhrase, pageNumber) {
+export default function useAxiosSearch({content, url, searchType, searchPhrase, pageNumber}) {
 	const abortController = useRef(null);
 
 	const [loading, setLoading] = useState(false);
@@ -17,12 +17,12 @@ export default function useAxiosSearch(content, queryWord, url, searchType, sear
 	});
 
 	useEffect(() => {
-		setPosts([]);
+		setPosts(null);
 	}, [searchType, searchPhrase]);
 
 	useEffect(() => {
         console.log("wyszukana: " + searchPhrase)
-        if(searchPhrase === "") return;
+        if(!searchPhrase) return;
 
 		console.log("pobieranie")
 
@@ -34,7 +34,7 @@ export default function useAxiosSearch(content, queryWord, url, searchType, sear
 				const response = await axios.get(
 					`${url}/${pageNumber}`,
 					{
-						params: { time: timeStamp, [queryWord]: searchPhrase },
+						params: { time: timeStamp, word: searchPhrase },
 						// signal: abortController.current.signal,
 					}
 				);
@@ -42,7 +42,9 @@ export default function useAxiosSearch(content, queryWord, url, searchType, sear
 				console.log(response.data[content])
 				
 				setPosts((prevPosts) => {
-					return [...prevPosts, ...response.data[content]];
+					if(prevPosts)
+						return [...prevPosts, ...response.data[content]];
+					return [...response.data[content]]
 				});
 
 				setHasMore(response.data.isNext);
@@ -54,7 +56,7 @@ export default function useAxiosSearch(content, queryWord, url, searchType, sear
 			}
 		};
 		fetchData();
-	}, [pageNumber, searchType, searchPhrase]);
+	}, [pageNumber, searchType, searchPhrase, url]);
 
 	return [ posts, loading, error, hasMore];
 }
