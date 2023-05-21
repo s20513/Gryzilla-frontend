@@ -35,7 +35,7 @@ export default function ContentInput(props) {
 
 	const [showInput, setShowInput] = useState(false);
 
-	const [title, setTitle] = useState("");
+	const [title, setTitle] = useState( postData && postData.title ? postData.title : "");
 
 	const childTextContentRef = useRef();
 	const childTagsRef = useRef();
@@ -76,9 +76,9 @@ export default function ContentInput(props) {
 				<form onSubmit={handleSubmit}>
 					{enableTitle && (
 						<input
+							value={postData ? postData.title : ""}
 							className="article-title-input"
 							type="text"
-							id="fname"
 							name="fname"
 							placeholder="Wprowadz tytuł artykuły.."
 							onChange={(e) => setTitle(e.target.value)}

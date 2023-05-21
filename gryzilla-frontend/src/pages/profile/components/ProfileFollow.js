@@ -4,7 +4,7 @@ export default function ProfileFollow({ idUser, nick }) {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/profile/rerender/${idUser}`);
+        navigate(`/profile/${idUser}`);
     }
 
 	return (

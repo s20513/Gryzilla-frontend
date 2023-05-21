@@ -9,11 +9,15 @@ export default function PostDetails() {
 	const params = useParams();
 	const idCommentHighlight = params.idComment ? params.idComment : null;
 
-	const [data, errorData, loadingData] = useAxios({
+	const [data, errorData, loadingData, runRequest] = useAxios({
 		method: "GET",
 		url: `/posts/${params.idPost}`,
 		headers: { accept: "*/*" },
 	});
+
+	useEffect(()=>{
+		runRequest();
+	},[params.idPost])
 
 	return (
 		<Container className="main-panel">

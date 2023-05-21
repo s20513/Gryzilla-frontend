@@ -12,6 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import LoadingBlock from "../../components/LoadingBlock";
+import { Link } from "react-router-dom";
 
 export default function PostHit() {
 	const [posts, errorPosts, loadingPosts] = useAxios({
@@ -31,26 +32,38 @@ export default function PostHit() {
 			</div> */}
 
 			<div className="top-three">
-				{!posts && <LoadingBlock blocksNum={3} topSize="25px" bottomLines={3} hrLine={true}/>}
+				{!posts && (
+					<LoadingBlock
+						blocksNum={3}
+						topSize="25px"
+						bottomLines={3}
+						hrLine={true}
+					/>
+				)}
 
 				{posts &&
 					posts.map((post, index) => {
 						return (
-							<div key={index} className="content-container content-wrapper">
-								{/* <span className="likes-count">+{post.likes} </span> */}
-								<DataBar
-									idPost={post.idPost}
-									likes={post.likes}
-									nick={post.nick}
-									date={DbDateConvert(post.createdAt)}
-									avatar={{type: post.type, base64PhotoData: post.base64PhotoData}}
-								/>
-								<hr className="hr-line" />
-								<div
-									className="text-fade-out"
-									dangerouslySetInnerHTML={{ __html: post.content }}
-								></div>
-							</div>
+							<Link to={`/posts/${post.idPost}`}>
+								<div key={index} className="content-container content-wrapper">
+									{/* <span className="likes-count">+{post.likes} </span> */}
+									<DataBar
+										idPost={post.idPost}
+										likes={post.likes}
+										nick={post.nick}
+										date={DbDateConvert(post.createdAt)}
+										avatar={{
+											type: post.type,
+											base64PhotoData: post.base64PhotoData,
+										}}
+									/>
+									<hr className="hr-line" />
+									<div
+										className="text-fade-out"
+										dangerouslySetInnerHTML={{ __html: post.content }}
+									></div>
+								</div>
+							</Link>
 						);
 					})}
 			</div>

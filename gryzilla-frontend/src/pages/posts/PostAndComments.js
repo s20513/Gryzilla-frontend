@@ -3,9 +3,11 @@ import PostComments from "./PostComments";
 import Post from "./Post";
 import Comment from "../../components/Comment";
 import VerticalLineWrapper from "./components/VerticalLineWrapper";
+import DeleteContentWrapper from "../../components/wrappers/DeleteContentWrapper";
 
 export default function PostAndComments({ postData }) {
 	const [displayComments, setDisplayComments] = useState(false);
+	const [isDeleted, setIsDeleted] = useState(false);
 
 	const toggleDisplayComments = () => {
 		setDisplayComments((prev) => !prev);
@@ -14,21 +16,14 @@ export default function PostAndComments({ postData }) {
 
 	return (
 		<div className="content-wrapper">
-			<Post postData={postData} toggleComments={toggleDisplayComments} />
+			<DeleteContentWrapper
+				isDeleted={isDeleted}
+				placeholder={"Post został usunięty"}
+			>
+				<Post postData={postData} isDdeleted={isDeleted} setIsDeleted={setIsDeleted} toggleComments={toggleDisplayComments} />
 
-			{/* {!displayComments && postData.commentsDtos.length > 0 && (
-				<VerticalLineWrapper>
-					{postData.commentsDtos.map((comment) => (
-						<Comment
-							key={comment.idComment}
-							nick={comment.nick}
-							description={comment.content}
-						/>
-					))}
-				</VerticalLineWrapper>
-			)} */}
-
-			{displayComments && <PostComments idPost={postData.idPost} />}
+				{displayComments && <PostComments idPost={postData.idPost} />}
+			</DeleteContentWrapper>
 		</div>
 	);
 }

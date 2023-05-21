@@ -6,24 +6,28 @@ import { AiFillWarning } from "react-icons/ai";
 import PostComments from "../PostComments";
 import DataBar from "../../../components/DataBarPost";
 import ContentInput from "../../../components/Editor/ContentInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../../utils/DataUtlis";
 import { Dropdown } from "react-bootstrap";
-import ReportModal from "../../../components/ReportModal";
+import ReportModal from "../../../components/modals/ReportModal";
 import LikeButton from "../../../components/LikeButton";
 import { MdThumbUp } from "react-icons/md";
+import OptionDropdown from "../../../components/OptionDropdown";
 
 export default function WidgetButtons({
 	handleComments,
 	handleEdit,
 	handleDelete,
+	handleReport,
 	commentsNumber,
 	idPost,
 	showDetailsButton,
 	likes,
 	url
 }) {
+
+	const navigate = useNavigate();
 	return (
 		<div className="widget-box">
 			
@@ -36,44 +40,14 @@ export default function WidgetButtons({
 			<Button type="button" onClick={handleComments} className="widget-button">
 				<BsFillChatLeftTextFill /> {commentsNumber} 
 			</Button>
-			
 
-			<Dropdown align="start">
-				<Dropdown.Toggle className="widget-button" id="dropdown-basic">
-					Opcje
-				</Dropdown.Toggle>
-
-				<Dropdown.Menu className="dropdown-menu-right dropdown-menu-dark">
-					<Dropdown.Item onClick={handleEdit}>Edytuj</Dropdown.Item>
-
-					<Dropdown.Item>Dodaj do ulubionych</Dropdown.Item>
-
-					{showDetailsButton && (
-						<Dropdown.Item as={Link} to={"" + idPost}>
-							Widok w nowym oknie
-						</Dropdown.Item>
-					)}
-
-					<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
-
-					<Dropdown.Item>
-						<ReportModal
-							url="/reportPost"
-							reportedContentId={{ idPost: idPost }}
-						/>
-					</Dropdown.Item>
-
-					<Dropdown.Item>Info: Id-{idPost}</Dropdown.Item>
-				</Dropdown.Menu>
-			</Dropdown>
-
-			{/* <button
-				type="button"
-				onClick={handleEdit}
-				className="widget-button"
-			>
-				Opcje
-			</button> */}
+			<OptionDropdown
+				handleNewView={() => navigate(`${idPost}`)}
+				handleEdit={handleEdit}
+				handleDelete={handleDelete}
+				handleReport={handleReport}
+				upper={true}
+			/>
 		</div>
 	);
 }

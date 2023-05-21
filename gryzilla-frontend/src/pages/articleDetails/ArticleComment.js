@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Comment from "../../../components/Comment";
+import Comment from "../../components/Comment";
 import { Button } from "react-bootstrap";
-import ContentInput from "../../../components/Editor/ContentInput";
+import ContentInput from "../../components/Editor/ContentInput";
 import { Dropdown } from "react-bootstrap";
-import ReportModal from "../../../components/modals/ReportModal";
-import EditContentInputWrapper from "../../../components/wrappers/EditContentInputWrapper";
-import OptionDropdown from "../../../components/OptionDropdown";
-import DeleteModal from "../../../components/modals/DeleteModal";
-import DeleteContentWrapper from "../../../components/wrappers/DeleteContentWrapper";
+import ReportModal from "../../components/modals/ReportModal";
+import OptionDropdown from "../../components/OptionDropdown";
+import EditContentInputWrapper from "../../components/wrappers/EditContentInputWrapper";
+import DeleteContentWrapper from "../../components/wrappers/DeleteContentWrapper";
+import DeleteModal from "../../components/modals/DeleteModal";
 
-export default function CommentPost({ commentData }) {
+export default function ArticleComment({ commentData }) {
 	const [displayEditor, setDisplayEditor] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 
@@ -30,19 +30,18 @@ export default function CommentPost({ commentData }) {
 			isDeleted={isDeleted}
 			placeholder={"Komentarz został usunięty"}
 		>
-
 			<EditContentInputWrapper
 				displayEditor={displayEditor}
 				initialContent={commentData}
 				addNew={setNewPostData}
-				url={`/posts/comment/${commentData.idComment}`}
+				url={`/articles/comments/${commentData.idComment}`}
 				method={"PUT"}
 				apiData={{
-					idPost: commentData.idPost,
+					idArticle: commentData.idArticle,
 					idComment: commentData.idComment,
 				}}
 				enableTags={false}
-				placeHolder={"Wprowadz nowy post..."}
+				placeHolder={"Wprowadź komentarz..."}
 				handleClose={changeDisplayEditor}
 			>
 				<Comment
@@ -53,7 +52,7 @@ export default function CommentPost({ commentData }) {
 				/>
 				<OptionDropdown
 					handleEdit={changeDisplayEditor}
-					handleDelete={() => setShowDeleteModal(true)}
+					handleDelete={() =>setShowDeleteModal(true)}
 					handleReport={() => setShowReportModal(true)}
 				/>
 			</EditContentInputWrapper>
@@ -61,7 +60,7 @@ export default function CommentPost({ commentData }) {
 			<ReportModal
 				show={showReportModal}
 				setShow={setShowReportModal}
-				url={`/reportCommentPost`}
+				url={`/reportCommentArticle`}
 				reportedContentId={{ idComment: commentData.idComment }}
 			/>
 
@@ -70,7 +69,7 @@ export default function CommentPost({ commentData }) {
 				setShow={setShowDeleteModal}
 				isDeleted={isDeleted}
 				setIsDeleted={setIsDeleted}
-				url={`/posts/comment/${commentData.idComment}`}
+				url={`/articles/comments/${commentData.idComment}`}
 				reportedContentId={{ idComment: commentData.idComment }}
 			/>
 		</DeleteContentWrapper>

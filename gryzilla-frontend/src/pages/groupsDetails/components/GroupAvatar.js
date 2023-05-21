@@ -6,7 +6,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import useAxiosFile from "../../../hooks/useAxiosFile";
 import { Form } from "react-bootstrap";
-import PhotoModal from "../../../components/PhotoModal";
+import PhotoModal from "../../../components/modals/PhotoModal";
 
 export default function GroupAvatar({ idGroup }) {
 	

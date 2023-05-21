@@ -23,16 +23,22 @@ export default function Profile() {
 	//const [idUser, setIdUser] = useState(10);
 
 	const auth = useAuth();
-	const { idUser } = useParams();
+	const params = useParams();
+	const idUser = params.idUser;
 
-	const [profile, errorProfile, loadingProfile] = useAxios({
+	const [profile, errorProfile, loadingProfile, runRequest] = useAxios({
 		method: "GET",
-		url: `/users/${idUser}`,
+		url: `/users/${params.idUser}`,
 		headers: { accept: "*/*" },
 	});
+	
+	useEffect(()=>{
+		runRequest();
+	},[params.idUser])
 
 	return (
 		<>
+		{profile &&
 			<Container className="main-panel">
 				<Container className="d-flex justify-content-between">
 					<h2>Mój profil {idUser}</h2>
@@ -59,6 +65,7 @@ export default function Profile() {
 					</Row>
 				</Container>
 			</Container>
+		}
 
 			<Container className="main-panel">
 				<Tabs

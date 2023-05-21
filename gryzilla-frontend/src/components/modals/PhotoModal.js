@@ -2,7 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
-import useAxiosFile from "../hooks/useAxiosFile";
+import useAxiosFile from "../../hooks/useAxiosFile";
 
 export default function PhotoModal({show, setShow, urlPOST, afterSubmit}) {
 

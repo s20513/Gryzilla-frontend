@@ -6,6 +6,7 @@ import InputAddArticleComment from "../articles/InputAddArticleComment";
 import ContentInput from "../../components/Editor/ContentInput";
 import Comment from "../../components/Comment";
 import VerticalLineWrapper from "../posts/components/VerticalLineWrapper";
+import ArticleComment from "./ArticleComment";
 
 export default function ArticleComments(props) {
 	const data = props.data;
@@ -29,43 +30,36 @@ export default function ArticleComments(props) {
 	return (
 		<>
 			<VerticalLineWrapper>
-					<div className="mt-3">
-						{!displayCommentInput ? (
-							<InputMockup handleClick={() => setDisplayCommentInput(true)}>
-								Dodaj nowy komentarz...
-							</InputMockup>
-						) : (
-							<ContentInput
-								addNew={addNewComment}
-								url={"comments"}
-								method={"POST"}
-								apiData={{ idUser: 6, idArticle: data.idArticle }}
-								enableTags={false}
-								placeHolder={"Wprowadz nowy komentarz..."}
-								handleClose={() => setDisplayCommentInput(false)}
-							/>
-						)}
-					</div>
-
-					{data &&
-						data.comments
-							.concat(newComment)
-							.map((comment) => (
-								<Comment
-									key={comment.idComment}
-									avatar={{type: comment.niema, base: "xd"}}
-									nick={comment.nick}
-									createdAt={comment.createdAt}
-									content={comment.content}
-									highlight={comment.idComment == props.idHighlight ? true : false}
-								/>
-							))}
-
-					{data && data.comments.length == 0 && (
-						<div className="comment-data-container">
-							Brak komentarzy do wyświetlenia
-						</div>
+				<div className="mt-3">
+					{!displayCommentInput ? (
+						<InputMockup handleClick={() => setDisplayCommentInput(true)}>
+							Dodaj nowy komentarz...
+						</InputMockup>
+					) : (
+						<ContentInput
+							addNew={addNewComment}
+							url={"comments"}
+							method={"POST"}
+							apiData={{ idUser: 6, idArticle: data.idArticle }}
+							enableTags={false}
+							placeHolder={"Wprowadz nowy komentarz..."}
+							handleClose={() => setDisplayCommentInput(false)}
+						/>
 					)}
+				</div>
+
+				{data &&
+					data.comments
+						.concat(newComment)
+						.map((comment) => (
+							<ArticleComment key={comment.idComment} commentData={comment} />
+						))}
+
+				{data && data.comments.length == 0 && (
+					<div className="comment-data-container">
+						Brak komentarzy do wyświetlenia
+					</div>
+				)}
 			</VerticalLineWrapper>
 
 			{/* {loadingData && (

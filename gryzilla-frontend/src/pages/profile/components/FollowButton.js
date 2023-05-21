@@ -14,6 +14,11 @@ export default function FollowButton({ idUser }) {
 		executeOnRender: false,
 	});
 
+	useEffect(()=>{
+		if (!auth.isLogged) return;
+		runRequest({ url: `/friends/${auth.id}/` });
+	},[idUser])
+
 	useEffect(() => {
 		if (!auth.isLogged) return;
 		runRequest({ url: `/friends/${auth.id}/` });

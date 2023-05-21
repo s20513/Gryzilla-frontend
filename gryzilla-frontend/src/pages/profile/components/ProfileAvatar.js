@@ -6,7 +6,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import useAxiosFile from "../../../hooks/useAxiosFile";
 import { Form } from "react-bootstrap";
-import PhotoModal from "../../../components/PhotoModal";
+import PhotoModal from "../../../components/modals/PhotoModal";
 
 export default function ProfileAvatar({ idUser }) {
 	
@@ -18,6 +18,10 @@ export default function ProfileAvatar({ idUser }) {
 		url: `/users/photo/${idUser}`,
 		headers: { accept: "*/*" },
 	});
+
+	useEffect(()=>{
+		runRequest();
+	},[idUser])
 
 	const afterSubmit = () => runRequest();
 

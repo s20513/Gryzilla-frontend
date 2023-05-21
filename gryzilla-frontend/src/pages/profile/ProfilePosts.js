@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import Post from "../posts/Post";
 
 export default function ProfilePotst({ idUser }) {
-	const [posts, errorPosts, loadingPosts] = useAxios({
+	const [posts, errorPosts, loadingPosts, runRequest] = useAxios({
 		method: "GET",
 		url: `/posts/user/${idUser}`,
 		headers: { accept: "*/*" },
 	});
+
+	useEffect(()=>{
+		runRequest();
+	},[idUser])
 
 	const [showMore, setShowMore] = useState(false);
 	const limit = 3;

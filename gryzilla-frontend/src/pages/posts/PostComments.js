@@ -11,7 +11,7 @@ import CommentPost from "./components/CommentPost";
 export default function PostComments(props) {
 	const idPost = props.idPost;
 	const [displayCommentInput, setDisplayCommentInput] = useState(false);
-	const auth = useAuth()
+	const auth = useAuth();
 
 	//tutaj pobieranie samych komentarzy powinno być, nie całego posta z komentarzami
 	const [data, errorData, loadingData] = useAxios({
@@ -29,37 +29,41 @@ export default function PostComments(props) {
 
 	return (
 		<>
-		<VerticalLineWrapper>
-					<div className="mt-3">
-						{!displayCommentInput ? (
-							<InputMockup handleClick={() => auth.isLogged ? setDisplayCommentInput(true) : alert("Zaloguj się aby dodawać treści")}>
-								Dodaj nowy komentarz...
-							</InputMockup>
-						) : (
-							<ContentInput
-								addNew={addNewComment}
-								url={"posts/comment"}
-								method={'POST'}
-								apiData={{ idPost: idPost }}
-								enableTags={false}
-								placeHolder={"Wprowadz nowy komentarz..."}
-								handleClose={() => setDisplayCommentInput(false)}
-							/>
-						)}
-					</div>
-
-					{data &&
-						data.comments
-							.concat(newComment)
-							.map((comment) => (
-								<CommentPost commentData={comment} />
-							))}
-
-					{data && data.comments.length == 0 && (
-						<div className="comment-data-container">
-							Brak komentarzy do wyświetlenia
-						</div>
+			<VerticalLineWrapper>
+				<div className="mt-3">
+					{!displayCommentInput ? (
+						<InputMockup
+							handleClick={() =>
+								auth.isLogged
+									? setDisplayCommentInput(true)
+									: alert("Zaloguj się aby dodawać treści")
+							}
+						>
+							Dodaj nowy komentarz...
+						</InputMockup>
+					) : (
+						<ContentInput
+							addNew={addNewComment}
+							url={"posts/comment"}
+							method={"POST"}
+							apiData={{ idPost: idPost }}
+							enableTags={false}
+							placeHolder={"Wprowadz nowy komentarz..."}
+							handleClose={() => setDisplayCommentInput(false)}
+						/>
 					)}
+				</div>
+
+				{data &&
+					data.comments
+						.concat(newComment)
+						.map((comment) => <CommentPost commentData={comment} />)}
+
+				{data && data.comments.length == 0 && (
+					<div className="comment-data-container">
+						Brak komentarzy do wyświetlenia
+					</div>
+				)}
 			</VerticalLineWrapper>
 
 			{loadingData && (

@@ -1,9 +1,9 @@
 import { useDebugValue, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import useAxios from "../hooks/useAxios";
+import useAxios from "../../hooks/useAxios";
 import Form from "react-bootstrap/Form";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ReportModal({ show, setShow, url, reportedContentId }) {
 	// const [show, setShow] = useState(false);
@@ -13,6 +13,8 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 
 	const [errorIdReason, setErrorIdReason] = useState();
 	const [errorReportComment, setErrirReportComment] = useState();
+
+	const [isReported, setIsReported] = useState(false);
 
 	const auth = useAuth();
 
@@ -31,23 +33,25 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 
 	//pobierz liste zgłoszen kiedy modal zostanie wyświetlony i nie ma wczytanej listy
 	useEffect(() => {
-		if(!show || reasonsGet) return;
+		if (!show || reasonsGet) return;
 		runRequestGet();
 	}, [show]);
 
 	const handleClose = () => {
+
 		setIdReason(null);
 		setReportComment(null);
 		setErrirReportComment(null);
 		setErrorIdReason(null);
-
+		
 		setShow(false);
+		setIsReported(false);
 	};
 
-	const handleShow = () => {
-		setShow(true);
-		runRequestGet();
-	};
+	useEffect(() => {
+		if (!reasonsPost) return;
+		setIsReported(true);
+	}, [reasonsPost]);
 
 	const handleSubmit = () => {
 		//console.log(reportComment + " " + idReason);
@@ -66,12 +70,6 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 			setErrirReportComment("");
 		}
 
-		console.log({data: {
-			idUser: auth.id,
-			idReason: idReason,
-			content: reportComment,
-			...reportedContentId,
-		}})
 		runRequestPost({
 			data: {
 				idUser: auth.id,
@@ -97,46 +95,48 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 
 				<Modal.Body>
 					<div className="d-flex flex-center flex-column">
-						<div>
-							<Form>
-								<Form.Group
-									className="mb-3"
-									controlId="exampleForm.ControlInput1"
-								>
-									<Form.Label>Powód zgłoszenia</Form.Label>
-									<Form.Select
-										aria-label="Default select example"
-										onChange={(event) => setIdReason(event.target.value)}
+						{!isReported && (
+							<div>
+								<Form>
+									<Form.Group
+										className="mb-3"
+										controlId="exampleForm.ControlInput1"
 									>
-										<option value={null}>---</option>
-										{reasonsGet &&
-											reasonsGet.map((reason) => {
-												return (
-													<option key={reason.id} value={reason.id}>
-														{reason.name}
-													</option>
-												);
-											})}
-									</Form.Select>
-									<Form.Text className="text-muted">{errorIdReason}</Form.Text>
-								</Form.Group>
+										<Form.Label>Powód zgłoszenia</Form.Label>
+										<Form.Select
+											aria-label="Default select example"
+											onChange={(event) => setIdReason(event.target.value)}
+										>
+											<option value={null}>---</option>
+											{reasonsGet &&
+												reasonsGet.map((reason) => {
+													return (
+														<option key={reason.id} value={reason.id}>
+															{reason.name}
+														</option>
+													);
+												})}
+										</Form.Select>
+										<Form.Text className="text-muted">
+											{errorIdReason}
+										</Form.Text>
+									</Form.Group>
 
-								<Form.Group
-									className="mb-3"
-									controlId=""
-								>
-									<Form.Label>Komentarz do zgłoszenia</Form.Label>
-									<Form.Control
-										as="textarea"
-										rows={3}
-										onChange={(event) => setReportComment(event.target.value)}			 						
-									/>
-                                    <Form.Text className="text-muted">
-										{errorReportComment}
-									</Form.Text>
-								</Form.Group>
-							</Form>
-						</div>
+									<Form.Group className="mb-3" controlId="">
+										<Form.Label>Komentarz do zgłoszenia</Form.Label>
+										<Form.Control
+											as="textarea"
+											rows={3}
+											onChange={(event) => setReportComment(event.target.value)}
+										/>
+										<Form.Text className="text-muted">
+											{errorReportComment}
+										</Form.Text>
+									</Form.Group>
+								</Form>
+							</div>
+						)}
+						{isReported && <span>Zgłoszenie zostało dodane</span>}
 					</div>
 				</Modal.Body>
 
@@ -144,9 +144,11 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 					<Button variant="secondary" onClick={handleClose}>
 						Zamknij
 					</Button>
-					<Button variant="primary" onClick={handleSubmit}>
-						Wyślij
-					</Button>
+					{!isReported && (
+						<Button variant="primary" onClick={handleSubmit}>
+							Wyślij
+						</Button>
+					)}
 				</Modal.Footer>
 			</Modal>
 		</>

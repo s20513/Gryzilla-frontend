@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import { useAuth } from "../../context/AuthContext";
 import ContentInput from "../../components/Editor/ContentInput";
@@ -10,11 +10,15 @@ export default function ProfileComments({ idUser }) {
 	const [showInput, setShowInput] = useState(false);
 	const [newComment, setNewComment] = useState(null);
 
-	const [reviews, error, loading] = useAxios({
+	const [reviews, error, loading, runRequest] = useAxios({
 		method: "GET",
 		url: `/profileComments/${idUser}`,
 		headers: { accept: "*/*" },
 	});
+
+	useEffect(()=>{
+		runRequest();
+	},[idUser])
 
 	const addNewComment = (newComment) => {
 		setNewComment(newComment);

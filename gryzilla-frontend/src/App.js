@@ -28,6 +28,7 @@ import Groups from "./pages/groups/Groups";
 import GroupDetials from "./pages/groupsDetails/GroupDetails";
 import GroupNew from "./pages/groupsNew/GroupNew";
 import SearchPage from "./pages/search/SearchPage";
+import ArticleEdit from "./pages/articleEdit/ArticleEdit";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -60,6 +61,7 @@ function App() {
 										<Route path=":idArticle" element={<ArticleDetails />} />
 										<Route path=":idArticle/:idComment" element={<ArticleDetails />} />
 										<Route path="new" element={<ArticleNew />} />
+										<Route path="edit/:idArticle" element={<ArticleEdit />} />
 									</Route>
 									<Route path="/groups">
 										<Route index element={<Groups />} />

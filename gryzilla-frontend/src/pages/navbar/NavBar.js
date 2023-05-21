@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import gryzillaLogo from "../../assets/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import LoginModal from "../../components/LoginModal";
+import LoginModal from "../../components/LoginModal/LoginModal";
 import { useAuth } from "../../context/AuthContext";
 import { useNavbar } from "../../context/NavbarContext";
 import useAxios from "../../hooks/useAxios";
