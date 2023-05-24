@@ -115,7 +115,7 @@
     all: unset;
     //background-color: rgb(206, 159, 159);
     //border: solid 1px rgb(63, 150, 179);
-    color: rgb(56, 145, 175);
+    color: rgb(78, 147, 170);
     font-size: 0.9rem;
     font-weight: 400;
     height: 25px;
@@ -127,7 +127,8 @@
 }
 
 .widget-button:hover {
-    background-color: rgb(4, 79, 104);
+    //background-color: rgb(4, 79, 104);
+    background-color: transparent;
     color: white;
 }
 

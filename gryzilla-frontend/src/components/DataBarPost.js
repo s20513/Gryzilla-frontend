@@ -12,7 +12,7 @@ export default function DataBar({ idUser, nick, date, avatar }) {
 			</div>
 
 			<div className="d-flex flex-column">
-				<span className="user-nick"><Link to={"/profile/" + idUser }>{nick}</Link></span>
+				<span className="user-nick"><Link to={`/profile/${idUser} `}>{nick}</Link></span>
 				<span className="label">Użytkownik</span>
 			</div>
 

@@ -29,42 +29,34 @@ export default function ArticleComments(props) {
 
 	return (
 		<>
-			<VerticalLineWrapper>
-				<div className="mt-3">
-					{!displayCommentInput ? (
-						<InputMockup handleClick={() => setDisplayCommentInput(true)}>
-							Dodaj nowy komentarz...
-						</InputMockup>
-					) : (
-						<ContentInput
-							addNew={addNewComment}
-							url={"comments"}
-							method={"POST"}
-							apiData={{ idUser: 6, idArticle: data.idArticle }}
-							enableTags={false}
-							placeHolder={"Wprowadz nowy komentarz..."}
-							handleClose={() => setDisplayCommentInput(false)}
-						/>
-					)}
-				</div>
-
-				{data &&
-					data.comments
-						.concat(newComment)
-						.map((comment) => (
-							<ArticleComment key={comment.idComment} commentData={comment} />
-						))}
-
-				{data && data.comments.length == 0 && (
-					<div className="comment-data-container">
-						Brak komentarzy do wyświetlenia
-					</div>
+			<div className="mt-3">
+				{!displayCommentInput ? (
+					<InputMockup handleClick={() => setDisplayCommentInput(true)}>
+						Dodaj nowy komentarz...
+					</InputMockup>
+				) : (
+					<ContentInput
+						addNew={addNewComment}
+						url={"comments"}
+						method={"POST"}
+						apiData={{ idUser: 6, idArticle: data.idArticle }}
+						enableTags={false}
+						placeHolder={"Wprowadz nowy komentarz..."}
+						handleClose={() => setDisplayCommentInput(false)}
+					/>
 				)}
-			</VerticalLineWrapper>
-
-			{/* {loadingData && (
-				<div className="loading-block">Ładowanie komentarzy...</div>
-			)} */}
+			</div>
+			{data &&
+				data.comments
+					.concat(newComment)
+					.map((comment) => (
+						<ArticleComment key={comment.idComment} commentData={comment} />
+					))}
+			{data && data.comments.length == 0 && (
+				<div className="comment-data-container">
+					Brak komentarzy do wyświetlenia
+				</div>
+			)}
 		</>
 	);
 }

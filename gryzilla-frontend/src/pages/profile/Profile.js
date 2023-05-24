@@ -54,13 +54,13 @@ export default function Profile() {
 								</div>
 							</Row>
 						</Col>
-						<Col lg={{ span: 8, offset: 1 }} md={12} sm={12}>
+						<Col lg={{ span: 8, offset: 1 }} md={12} sm={12} >
 							<Row>
 								<ProfileDataTable profile={profile} />
 							</Row>
-							<Row>
+							{/* <Row>
 								<ProfileLinkButtons />
-							</Row>
+							</Row> */}
 						</Col>
 					</Row>
 				</Container>

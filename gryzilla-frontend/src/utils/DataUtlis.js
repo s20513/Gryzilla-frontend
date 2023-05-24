@@ -5,7 +5,7 @@ export const DbDateConvert = (dbDate) => {
     const minutes = date.getMinutes() > 9 ? date.getMinutes() : ("0" + date.getMinutes())
     const time = hours + ":" + minutes;
 
-    const dateF = date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+    const dateF = date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
 
     return {time: time, date: dateF}
  };

@@ -18,6 +18,7 @@ import useAxios from "../../hooks/useAxios";
 import AvatarMini from "../../components/AvatarMini";
 import { Dropdown } from "react-bootstrap";
 import SearchBar from "./SearchBar";
+import NavAvatar from "./NavAvatar";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
@@ -52,7 +53,6 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/posts">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item
 									as={Link}
@@ -67,7 +67,6 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/articles">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item><Link to={"/articles/new"}>Nowy</Link></NavDropdown.Item>
 							</NavDropdown>
@@ -76,7 +75,6 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/groups">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.2">Ulubione</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item><Link to={"/groups/new"}>Nowy</Link></NavDropdown.Item>
 							</NavDropdown>
@@ -92,7 +90,7 @@ export default function NavBar() {
 
 							{auth.isLogged && (
 								<div className="d-flex ms-2 flex">
-									{/* <AvatarMini idUser={auth.id} /> */}
+									<NavAvatar idUser={auth.id} />
 
 									<Dropdown>
 										<Dropdown.Toggle

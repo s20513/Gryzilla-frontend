@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import ArticlePreview from "../articles/ArticlePreview";
 
 export default function ProfileArticles({idUser}) {
-	const [articles, errorPosts, loadingPosts] = useAxios({
+	const [articles, errorPosts, loadingPosts, runRequest] = useAxios({
 		method: "GET",
 		url: `/articles/user/${idUser}`,
 		headers: { accept: "*/*" },
 	});
+
+	useEffect(()=>{
+		runRequest();
+	},[idUser])
 
 	const [showMore, setShowMore] = useState(false);
 	const limit = 3;

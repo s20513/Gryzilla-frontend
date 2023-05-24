@@ -34,18 +34,19 @@ export default function ProfileAvatar({ idUser }) {
 			<div onClick={handleShow}>
 				{photo ? (
 					<img
-						className="profile-img"
+						className="profile-img profile-img-shadow "
 						src={getBase64Img()}
 						//src="https://picsum.photos/250"
 						alt="profile picture"
 					/>
 				) : (
 					<img
-						className="profile-img"
+						className="profile-img profile-img-shadow"
 						src={defaultAvatar}
 						alt="profile picture"
 					/>
 				)}
+				
 			</div>
 			<PhotoModal show={show} setShow={setShow} urlPOST={`/users/photo/${idUser}`} afterSubmit={afterSubmit}/>
 		</>

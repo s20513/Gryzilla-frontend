@@ -21,7 +21,7 @@ export default function Articles() {
 	);
 	const [pageNumber, setPageNumber] = useState(5);
 
-	const [ articles, loading, error, hasMore ] = useFetchPosts(
+	const [ articles, loading, error, isCancel, hasMore ] = useFetchPosts(
 		"articles",
 		"/articles/qty/",
 		sortType,
@@ -35,7 +35,7 @@ export default function Articles() {
 
 	const lastArticleRef = useCallback(
 		(node) => {
-			if (loading) return;
+			if (loading || isCancel) return;
 			if (observer.current) observer.current.disconnect();
 
 			observer.current = new IntersectionObserver((entries) => {

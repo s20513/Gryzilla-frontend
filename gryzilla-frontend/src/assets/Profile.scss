@@ -7,7 +7,23 @@
     //border: 5px solid rgb(114, 43, 43);
     border-radius: 1rem;
     box-shadow: 0 0 8px 0 rgb(0, 0, 0);
+    position: relative;
+    cursor: pointer;
 }
+
+.profile-img-shadow {
+    -webkit-filter: brightness(100%);
+}
+
+.profile-img-shadow:hover {
+    -webkit-filter: brightness(60%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 0.2s ease;
+}
+
 
 .profile-img-mini {
     @extend .profile-img;

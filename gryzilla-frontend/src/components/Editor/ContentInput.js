@@ -76,10 +76,9 @@ export default function ContentInput(props) {
 				<form onSubmit={handleSubmit}>
 					{enableTitle && (
 						<input
-							value={postData ? postData.title : ""}
+							value={title}
 							className="article-title-input"
 							type="text"
-							name="fname"
 							placeholder="Wprowadz tytuł artykuły.."
 							onChange={(e) => setTitle(e.target.value)}
 						/>

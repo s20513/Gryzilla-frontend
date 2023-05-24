@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import Post from "../posts/Post";
+import PostAndComments from "../posts/PostAndComments";
 
 export default function ProfilePotst({ idUser }) {
 	const [posts, errorPosts, loadingPosts, runRequest] = useAxios({
@@ -21,7 +22,8 @@ export default function ProfilePotst({ idUser }) {
 			{posts &&
 				posts.map((post, index) => {
 					if (showMore === false && index > (limit - 1)) return;
-					return <Post key={post.idPost} postData={post}></Post>;
+					//return <Post key={post.idPost} postData={post}></Post>;
+					return <PostAndComments key={post.idPost} postData={post}/>
 				})}
 
 			{posts && !showMore && (
