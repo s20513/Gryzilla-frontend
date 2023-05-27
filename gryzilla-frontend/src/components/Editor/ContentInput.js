@@ -14,10 +14,11 @@ import { FiAlertCircle } from "react-icons/fi";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../assets/Editor.scss";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import TextEditor from "./TextEditor";
 import { useAuth } from "../../context/AuthContext";
 import { useNavbar } from "../../context/NavbarContext";
+import useValidation, { Validate } from "../../hooks/useValidation";
 
 export default function ContentInput(props) {
 	const postData = props.initialContent;
@@ -35,7 +36,21 @@ export default function ContentInput(props) {
 
 	const [showInput, setShowInput] = useState(false);
 
-	const [title, setTitle] = useState( postData && postData.title ? postData.title : "");
+	const [title, setTitle] = useState(
+		postData && postData.title ? postData.title : ""
+	);
+
+	const [isValidTitle, setIsValidTitle] = useState(false);
+	const [errorText, setErrorText] = useState("");
+
+	const [isOkTitle, msg] = useValidation({
+		value: title,
+		validation: {
+			required: true,
+			minLength: 6,
+			maxLength: 100,
+		},
+	});
 
 	const childTextContentRef = useRef();
 	const childTagsRef = useRef();
@@ -46,19 +61,35 @@ export default function ContentInput(props) {
 		headers: { accept: "*/*" },
 	});
 
-	// useEffect(() => {
-	// 	scrollRef.current.scrollIntoView();
-	// }, []);
+	useEffect(() => {
+		scrollRef.current.scrollIntoView();
+	}, []);
 
 	//po otrzymaniu wartości z bazy
 	useEffect(() => {
-		if (newContent != undefined && newContent != null)
-			props.addNew(newContent);
+		if (newContent != undefined && newContent != null) props.addNew(newContent);
 	}, [newContent]);
 
 	const handleSubmit = (event) => {
-		console.log("submit");
 		event.preventDefault();
+		const value = childTextContentRef.current.getPostContent();
+		const validation = {required: true, minLength: (7 + 5), maxLength: 2000}
+		const {isOk, msg} = Validate(value, validation);
+
+		setErrorText(msg);
+
+		if(!isOk) {
+			//console.log("Bład tekst")
+			return;
+		}
+
+		if(enableTitle === true && !isOkTitle) {
+			console.log("blad title")
+			return;
+		}
+
+		console.log("submit");
+		
 		runRequest({
 			data: {
 				idUser: auth.id,
@@ -75,19 +106,23 @@ export default function ContentInput(props) {
 			<div className="content-container">
 				<form onSubmit={handleSubmit}>
 					{enableTitle && (
-						<input
-							value={title}
-							className="article-title-input"
-							type="text"
-							placeholder="Wprowadz tytuł artykuły.."
-							onChange={(e) => setTitle(e.target.value)}
-						/>
+						<>
+							<input
+								value={title}
+								className="article-title-input"
+								type="text"
+								placeholder="Wprowadz tytuł artykuły.."
+								onChange={(e) => setTitle(e.target.value)}
+							/>
+							<Form.Text className="text-muted">{msg}</Form.Text>
+						</>
 					)}
 
 					<TextEditor
 						initialContent={postData ? postData.content : undefined}
 						ref={childTextContentRef}
 					/>
+					<Form.Text className="text-muted">{errorText}</Form.Text>
 
 					{enableTags && (
 						<div style={{ marginTop: "8px" }}>

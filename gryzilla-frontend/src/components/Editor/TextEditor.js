@@ -10,6 +10,7 @@ import {
 	ContentState,
 	convertFromHTML,
 } from "draft-js";
+import { Form } from "react-bootstrap";
 
 const TextEditor = forwardRef((props, _ref) => {
 	const initialContent = props.initialContent;
@@ -35,38 +36,40 @@ const TextEditor = forwardRef((props, _ref) => {
 	}));
 
 	return (
-		<Editor
-			editorState={editorState}
-			onEditorStateChange={setEditorState}
-			placeholder={placeHolder}
-			toolbarClassName="toolbar-class"
-			wrapperClassName="wrapper-class"
-			editorClassName="editor-class"
-
-			toolbar={{
-				options: [
-					"inline",
-					"blockType",
-					"fontSize",
-					"fontFamily",
-					"list",
-					"textAlign",
-					"link",
-					"emoji",
-					"remove",
-					"history",
-				],
-				inline: {
+		<>
+			<Editor
+				editorState={editorState}
+				onEditorStateChange={setEditorState}
+				placeholder={placeHolder}
+				toolbarClassName="toolbar-class"
+				wrapperClassName="wrapper-class"
+				editorClassName="editor-class"
+				toolbar={{
 					options: [
-						"bold",
-						"italic",
-						"underline",
-						"strikethrough",
-						"superscript",
+						"inline",
+						"blockType",
+						"fontSize",
+						"fontFamily",
+						"list",
+						"textAlign",
+						"link",
+						"emoji",
+						"remove",
+						"history",
 					],
-				},
-			}}
-		/>
+					inline: {
+						options: [
+							"bold",
+							"italic",
+							"underline",
+							"strikethrough",
+							"superscript",
+						],
+					},
+				}}
+			/>
+			
+		</>
 	);
 });
 
