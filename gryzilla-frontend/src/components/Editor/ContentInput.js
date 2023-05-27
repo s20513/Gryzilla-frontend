@@ -44,11 +44,11 @@ export default function ContentInput(props) {
 	const [errorText, setErrorText] = useState("");
 
 	const [isOkTitle, msg] = useValidation({
-		value: title,
 		validation: {
-			required: true,
-			minLength: 6,
-			maxLength: 100,
+			validate: title,
+			required: { value: true, message: "Podanie tytuły jest wymagane" },
+			minLength: { value: 6, message: "Tytuł powinien składać się z conajmniej 6 znaków" },
+			maxLength: { value: 100, message: "Tytuł nie może mieć więcej niż 100 znaków" },
 		},
 	});
 
@@ -73,23 +73,20 @@ export default function ContentInput(props) {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const value = childTextContentRef.current.getPostContent();
-		const validation = {required: true, minLength: (7 + 5), maxLength: 2000}
-		const {isOk, msg} = Validate(value, validation);
+		const validation = {
+			validate: value,
+			required: {value: true},
+			minLength: {value: (7 + 5), message: "Wprowadzona treść jest za krótka"},
+			maxLength: {value: 2000, message: "Wprowadzona treść jest za długa"},
+		};
+		const { isOk, msg } = Validate(value, validation);
 
 		setErrorText(msg);
 
-		if(!isOk) {
-			//console.log("Bład tekst")
-			return;
-		}
+		if (!isOk) return;
 
-		if(enableTitle === true && !isOkTitle) {
-			console.log("blad title")
-			return;
-		}
+		if (enableTitle === true && !isOkTitle) return;
 
-		console.log("submit");
-		
 		runRequest({
 			data: {
 				idUser: auth.id,

@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 export default function FormInput({
     label,
 	control,
-	value,
 	setIsValid,
 	validation,
 }) {
-	const [isOk, msg] = useValidation({value, validation});
+	const [isOk, msg] = useValidation({validation});
 
 	useEffect(()=>{
 	    setIsValid(isOk);

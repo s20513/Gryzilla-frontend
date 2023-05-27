@@ -17,32 +17,14 @@ export default function GroupsNewForm() {
 	const [isValidName, setIsValidName] = useState(false);
 	const [isValidDesc, setIsValidDesc] = useState(false);
 
+	const isValidArr = [isValidName, isValidDesc];
+
 	const [data, error, loading, runRequest] = useAxios({
 		method: "POST",
 		url: "/groups",
 		headers: { accept: "*/*" },
 	});
 
-	// const validateForm = () => {
-	// 	setErrorDescription(null);
-	// 	setErrorName(null);
-	// 	if (name.length != 0) {
-	// 		if (name.length < 3)
-	// 			setErrorName("Nazwa grupy musi zawierać minimum 3 znaki");
-	// 	}
-
-	// 	if (description.length != 0) {
-	// 		if (description.length < 20)
-	// 			setErrorDescription("Opis grupy musi zawierać minimum 20 znaków");
-	// 	}
-
-	// 	if (errorDescription && errorName) return false;
-	// 	return true;
-	// };
-
-	// useEffect(() => {
-	// 	validateForm();
-	// }, [name, description]);
 
 	useEffect(() => {
 		if (!data) return;
@@ -50,11 +32,13 @@ export default function GroupsNewForm() {
 		navigate(`/groups/${data.idGroup}`);
 	}, [data]);
 
-	const handleClick = () => {
-		// if (!validateForm()) return;
-		// runRequest({
-		// 	data: { idUser: auth.id, groupName: name, description: description },
-		// });
+	const handleSubmit = () => {
+		if(isValidArr.some(v => v !== true))
+			return
+		
+		runRequest({
+			data: { idUser: auth.id, groupName: name, description: description },
+		});
 	};
 
 	return (
@@ -71,12 +55,12 @@ export default function GroupsNewForm() {
 							placeholder="Nazwa grupy"
 						/>
 					}
-					value={name}
 					setIsValid={setIsValidName}
 					validation={{
-						required: true,
-						minLength: 10,
-						maxLength: 20,
+						validate: name,
+						required: {value: true},
+						minLength: {value: 5},
+						maxLength: {value: 60},
 					}}
 				/>
 
@@ -90,40 +74,18 @@ export default function GroupsNewForm() {
 							onChange={(event) => setDescription(event.target.value)}
 						/>
 					}
-					value={description}
 					setIsValid={setIsValidDesc}
 					validation={{
-						required: true,
-						minLength: 10,
-						maxLength: 20,
+						validate: description,
+						required: {value: true, message: "Opis grupy jest wymagany"},
+						minLength: {value: 10, message: "Opis musi się składac z conajmniej 10 znaków"},
+						maxLength: {value: 200},
 					}}
 				/>
 
-				{/* <Form.Group className="mb-3" controlId="formBasicEmail">
-					<Form.Label>Nazwa grupy</Form.Label>
-					<Form.Control
-						onChange={(e) => {
-							setName(e.target.value);
-						}}
-						type="text"
-						placeholder="Nazwa grupy"
-					/>
-					<Form.Text className="text-muted">{errorName}</Form.Text>
-				</Form.Group> */}
-
-				{/* <Form.Group className="mb-3" controlId="">
-					<Form.Label>Opis grupy</Form.Label>
-					<Form.Control
-						as="textarea"
-						rows={3}
-						placeholder="Opis grupy"
-						onChange={(event) => setDescription(event.target.value)}
-					/>
-					<Form.Text className="text-muted">{errorDescription}</Form.Text>
-				</Form.Group> */}
 			</Form>
 			<div className="d-flex justify-content-center gap-3">
-				<Button variant="primary" onClick={handleClick}>
+				<Button variant="primary" onClick={handleSubmit}>
 					Utwórz
 				</Button>
 			</div>
