@@ -24,11 +24,11 @@ export default function MyVerticallyCenteredModal(props) {
 	const [email, setEmail] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 
-	const [loginError, setLoginError] = useState("");
-	const [passwordError, setPasswordError] = useState("");
-	const [passwordReapetError, setPasswordReaperError] = useState("");
-	const [emailError, setEmailError] = useState("");
-	const [phoneNumberError, setPhoneNumberError] = useState("");
+	const [loginError, setLoginError] = useState(false);
+	const [passwordError, setPasswordError] = useState(false);
+	const [passwordReapetError, setPasswordReaperError] = useState(false);
+	const [emailError, setEmailError] = useState(false);
+	const [phoneNumberError, setPhoneNumberError] = useState(false);
 
 	const isValidLoginArr = [loginError, passwordError];
 	const isValidRegisterArr = [
@@ -99,6 +99,9 @@ export default function MyVerticallyCenteredModal(props) {
 	};
 
 	const changeModalType = () => {
+		setPasswordReapet("");
+		setEmail("");
+		setPhoneNumber("");
 		setModalType((prev) => {
 			if (prev == "login") return "register";
 			else return "login";
@@ -110,60 +113,6 @@ export default function MyVerticallyCenteredModal(props) {
 		props.onHide();
 	};
 
-	// const validateForm = () => {
-	// 	var isGood = true;
-	// 	const empty = "Pole nie może być puste";
-	// 	if (login.length == 0) {
-	// 		setLoginError(empty);
-	// 		isGood = false;
-	// 	} else if (login.length < 5) {
-	// 		setLoginError("Login musi mieć więcej niż 5 znaków");
-	// 		isGood = false;
-	// 	} else {
-	// 		setLoginError("");
-	// 	}
-
-	// 	if (password.length == 0) {
-	// 		setPasswordError(empty);
-	// 		isGood = false;
-	// 	} else if (password.length < 5) {
-	// 		setPasswordError("Hasło musi miec więcej niż 5 znaków");
-	// 	} else {
-	// 		setPasswordError("");
-	// 	}
-
-	// 	if (passwordReapet.length == 0) {
-	// 		setPasswordReaperError(empty);
-	// 		isGood = false;
-	// 	} else if (passwordReapet != password) {
-	// 		setPasswordReaperError("Wprowadzone hasła są różne");
-	// 		isGood = false;
-	// 	} else {
-	// 		setPasswordReaperError("");
-	// 	}
-
-	// 	if (email.length == 0) {
-	// 		setEmailError(empty);
-	// 		isGood = false;
-	// 	} else if (!email.includes("@")) {
-	// 		setEmailError("Błędny format adresu email");
-	// 	} else {
-	// 		setEmailError("");
-	// 	}
-
-	// 	const reg = /^([0-9]{9})$/;
-	// 	if (phoneNumber.length == 0) {
-	// 		setPhoneNumberError(empty);
-	// 		isGood = false;
-	// 	} else if (!reg.test(phoneNumber)) {
-	// 		setPhoneNumberError("Błędnu numer telefonu");
-	// 		isGood = false;
-	// 	} else {
-	// 		setPhoneNumberError("");
-	// 	}
-
-	// 	return isGood;
-	// };
 
 	return (
 		<Modal
@@ -201,25 +150,7 @@ export default function MyVerticallyCenteredModal(props) {
 							maxLength: { value: 60 },
 						}}
 					/>
-					{/* <FormInput
-						label={"Login"}
-						control={
-							<Form.Control
-								onChange={(e) => {
-									setLogin(e.target.value);
-								}}
-								type="text"
-								placeholder="Login"
-							/>
-						}
-						setIsValid={setLoginError}
-						validation={{
-							validate: login,
-							required: { value: true },
-							minLength: { value: 5 },
-							maxLength: { value: 60 },
-						}}
-					/> */}
+				
 					<FormInput
 						label={"Hasło"}
 						control={
@@ -282,6 +213,7 @@ export default function MyVerticallyCenteredModal(props) {
 									required: { value: true },
 									minLength: { value: 1 },
 									maxLength: { value: 255 },
+									email: { value: true }
 								}}
 							/>
 
@@ -300,8 +232,9 @@ export default function MyVerticallyCenteredModal(props) {
 								validation={{
 									validate: phoneNumber,
 									required: { value: true },
-									minLength: { value: 9 },
-									maxLength: { value: 9 },
+									minLength: { value: 1 },
+									maxLength: { value: 20 },
+									phoneNumber: { value: true }
 								}}
 							/>
 						</>

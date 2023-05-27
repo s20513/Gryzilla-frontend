@@ -6,6 +6,7 @@ import useAxios from "../../hooks/useAxios";
 
 export default function LoginFormInput({
 	value,
+    isRegister,
 	label,
 	control,
 	setIsValid,
@@ -25,8 +26,6 @@ export default function LoginFormInput({
 
 	useEffect(() => {
 		if (!data) return;
-		console.log("Czy istnieje?");
-		console.log(data);
 
 		if (data.exists === true) {
 			setErrorUnique("Użytkownik o takiej nazwie już istnieje");
@@ -38,12 +37,20 @@ export default function LoginFormInput({
 
 	useEffect(() => {
 		if (!isOk) return;
+
+        if(!isRegister){
+            setErrorUnique("");
+            setIsValid(isOk);
+            return;
+        }
+
+        setErrorUnique("Trwa sprawdzanie dostępności loginu...")
 		runRequest({
 			params: {
 				Nick: value,
 			},
 		});
-	}, [valueDebounced]);
+	}, [valueDebounced, isRegister]);
 
 	return (
 		<>

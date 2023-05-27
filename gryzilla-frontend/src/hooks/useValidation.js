@@ -27,7 +27,7 @@ export const Validate = (value, validation) => {
 	const notEmail = "Podany email nie jest prawidłowy";
 	const notPhone = "Podany numer telefonu nie jest prawidłowy";
 
-	if (validation.required.value == true) {
+	if (validation.required && validation.required.value) {
 		if (isEmpty(value)) {
 			return {
 				isOk: false,
@@ -40,7 +40,7 @@ export const Validate = (value, validation) => {
 		}
 	}
 
-	if (validation.minLength.value) {
+	if (validation.minLength && validation.minLength.value ) {
 		if (isLessThen(value, validation.minLength.value)) {
 			return {
 				isOk: false,
@@ -51,7 +51,7 @@ export const Validate = (value, validation) => {
 		}
 	}
 
-	if (validation.maxLength.value) {
+	if (validation.maxLength && validation.maxLength.value) {
 		if (isMoreThan(value, validation.maxLength.value)) {
 			return {
 				isOk: false,
@@ -62,7 +62,7 @@ export const Validate = (value, validation) => {
 		}
 	}
 
-	if (validation.equalTo) {
+	if (validation.equalTo && validation.equalTo.value) {
 		if (!isEqual(value, validation.equalTo.value)) {
 			return {
 				isOk: false,
@@ -73,11 +73,17 @@ export const Validate = (value, validation) => {
 		}
 	}
 
-	// if(validation.email){
-	//     if(!isEmail) {
-	//         return {isOk: false, msg: notPhone}
-	//     }
-	// }
+	if(validation.email && validation.email.value){
+	    if(!isEmail(value)) {
+	        return {isOk: false, msg: validation.email.message ? validation.email.message : notEmail}
+	    }
+	}
+
+	if(validation.phoneNumber && validation.phoneNumber.value){
+	    if(!isPhoneNumber(value)) {
+	        return {isOk: false, msg: validation.phoneNumber.message ? validation.phoneNumber.message : notPhone}
+	    }
+	}
 
 	return { isOk: true, msg: "" };
 };
@@ -109,3 +115,19 @@ const isEqual = (value, toCompare) => {
 	}
 	return false;
 };
+
+const isEmail = (value) => {
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	if(emailRegex.test(value)) {
+		return true;
+	}
+	return false;
+}
+
+const isPhoneNumber = (value) => {
+	const phoneRegex = /^(?:\+?48)?(?:\s?-?\d{3}){3}$/;
+	if(phoneRegex.test(value)) {
+		return true;
+	}
+	return false;
+}
