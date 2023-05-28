@@ -75,7 +75,7 @@ function App() {
 											element={<ProfileRerender />}
 										/>
 									</Route>
-									<Route path="/search">
+									<Route path="/search/:searchData">
 										<Route index element={<SearchPage />}/>
 										<Route path="phrase/:searchPhrase" element={<SearchPage/>}/>
 										<Route path="tag/:searchPhrase" element={<SearchPage/>}/>

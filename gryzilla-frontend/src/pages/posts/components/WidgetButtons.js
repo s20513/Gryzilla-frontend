@@ -24,7 +24,8 @@ export default function WidgetButtons({
 	idPost,
 	showDetailsButton,
 	likes,
-	url
+	url,
+	owner
 }) {
 
 	const navigate = useNavigate();
@@ -47,6 +48,7 @@ export default function WidgetButtons({
 				handleDelete={handleDelete}
 				handleReport={handleReport}
 				upper={true}
+				owner={owner}
 			/>
 		</div>
 	);

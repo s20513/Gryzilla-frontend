@@ -66,6 +66,7 @@ export default function ArticleDetails() {
 						handleDelete={()=>setShowDeleteModal(true)}
 						handleReport={()=>setShowReportModal(true)}
 						upper={false}
+						owner={data.author.idUser}
 					/>
 
 					<ReportModal

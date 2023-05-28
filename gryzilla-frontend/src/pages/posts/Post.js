@@ -88,6 +88,7 @@ export default function Post({
 					showDetailsButton={detailsLink2}
 					likes={postData.likes}
 					url={"likesPost"}
+					owner={postData.idUser}
 				/>
 			</EditContentInputWrapper>
 

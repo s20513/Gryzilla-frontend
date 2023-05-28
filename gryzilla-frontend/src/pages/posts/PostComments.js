@@ -44,7 +44,7 @@ export default function PostComments(props) {
 					) : (
 						<ContentInput
 							addNew={addNewComment}
-							url={"posts/comment"}
+							url={"/posts/comment"}
 							method={"POST"}
 							apiData={{ idPost: idPost }}
 							enableTags={false}

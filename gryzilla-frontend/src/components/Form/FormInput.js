@@ -16,7 +16,7 @@ export default function FormInput({
 
 	return (
 		<>
-			<Form.Group className="mb-3" controlId="formBasicEmail">
+			<Form.Group className="mb-3">
 				<Form.Label>{label}</Form.Label>
 				{control}
 				<Form.Text className="text-muted">{msg}</Form.Text>

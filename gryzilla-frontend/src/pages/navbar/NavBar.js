@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import gryzillaLogo from "../../assets/logo.png";
 import { AiOutlineUser } from "react-icons/ai";
-import LoginModal from "../../components/LoginModal/LoginModal";
+import LoginModal from "../../components/modals/LoginModal/LoginModal";
 import { useAuth } from "../../context/AuthContext";
 import { useNavbar } from "../../context/NavbarContext";
 import useAxios from "../../hooks/useAxios";
@@ -19,6 +19,7 @@ import AvatarMini from "../../components/AvatarMini";
 import { Dropdown } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import NavAvatar from "./NavAvatar";
+import Require from "../../context/Require";
 
 export default function NavBar() {
 	const [modalShow, setModalShow] = useState(false);
@@ -53,30 +54,50 @@ export default function NavBar() {
 								<NavDropdown.Item as={Link} to="/posts">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item
-									as={Link}
-									to="/posts"
-									onClick={() => handleClick()}
-								>
-									Nowy
+								<NavDropdown.Item as={Link} to="/search/posts">
+									Szukaj
 								</NavDropdown.Item>
+
+								<Require req={{ authLogged: true }}>
+									<NavDropdown.Divider />
+									<NavDropdown.Item
+										as={Link}
+										to="/posts"
+										onClick={() => handleClick()}
+									>
+										Nowy
+									</NavDropdown.Item>
+								</Require>
 							</NavDropdown>
 
 							<NavDropdown title="Artykuły" id="basic">
 								<NavDropdown.Item as={Link} to="/articles">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item><Link to={"/articles/new"}>Nowy</Link></NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="/search/articles">
+									Szukaj
+								</NavDropdown.Item>
+								<Require req={{ authRole: ["Redactor", "Admin"] }}>
+									<NavDropdown.Divider />
+									<NavDropdown.Item as={Link} to="/articles/new">
+										Nowy
+									</NavDropdown.Item>
+								</Require>
 							</NavDropdown>
 
 							<NavDropdown title="Grupy" id="basic">
 								<NavDropdown.Item as={Link} to="/groups">
 									Główna
 								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item><Link to={"/groups/new"}>Nowy</Link></NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="/search/groups">
+									Szukaj
+								</NavDropdown.Item>
+								<Require req={{ authLogged: true }}>
+									<NavDropdown.Divider />
+									<NavDropdown.Item as={Link} to="/groups/new">
+										Nowy
+									</NavDropdown.Item>
+								</Require>
 							</NavDropdown>
 						</Nav>
 						<SearchBar />
@@ -84,7 +105,7 @@ export default function NavBar() {
 							{/* <AiOutlineUser/> */}
 							{!auth.isLogged && (
 								<Nav.Link onClick={() => setModalShow(true)}>
-										Zaloguj się
+									Zaloguj się
 								</Nav.Link>
 							)}
 
@@ -110,10 +131,7 @@ export default function NavBar() {
 												Mój profil
 											</Dropdown.Item>
 
-											<Dropdown.Item
-												as={Link}
-												to={`/adminPanel`}
-											>
+											<Dropdown.Item as={Link} to={`/adminPanel`}>
 												Panel zarządzania
 											</Dropdown.Item>
 

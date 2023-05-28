@@ -1,27 +1,29 @@
 import { useEffect, useCallback, useRef, useState } from "react";
 import useFetchPosts from "../../hooks/useFetchPosts";
-import PostAndComments from "../posts/PostAndComments"
+import PostAndComments from "../posts/PostAndComments";
 import LoadingBanner from "../../components/LoadingBanner";
 import useAxiosSearch from "../../hooks/useAxiosSearch";
 
-export default function PostsSearch({searchType, searchPhrase}) {
+export default function PostsSearch({ searchType, searchPhrase }) {
+	const observer = useRef();
+	const [pageNumber, setPageNumber] = useState(5);
 
-    const observer = useRef();
-    const [pageNumber, setPageNumber] = useState(5);
-
-    const [posts, loading, error, hasMore] = useAxiosSearch({
+	const [posts, loading, error, hasMore] = useAxiosSearch({
 		content: "posts",
-		url: searchType === "phrase" ? `/search/getPostsByWord/` : `/search/getPostsByTag`,
+		url:
+			searchType === "phrase"
+				? `/search/getPostsByWord/`
+				: `/search/getPostsByTag`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,
-		pageNumber: pageNumber
+		pageNumber: pageNumber,
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		setPageNumber(5);
-	},[searchPhrase, searchType])
+	}, [searchPhrase, searchType]);
 
-    const lastPostRef = useCallback(
+	const lastPostRef = useCallback(
 		(node) => {
 			if (loading) return;
 			if (observer.current) observer.current.disconnect();
@@ -43,6 +45,12 @@ export default function PostsSearch({searchType, searchPhrase}) {
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <PostAndComments key={post.idPost} postData={post} />;
 				})}
+
+			{posts && posts.length === 0 && (
+				<div className="content-container text-center">
+					Brak postów do wyświetlenia
+				</div>
+			)}
 
 			{!loading && <div ref={lastPostRef}></div>}
 

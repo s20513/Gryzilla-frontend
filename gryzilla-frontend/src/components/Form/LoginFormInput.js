@@ -29,18 +29,31 @@ export default function LoginFormInput({
 
 		if (data.exists === true) {
 			setErrorUnique("Użytkownik o takiej nazwie już istnieje");
+			setIsValid(false);
 		} else {
 			setErrorUnique(null);
 			setIsValid(isOk);
 		}
 	}, [data]);
 
+	//po zmianie wartości pola lub typu login/register
 	useEffect(() => {
-		if (!isOk) return;
+		setErrorUnique(null);
 
+		console.log("sprawdzam")
+
+		//jezeli blad walidacji
+		if (!isOk) {
+			console.log("blad walidacji " + msg)
+			setIsValid(false);
+			return;
+		}
+		console.log("czy register? " + isRegister)
+		//jezeli jest logowanie i przeszło walidacje
         if(!isRegister){
-            setErrorUnique("");
-            setIsValid(isOk);
+			console.log("Walidacja ok i nie ma rejestracji")
+            setErrorUnique(null);
+            setIsValid(true);
             return;
         }
 
@@ -54,7 +67,7 @@ export default function LoginFormInput({
 
 	return (
 		<>
-			<Form.Group className="mb-3" controlId="formBasicEmail">
+			<Form.Group className="mb-3">
 				<Form.Label>{label}</Form.Label>
 				{control}
 				<Form.Text className="text-muted">

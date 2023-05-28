@@ -1,28 +1,27 @@
 import { useEffect, useCallback, useRef, useState } from "react";
 import useFetchPosts from "../../hooks/useFetchPosts";
-import PostAndComments from "../posts/PostAndComments"
+import PostAndComments from "../posts/PostAndComments";
 import LoadingBanner from "../../components/LoadingBanner";
 import useAxiosSearch from "../../hooks/useAxiosSearch";
 import GroupPreview from "../groups/GroupPreview";
 
-export default function GroupSearch({searchType, searchPhrase}) {
+export default function GroupSearch({ searchType, searchPhrase }) {
+	const observer = useRef();
+	const [pageNumber, setPageNumber] = useState(5);
 
-    const observer = useRef();
-    const [pageNumber, setPageNumber] = useState(5);
-
-    const [groups, loading, error, hasMore] = useAxiosSearch({
+	const [groups, loading, error, hasMore] = useAxiosSearch({
 		content: "groups",
-		url:  `/search/getGroupsByWord/`,
+		url: `/search/getGroupsByWord/`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,
-		pageNumber: pageNumber
+		pageNumber: pageNumber,
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		setPageNumber(5);
-	},[searchPhrase, searchType])
+	}, [searchPhrase, searchType]);
 
-    const lastPostRef = useCallback(
+	const lastPostRef = useCallback(
 		(node) => {
 			if (loading) return;
 			if (observer.current) observer.current.disconnect();
@@ -39,9 +38,16 @@ export default function GroupSearch({searchType, searchPhrase}) {
 
 	return (
 		<div>
-			{groups && groups.map((group) => {
-                return <GroupPreview data={group}/>
-            })}
+			{groups &&
+				groups.map((group) => {
+					return <GroupPreview data={group} />;
+				})}
+
+			{groups && groups.length === 0 && (
+				<div className="content-container text-center">
+					Brak grup do wyświetlenia
+				</div>
+			)}
 
 			{!loading && <div ref={lastPostRef}></div>}
 

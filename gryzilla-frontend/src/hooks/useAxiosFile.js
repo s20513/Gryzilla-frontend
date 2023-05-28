@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 export const useAxiosFile = (axiosParams) => {
 	const [response, setResponse] = useState(null);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+
+	const auth = useAuth();
 
 	const fetchData = async (url, formData) => {
 		try {
@@ -12,6 +15,7 @@ export const useAxiosFile = (axiosParams) => {
 			const result = await axios.post(url, formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
+					...auth.getJwtToken(),
 				},
 			});
 			setResponse(result.data);
@@ -21,14 +25,6 @@ export const useAxiosFile = (axiosParams) => {
 			setLoading(false);
 		}
 	};
-
-	// useEffect(() => {
-	// 	if (axiosParams.executeOnRender && axiosParams.executeOnRender == false)
-	// 	  return;
-	// 	if (axiosParams.method == "GET") {
-	// 		runRequest(axiosParams);
-	// 	}
-	// }, []); // execute once only request is GET
 
 	const runRequest = (url, file) => {
 		fetchData(url, file);

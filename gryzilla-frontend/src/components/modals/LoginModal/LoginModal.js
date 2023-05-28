@@ -6,13 +6,13 @@ import axios from "axios";
 
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
-import useAxios from "../../hooks/useAxios";
-import { useAuth } from "../../context/AuthContext";
-import LoadingBanner from "../LoadingBanner";
-import ErrorBanner from "../ErrorBanner";
-import SuccessBaner from "../SuccessBanner";
-import FormInput from "../Form/FormInput";
-import LoginFormInput from "../Form/LoginFormInput";
+import useAxios from "../../../hooks/useAxios";
+import { useAuth } from "../../../context/AuthContext";
+import LoadingBanner from "../../LoadingBanner";
+import ErrorBanner from "../../ErrorBanner";
+import SuccessBaner from "../../SuccessBanner";
+import FormInput from "../../Form/FormInput";
+import LoginFormInput from "../../Form/LoginFormInput";
 
 export default function MyVerticallyCenteredModal(props) {
 	const auth = useAuth();
@@ -58,8 +58,8 @@ export default function MyVerticallyCenteredModal(props) {
 	useEffect(() => {
 		if (dataLogin == null) return;
 		setSuccessRegister(false);
-		props.onHide();
-		auth.login(dataLogin);
+		handleClose();
+		auth.loginWithCredentails(dataLogin);
 	}, [dataLogin]);
 
 	//po rejestracji
@@ -71,9 +71,9 @@ export default function MyVerticallyCenteredModal(props) {
 	}, [dataRegister]);
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
-
 		if (modalType == "login") {
+			console.log("logowanie")
+			
 			if (isValidLoginArr.some((v) => v !== true)) return;
 
 			runRequestLogin({
@@ -109,6 +109,8 @@ export default function MyVerticallyCenteredModal(props) {
 	};
 
 	const handleClose = () => {
+		setLogin("");
+		setPassword("");
 		setSuccessRegister(false);
 		props.onHide();
 	};
@@ -262,7 +264,7 @@ export default function MyVerticallyCenteredModal(props) {
 				<Button variant="secondary" onClick={() => handleClose()}>
 					Zamknij
 				</Button>
-				<Button variant="primary" onClick={handleSubmit}>
+				<Button variant="primary" onClick={() => handleSubmit()}>
 					{modalType == "login" ? "Zaloguj się" : "Zarejestruj się"}
 				</Button>
 			</Modal.Footer>

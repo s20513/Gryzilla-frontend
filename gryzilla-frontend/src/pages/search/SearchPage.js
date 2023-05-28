@@ -24,17 +24,27 @@ export default function SearchPage() {
 	const [searchPhrase, setSearchPhrase] = useState(() => {
 		return params.searchPhrase ? params.searchPhrase : "";
 	});
+	const [searchData, setSearchData] = useState(() => {
+		return params.searchData ? params.searchData : "posts";
+	});
+
 	const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
 	useEffect(() => {
 		setSearchPhrase(params.searchPhrase ? params.searchPhrase : "");
+		setSearchData(params.searchData ? params.searchData : "");
 	}, [navigate]);
+
+	const test = () => {
+		console.log("click");
+		setSearchData("articles");
+	};
 
 	useEffect(() => {
 		if (searchPhrase)
-			navigate(`/search/${searchType}/${debouncedSearchPhrase}`);
-		else navigate("/search");
-	}, [debouncedSearchPhrase, searchType]);
+			navigate(`/search/${searchData}/${searchType}/${debouncedSearchPhrase}`);
+		else navigate(`/search/${searchData}`);
+	}, [debouncedSearchPhrase, searchType, searchData]);
 
 	const getPolishSearchtype = () => {
 		return searchType === "phrase" ? "fraza" : "tag";
@@ -67,31 +77,44 @@ export default function SearchPage() {
 				</InputGroup>
 			</div>
 			<Tabs
-				defaultActiveKey="posts"
+				//defaultActiveKey={searchData}
+				activeKey={searchData}
 				id="fill-tab-example"
 				transition={true}
 				className="tabs-style mb-3"
 				justify
+				onSelect={(key) => setSearchData(key)}
 			>
-				<Tab eventKey="posts" title="Posty">
+				<Tab				
+					eventKey="posts"
+					title="Posty"
+				>
 					<PostsSearch
 						searchPhrase={debouncedSearchPhrase}
 						searchType={searchType}
 					/>
 				</Tab>
+
 				<Tab eventKey="articles" title="Artykuły">
 					<ArticlesSearch
 						searchPhrase={debouncedSearchPhrase}
 						searchType={searchType}
 					/>
 				</Tab>
-				<Tab eventKey="users" title="Użytkownicy">
+
+				<Tab
+					eventKey="users"
+					title="Użytkownicy"
+				>
 					<ProfileSearch
 						searchPhrase={debouncedSearchPhrase}
 						searchType={searchType}
 					/>
 				</Tab>
-				<Tab eventKey="groups" title="Grupy">
+				<Tab
+					eventKey="groups"
+					title="Grupy"
+				>
 					<GroupSearch
 						searchPhrase={debouncedSearchPhrase}
 						searchType={searchType}

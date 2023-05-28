@@ -12,7 +12,7 @@ export default function LoadingBlock({ blocksNum, topSize, bottomLines, hrLine }
 
 	return [...Array(n)].map((element, index) => {
 		return (
-			<div className="content-container">
+			<div key={index} className="content-container">
 				<SkeletonTheme key={index} baseColor="#131927" highlightColor="#353a50">
 					<Skeleton height={topSize} />
 					{hrLine && <hr className="hr-line" />}

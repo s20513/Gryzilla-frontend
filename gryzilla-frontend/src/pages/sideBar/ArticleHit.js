@@ -31,8 +31,8 @@ export default function ArticleHit() {
 				{article &&
 					article.map((article, index) => {
 						return (
-							<Link to={`articles/${article.idArticle}`}>
-								<div key={index} className="content-container">
+							<Link key={index} to={`articles/${article.idArticle}`}>
+								<div className="content-container">
 									<h5 className="mb-0">{article.title}</h5>
 									<span className="article-label">
 										Twórca {article.author.nick}, utworzono{" "}

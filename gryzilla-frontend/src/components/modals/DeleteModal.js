@@ -2,8 +2,11 @@ import { Modal } from "react-bootstrap";
 import useAxios from "../../hooks/useAxios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+import { useAuth } from "../../context/AuthContext";
 
 export default function DeleteModal({show, setShow, isDeleted, setIsDeleted, url, deletedContentId}) {
+
+	const auth = useAuth();
 
     const [data, error, loading, runRequest] = useAxios({
 		method: "DELETE",
@@ -31,7 +34,7 @@ export default function DeleteModal({show, setShow, isDeleted, setIsDeleted, url
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Usówanie treści</Modal.Title>
+				<Modal.Title>Usuwanie treści</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>

@@ -21,8 +21,30 @@ export const AuthProvider = ({ children }) => {
 	//po otrzymaniu danych z serwera, zaloguj usera
 	useEffect(() => {
 		if (response == null) return;
-		login(response);
+		loginWithCredentails(response);
 	}, [response]);
+
+	function fetchNewJwtToken() {
+		const apiCall = {
+			method: "POST",
+			url: "/users/refreshToken",
+			headers: { accept: "*/*" },
+			data: { refreshToken: refreshToken },
+		};
+
+		const fetchData = async (params) => {
+			try {
+				const result = await axios.request(params);
+				setResponse(result.data);
+			} catch (error) {
+				setRefreshToken(null);
+				console.log("refreshToken utracił ważność: " + error);
+			} finally {
+				//setLoading(false);
+			}
+		};
+		fetchData(apiCall);
+	}
 
 	//po renderze strony
 	useEffect(() => {
@@ -32,80 +54,86 @@ export const AuthProvider = ({ children }) => {
 		if (refreshToken == null) {
 			console.log("Brak refreshTokena");
 			return;
+		} else {
+			console.log("Jest refreshToken")
 		}
 
 		//jeżeli ważny jwtToken to zaloguj
-		if ( jwtToken != null && chechValidJwt(jwtToken)) {
+		if (jwtToken != null && chechValidJwt(jwtToken, 10000)) {
 			console.log("Zapisany ważny jwtToken i jest resfresh token");
 			relogin();
 			return;
+		} else {
+			console.log("Brak jwt lub nie ważny")
 		}
-		
-		//Jeżeli jest refreshToken ale brak ważnego jwtTokena, pobierz pakiet do logowania
+
+		//Jeżeli jest refreshToken ale brak ważnego jwtTokena, pobierz nowy jwtToken
 		console.log("Używanie refreshTokena");
-
-		const fetchData = async (params) => {
-			try {
-				const result = await axios.request(params);
-				setResponse(result.data);
-			} catch (error) {
-				setRefreshToken(null);
-				console.log("Nie łykneło tokena: " + error);
-			} finally {
-				//setLoading(false);
-			}
-		};
-
-		const apiCall = {
-			method: "POST",
-			url: "/users/refreshToken",
-			headers: { accept: "*/*" },
-			data: { refreshToken: refreshToken },
-		};
-
-		fetchData(apiCall);
+		fetchNewJwtToken()
+		
 	}, []);
 
-	const login = (loginData) => {
+	const loginWithCredentails = (loginData) => {
 		setJwtToken(loginData.token);
 		setRefreshToken(loginData.refreshToken);
 		deCode(loginData.token);
-	
+
 		setIsLogged(true);
 	};
 
-	const relogin = (loginData) => {
+	const renewJwtToken = () => {
+		if(!chechValidJwt(jwtToken,5000)){
+			console.log("Potrzebny nowy token")
+			fetchNewJwtToken();
+		}
+	}
+
+	const relogin = () => {
 		deCode(jwtToken);
+
 		setIsLogged(true);
 	};
 
 	const logout = () => {
 		setRefreshToken(null);
 		setJwtToken(null);
-
 		// setNick(null);
 		// setId(null);
 		// setRole(null);
 		setIsLogged(false);
 	};
 
+	const getJwtToken = () => {
+		return { Authorization: jwtToken ? "Bearer " + jwtToken : "" };
+	};
+
 	function deCode(jwtToken) {
-		console.log("token do decode: " + jwtToken);
 		var decoded = jwt_decode(jwtToken);
 		setNick(decoded.unique_name);
 		setId(decoded.nameid);
 		setRole(decoded.role);
 	}
 
-	function chechValidJwt(jwtToken) {
+	function chechValidJwt(jwtToken, treshold) {
 		var decoded = jwt_decode(jwtToken);
-		if (decoded.exp * 1000 > Date.now()) return true;
+		if (decoded.exp * 1000 > (Date.now() + treshold)) return true;
 		return false;
 	}
 
 	return (
 		<AuthContext.Provider
-			value={{ nick, id, role, login, logout, isLogged, response }}
+			value={{
+				nick,
+				id,
+				role,
+				loginWithCredentails,
+				logout,
+				getJwtToken,
+				isLogged,
+				response,
+				jwtToken,
+				renewJwtToken
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

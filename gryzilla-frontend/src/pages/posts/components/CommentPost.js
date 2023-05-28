@@ -46,15 +46,20 @@ export default function CommentPost({ commentData }) {
 				handleClose={changeDisplayEditor}
 			>
 				<Comment
-					avatar={null}
+					avatar={{
+						type: commentData.type,
+						base64PhotoData: commentData.base64PhotoData,
+					}}
 					nick={commentData.nick}
 					createdAt={commentData.createdAt}
 					content={commentData.content}
+
 				/>
 				<OptionDropdown
 					handleEdit={changeDisplayEditor}
 					handleDelete={() => setShowDeleteModal(true)}
 					handleReport={() => setShowReportModal(true)}
+					owner={commentData.idUser}
 				/>
 			</EditContentInputWrapper>
 

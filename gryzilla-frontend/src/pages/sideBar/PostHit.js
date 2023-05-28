@@ -44,26 +44,26 @@ export default function PostHit() {
 				{posts &&
 					posts.map((post, index) => {
 						return (
-							<Link to={`/posts/${post.idPost}`}>
-								<div key={index} className="content-container content-wrapper">
-									{/* <span className="likes-count">+{post.likes} </span> */}
-									<DataBar
-										idPost={post.idPost}
-										likes={post.likes}
-										nick={post.nick}
-										date={DbDateConvert(post.createdAt)}
-										avatar={{
-											type: post.type,
-											base64PhotoData: post.base64PhotoData,
-										}}
-									/>
+							<div key={index} className="content-container content-wrapper">
+								{/* <span className="likes-count">+{post.likes} </span> */}
+								<DataBar
+									idPost={post.idPost}
+									likes={post.likes}
+									nick={post.nick}
+									date={DbDateConvert(post.createdAt)}
+									avatar={{
+										type: post.type,
+										base64PhotoData: post.base64PhotoData,
+									}}
+								/>
+								<Link key={index} to={`/posts/${post.idPost}`}>
 									<hr className="hr-line" />
 									<div
 										className="text-fade-out"
 										dangerouslySetInnerHTML={{ __html: post.content }}
 									></div>
-								</div>
-							</Link>
+								</Link>
+							</div>
 						);
 					})}
 			</div>

@@ -11,6 +11,7 @@ import useFetchPosts from "../../hooks/useFetchPosts";
 import { useRef } from "react";
 import { useCallback } from "react";
 import LoadingBanner from "../../components/LoadingBanner";
+import Require from "../../context/Require";
 
 export default function Articles() {
 	const observer = useRef();
@@ -21,7 +22,7 @@ export default function Articles() {
 	);
 	const [pageNumber, setPageNumber] = useState(5);
 
-	const [ articles, loading, error, isCancel, hasMore ] = useFetchPosts(
+	const [articles, loading, error, isCancel, hasMore] = useFetchPosts(
 		"articles",
 		"/articles/qty/",
 		sortType,
@@ -54,9 +55,16 @@ export default function Articles() {
 				<h3>Wszystkie artykuły</h3>
 				<DropdownList sortType={sortType} setSortType={changeSortType} />
 			</div>
-			<Link to={"/articles/new"}>
-				<InputMockup>Dodaj nowy artykuł...</InputMockup>
-			</Link>
+
+			<Require
+				req={{
+					authRole: ["Redactor", "Admin"],
+				}}
+			>
+				<Link to={"/articles/new"}>
+					<InputMockup>Dodaj nowy artykuł...</InputMockup>
+				</Link>
+			</Require>
 
 			{articles &&
 				articles.map((article) => {
@@ -76,11 +84,10 @@ export default function Articles() {
 			{!loading && <div ref={lastArticleRef}></div>}
 
 			<LoadingBanner
-                loading={loading}
-                error={error}
+				loading={loading}
+				error={error}
 				placeHolder={"Ładowanie artykułów"}
 			/>
-
 		</Container>
 	);
 }
