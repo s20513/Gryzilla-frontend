@@ -8,8 +8,11 @@ import EditContentInputWrapper from "../../../components/wrappers/EditContentInp
 import OptionDropdown from "../../../components/OptionDropdown";
 import DeleteModal from "../../../components/modals/DeleteModal";
 import DeleteContentWrapper from "../../../components/wrappers/DeleteContentWrapper";
+import Require from "../../../context/Require";
+import { useNavigate } from "react-router-dom";
 
 export default function CommentPost({ commentData }) {
+	const navigate = useNavigate();
 	const [displayEditor, setDisplayEditor] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 
@@ -30,7 +33,6 @@ export default function CommentPost({ commentData }) {
 			isDeleted={isDeleted}
 			placeholder={"Komentarz został usunięty"}
 		>
-
 			<EditContentInputWrapper
 				displayEditor={displayEditor}
 				initialContent={commentData}
@@ -53,14 +55,21 @@ export default function CommentPost({ commentData }) {
 					nick={commentData.nick}
 					createdAt={commentData.createdAt}
 					content={commentData.content}
-
+					id={commentData.idComment}
 				/>
-				<OptionDropdown
-					handleEdit={changeDisplayEditor}
-					handleDelete={() => setShowDeleteModal(true)}
-					handleReport={() => setShowReportModal(true)}
-					owner={commentData.idUser}
-				/>
+				{/* <Require
+					req={{
+						authLogged: true,
+					}}
+				> */}
+					<OptionDropdown
+						handleEdit={changeDisplayEditor}
+						handleDelete={() => setShowDeleteModal(true)}
+						handleReport={() => setShowReportModal(true)}
+						handleNewView={() => navigate(`/posts/${commentData.idPost}/${commentData.idComment}`)}
+						owner={commentData.idUser}
+					/>
+				{/* </Require> */}
 			</EditContentInputWrapper>
 
 			<ReportModal

@@ -29,11 +29,13 @@ import GroupDetials from "./pages/groupsDetails/GroupDetails";
 import GroupNew from "./pages/groupsNew/GroupNew";
 import SearchPage from "./pages/search/SearchPage";
 import ArticleEdit from "./pages/articleEdit/ArticleEdit";
+import ProfilePanel from "./pages/profilePanel/ProfilePanel";
+import ProfilePanelWrapper from "./pages/profilePanel/ProfilePanelWrapper";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
 	//axios.defaults.baseURL = 'http://89.68.200.216:7056/api';
-	//axios.defaults.baseURL = 'https://localhost:5001/api';
+	axios.defaults.baseURL = 'https://localhost:5001/api';
 
 	return (
 		<AuthProvider>
@@ -74,6 +76,7 @@ function App() {
 											path="rerender/:idUser"
 											element={<ProfileRerender />}
 										/>
+										<Route path="panel/:idUser" element={<ProfilePanelWrapper><ProfilePanel/></ProfilePanelWrapper>} />
 									</Route>
 									<Route path="/search/:searchData">
 										<Route index element={<SearchPage />}/>

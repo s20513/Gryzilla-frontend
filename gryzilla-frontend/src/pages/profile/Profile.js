@@ -17,6 +17,8 @@ import FollowButton from "./components/FollowButton";
 import ProfileAvatar from "./components/ProfileAvatar";
 import ProfileDataTable from "./components/ProfileDataTable";
 import ProfileLinkButtons from "./components/ProfileLinkButtons";
+import OptionDropdown from "../../components/OptionDropdown";
+import ProfileEditModal from "../../components/modals/ProfileEditModal";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -26,46 +28,56 @@ export default function Profile() {
 	const params = useParams();
 	const idUser = params.idUser;
 
+	const [showEditModal, setShowEditModal] = useState(false);
+
 	const [profile, errorProfile, loadingProfile, runRequest] = useAxios({
 		method: "GET",
 		url: `/users/${params.idUser}`,
 		headers: { accept: "*/*" },
 	});
-	
-	useEffect(()=>{
+
+	useEffect(() => {
 		runRequest();
-	},[params.idUser])
+	}, [params.idUser]);
 
 	return (
 		<>
-		{profile &&
-			<Container className="main-panel">
-				<Container className="d-flex justify-content-between">
-					<h2>Mój profil {idUser}</h2>
-				</Container>
+			{profile && (
+				<Container className="main-panel">
+					<Container className="d-flex justify-content-between">
+						<h2>Profil użytkonika {profile.nick}</h2>
+					</Container>
 
-				<Container>
-					<Row>
-						<Col lg={3} md={12} sm={12}>
-							<Row >
-								<div className="content-container profile-data-container">
-									<ProfileAvatar idUser={idUser} />
-									<FollowButton idUser={idUser} />
-								</div>
-							</Row>
-						</Col>
-						<Col lg={{ span: 8, offset: 1 }} md={12} sm={12} >
-							<Row>
-								<ProfileDataTable profile={profile} />
-							</Row>
-							{/* <Row>
+					<Container>
+						<Row>
+							<Col lg={3} md={12} sm={12}>
+								<Row>
+									<div className="content-container profile-data-container gap-2">
+										<ProfileAvatar idUser={idUser} />
+										<FollowButton idUser={idUser} />
+										<OptionDropdown
+											handleEdit={() => setShowEditModal(true)}
+											// handleDelete={() => setShowDeleteModal(true)}
+											// handleReport={() => setShowReportModal(true)}
+											owner={profile.idUser}
+											upper={true}
+										/>
+										<ProfileEditModal show={showEditModal} setShow={setShowEditModal}/>
+									</div>
+								</Row>
+							</Col>
+							<Col lg={{ span: 8, offset: 1 }} md={12} sm={12}>
+								<Row>
+									<ProfileDataTable profile={profile} />
+								</Row>
+								{/* <Row>
 								<ProfileLinkButtons />
 							</Row> */}
-						</Col>
-					</Row>
+							</Col>
+						</Row>
+					</Container>
 				</Container>
-			</Container>
-		}
+			)}
 
 			<Container className="main-panel">
 				<Tabs

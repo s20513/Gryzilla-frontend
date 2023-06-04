@@ -4,6 +4,8 @@ import { WithContext as ReactTags } from "react-tag-input";
 import axios from "axios";
 import { forwardRef, useImperativeHandle } from "react";
 import "../../assets/Tag.css";
+import useAxios from "../../hooks/useAxios";
+import { useAuth } from "../../context/AuthContext";
 
 const KeyCodes = {
 	comma: 188,
@@ -16,6 +18,8 @@ const Tag = forwardRef((props, _ref) => {
 	const initialContent = props.initialContent;
 
 	const [suggestions, setSuggestions] = useState([]);
+
+	const auth = useAuth();
 
 	const [parentTags, setParentTags] = useState(() => {
 		if (initialContent == undefined) return [];
@@ -46,11 +50,26 @@ const Tag = forwardRef((props, _ref) => {
 		setParentTags([...parentTags, tag]);
 	};
 
+	// const [data, error, loading, runRequest, isSuccess] = useAxios({
+	// 	method: "GET",
+	// 	url: `/tags/${auth.id}`,
+	// 	headers: { accept: "*/*" },
+	// 	executeOnRender: false,
+	// });
+
 	const handleInputChange = async (tag) => {
 		//console.log(tag);
 		setSuggestions([]);
+
+		const params = {
+			method: "GET",
+			url: `/tags/${tag}`,
+			headers: { accept: "*/*", ...auth.getJwtToken() },
+		}
+
 		try {
-			const response = await axios.get(`/tags/${tag}`);
+			const response = await axios.request(params);
+			//const response = await axios.get(`/tags/${tag}`, {headers: { accept: "*/*" }});
 			const result = response.data.map((tag) => {
 				return {
 					id: tag.id.toString(),

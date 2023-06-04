@@ -50,7 +50,7 @@ export default function PhotoModal({show, setShow, urlPOST, afterSubmit}) {
 						onChange={changeHandler}
 						style={{ display: "none" }}
 					/>
-					<label for="file" className="button-web-link btn btn-primary">
+					<label htmlFor="file" className="button-web-link btn btn-primary">
 						{!isFilePicked ? "Wybierz obraz" : "Wybierz inny obraz"}
 					</label>
 

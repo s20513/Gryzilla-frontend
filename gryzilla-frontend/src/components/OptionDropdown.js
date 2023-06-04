@@ -22,7 +22,7 @@ export default function OptionDropdown({
 			<Dropdown.Menu className="dropdown-menu-right dropdown-menu-dark">
 				{handleNewView && (
 					<Dropdown.Item onClick={handleNewView}>
-						Widok w nowym oknie
+						Widok szczegółowy
 					</Dropdown.Item>
 				)}
 
@@ -33,8 +33,10 @@ export default function OptionDropdown({
 						authRole: ["Admin"],
 					}}
 				>
-					<Dropdown.Item onClick={handleEdit}>Edytuj</Dropdown.Item>
-				</Require>	
+					{handleEdit && (
+						<Dropdown.Item onClick={handleEdit}>Edytuj</Dropdown.Item>
+					)}
+				</Require>
 
 				<Require
 					req={{
@@ -43,15 +45,20 @@ export default function OptionDropdown({
 						authRole: ["Admin", "Moderator"],
 					}}
 				>
-					<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
+					{handleDelete && (
+						<Dropdown.Item onClick={handleDelete}>Usuń</Dropdown.Item>
+					)}
 				</Require>
 
 				<Require
 					req={{
 						authLogged: true,
+						authOwner: false,
 					}}
 				>
-					<Dropdown.Item onClick={handleReport}>Zgłoś</Dropdown.Item>
+					{handleReport && (
+						<Dropdown.Item onClick={handleReport}>Zgłoś</Dropdown.Item>
+					)}
 				</Require>
 			</Dropdown.Menu>
 		</Dropdown>

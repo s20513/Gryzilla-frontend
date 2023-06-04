@@ -124,16 +124,23 @@ export default function NavBar() {
 										</Dropdown.Toggle>
 
 										<Dropdown.Menu>
-											<Dropdown.Item
-												as={Link}
-												to={`/profile/rerender/${auth.id}`}
-											>
+											<Dropdown.Item as={Link} to={`/profile/${auth.id}`}>
 												Mój profil
 											</Dropdown.Item>
 
-											<Dropdown.Item as={Link} to={`/adminPanel`}>
-												Panel zarządzania
+											<Dropdown.Item as={Link} to={`/profile/panel/${auth.id}`}>
+												Panel użytkownika
 											</Dropdown.Item>
+
+											<Require
+												req={{
+													authRole: ["Admin","Moderator"],
+												}}
+											>
+												<Dropdown.Item as={Link} to={`/adminPanel`}>
+													Panel zarządzania
+												</Dropdown.Item>
+											</Require>
 
 											<Dropdown.Divider />
 

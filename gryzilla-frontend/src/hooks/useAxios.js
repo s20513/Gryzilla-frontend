@@ -11,14 +11,21 @@ export const useAxios = (axiosParams) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 
+	const [isSuccess, setIsSuccess] = useState(null);
+
 	const fetchData = async (params) => {
 		try {
+			setIsSuccess(null);
+			setError(null);
 			setLoading(true);
+
 			const result = await axios.request(params);
 			setResponse(result.data);
-			setError(null);
+			setIsSuccess(true);
+			
 		} catch (error) {
 			setError(error);
+			setIsSuccess(false);
 		} finally {
 			setLoading(false);
 		}
@@ -37,7 +44,7 @@ export const useAxios = (axiosParams) => {
 		fetchData(Object.assign(axiosParams, data));
 	};
 
-	return [response, error, loading, runRequest];
+	return [response, error, loading, runRequest, isSuccess];
 };
 
 export default useAxios;

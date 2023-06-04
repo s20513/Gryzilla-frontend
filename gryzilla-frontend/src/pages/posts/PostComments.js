@@ -23,7 +23,9 @@ export default function PostComments(props) {
 	const [newComment, setNewComment] = useState([]);
 
 	const addNewComment = (newComment) => {
-		setNewComment(newComment);
+		setNewComment((prev) => {
+			return [...prev, newComment];
+		});
 		setDisplayCommentInput(false);
 	};
 
@@ -57,7 +59,7 @@ export default function PostComments(props) {
 				{data &&
 					data.comments
 						.concat(newComment)
-						.map((comment) => <CommentPost commentData={comment} />)}
+						.map((comment) => <CommentPost key={comment.idComment} commentData={comment} />)}
 
 				{data && data.comments.length == 0 && (
 					<div className="comment-data-container">

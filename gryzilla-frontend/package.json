@@ -1,5 +1,4 @@
 {
-  "proxy": "https://localhost:5001/api/",
   "name": "inzynierka",
   "version": "0.1.0",
   "private": true,
@@ -55,8 +54,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
   }
 }
