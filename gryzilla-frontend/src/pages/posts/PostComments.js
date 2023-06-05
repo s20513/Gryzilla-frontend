@@ -7,6 +7,7 @@ import ContentInput from "../../components/Editor/ContentInput";
 import { useAuth } from "../../context/AuthContext";
 import VerticalLineWrapper from "./components/VerticalLineWrapper";
 import CommentPost from "./components/CommentPost";
+import Require from "../../context/Require";
 
 export default function PostComments(props) {
 	const idPost = props.idPost;
@@ -33,33 +34,37 @@ export default function PostComments(props) {
 		<>
 			<VerticalLineWrapper>
 				<div className="mt-3">
-					{!displayCommentInput ? (
-						<InputMockup
-							handleClick={() =>
-								auth.isLogged
-									? setDisplayCommentInput(true)
-									: alert("Zaloguj się aby dodawać treści")
-							}
-						>
-							Dodaj nowy komentarz...
-						</InputMockup>
-					) : (
-						<ContentInput
-							addNew={addNewComment}
-							url={"/posts/comment"}
-							method={"POST"}
-							apiData={{ idPost: idPost }}
-							enableTags={false}
-							placeHolder={"Wprowadz nowy komentarz..."}
-							handleClose={() => setDisplayCommentInput(false)}
-						/>
-					)}
+					<Require req={{ authLogged: true }}>
+						{!displayCommentInput ? (
+							<InputMockup
+								handleClick={() =>
+									auth.isLogged
+										? setDisplayCommentInput(true)
+										: alert("Zaloguj się aby dodawać treści")
+								}
+							>
+								Dodaj nowy komentarz...
+							</InputMockup>
+						) : (
+							<ContentInput
+								addNew={addNewComment}
+								url={"/posts/comment"}
+								method={"POST"}
+								apiData={{ idPost: idPost }}
+								enableTags={false}
+								placeHolder={"Wprowadz nowy komentarz..."}
+								handleClose={() => setDisplayCommentInput(false)}
+							/>
+						)}
+					</Require>
 				</div>
 
 				{data &&
 					data.comments
 						.concat(newComment)
-						.map((comment) => <CommentPost key={comment.idComment} commentData={comment} />)}
+						.map((comment) => (
+							<CommentPost key={comment.idComment} commentData={comment} />
+						))}
 
 				{data && data.comments.length == 0 && (
 					<div className="comment-data-container">

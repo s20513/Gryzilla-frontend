@@ -14,8 +14,18 @@ export default function Require({ req, children }) {
     const idUserLogged = auth.id;
     const isLogged = auth.isLogged;
 
+    if(req.notOwner && req.notOwner == true) {
+        if(isLogged && (req.idOwner != idUserLogged) ) {
+            return (
+                <>{children}</> 
+            )
+        } else {
+            return <></>
+        }
+    }
+
     if(req.authLogged && req.authLogged == true) {
-        if(isLogged) {
+        if(isLogged && auth.role != "blocked") {
             return (
                 <>{children}</> 
             )

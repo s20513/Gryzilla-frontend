@@ -39,12 +39,9 @@ export default function LikeButton(props) {
 			const result = await axios.request({
 				method: method,
 				url: `/${url}/${auth.id}/${idContent}`,
-				headers: { accept: "*/*" },
+				headers: { accept: "*/*", ...auth.getJwtToken() },
 			});
-			//setResponse(result.data);
-		} catch (error) {
-			//setError(error);
-		} finally {
+
 			setLikesNum((prev) => {
 				if (isLiked) return --prev;
 				return ++prev;
@@ -53,24 +50,37 @@ export default function LikeButton(props) {
 			setIsLiked((prev) => {
 				return !prev;
 			});
+		} catch (error) {
+			console.log("Błąd podczas dawania like")
+		} finally {
+			// setLikesNum((prev) => {
+			// 	if (isLiked) return --prev;
+			// 	return ++prev;
+			// });
+
+			// setIsLiked((prev) => {
+			// 	return !prev;
+			// });
 		}
 	};
 
 	return (
-		// <div onClick={() => handleClick()} className={ (isLiked && auth.isLogged) ? ("likes-box-liked") : ("likes-box")}>
-		//     {/* {data == true ? "Tak" : "Nie" } */}
-		// 	<span>+{likesNum}</span>
-		// </div>
-		// <div onClick={() => handleClick()} className="widget-button">
-		//     {/* {data == true ? "Tak" : "Nie" } */}
-		// 	+{likesNum}
-		// </div>
 		<Button
 			onClick={() => handleClick()}
 			type="button"
 			className="widget-button"
+			disabled={auth.isLogged ? false : true}
 		>
-			<span style={{position: "relative", top:"-2px", color: (isLiked && auth.isLogged) ? "green" : ""}}><MdThumbUp/></span> {likesNum}
+			<span
+				style={{
+					position: "relative",
+					top: "-2px",
+					color: isLiked && auth.isLogged ? "green" : "",
+				}}
+			>
+				<MdThumbUp />
+			</span>{" "}
+			{likesNum}
 		</Button>
 	);
 }

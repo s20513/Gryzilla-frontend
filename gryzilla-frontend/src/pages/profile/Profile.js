@@ -19,6 +19,7 @@ import ProfileDataTable from "./components/ProfileDataTable";
 import ProfileLinkButtons from "./components/ProfileLinkButtons";
 import OptionDropdown from "../../components/OptionDropdown";
 import ProfileEditModal from "../../components/modals/ProfileEditModal";
+import Require from "../../context/Require";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -54,7 +55,14 @@ export default function Profile() {
 								<Row>
 									<div className="content-container profile-data-container gap-2">
 										<ProfileAvatar idUser={idUser} />
-										<FollowButton idUser={idUser} />
+										<Require
+											req={{
+												idOwner: idUser,
+												notOwner: true,
+											}}
+										>
+											<FollowButton idUser={idUser} />
+										</Require>
 										<OptionDropdown
 											handleEdit={() => setShowEditModal(true)}
 											// handleDelete={() => setShowDeleteModal(true)}
@@ -62,7 +70,10 @@ export default function Profile() {
 											owner={profile.idUser}
 											upper={true}
 										/>
-										<ProfileEditModal show={showEditModal} setShow={setShowEditModal}/>
+										<ProfileEditModal
+											show={showEditModal}
+											setShow={setShowEditModal}
+										/>
 									</div>
 								</Row>
 							</Col>

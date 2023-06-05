@@ -37,7 +37,7 @@ export default function NavBar() {
 				<Container>
 					{/* {auth.isLogged && <div style={{ color: "white" }}>Id: {auth.id} Nick: {auth.nick} Role: {auth.role}</div>} */}
 
-					<Navbar.Brand href="#home">
+					<Navbar.Brand as={Link} to="/">
 						<img
 							src={gryzillaLogo}
 							height="30"

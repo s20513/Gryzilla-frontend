@@ -14,9 +14,9 @@ import JoinButton from "./components/JoinButton";
 import GroupDataTable from "./components/GroupDataTable";
 import GroupComments from "./GroupComments";
 import GroupMembers from "./GroupMembers";
+import Require from "../../context/Require";
 
 export default function GroupDetials() {
-
 	const auth = useAuth();
 	const { idGroup } = useParams();
 
@@ -36,10 +36,17 @@ export default function GroupDetials() {
 				<Container>
 					<Row>
 						<Col lg={3} md={12} sm={12}>
-							<Row >
+							<Row>
 								<div className="content-container profile-data-container">
 									<GroupAvatar idGroup={idGroup} />
-									<JoinButton idGroup={idGroup}/>
+									<Require req={{ authLogged: true }}>
+										{group && (
+											<JoinButton
+												idGroup={idGroup}
+												idOwner={group.idUserCreator}
+											/>
+										)}
+									</Require>
 								</div>
 							</Row>
 						</Col>
@@ -66,7 +73,6 @@ export default function GroupDetials() {
 					<Tab eventKey="members" title="Członkowie">
 						<GroupMembers groupData={group} />
 					</Tab>
-					
 				</Tabs>
 			</Container>
 		</>

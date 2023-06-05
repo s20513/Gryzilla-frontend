@@ -3,10 +3,11 @@ import useAxios from "../../../hooks/useAxios";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function JoinButton({ idGroup }) {
+export default function JoinButton({ idGroup, idOwner }) {
 	const auth = useAuth();
 
 	const [isJoin, setIsJoin] = useState(false);
+	const [loadingF, setLoadingF] = useState(false);
 
 	const [data, error, loading, runRequest] = useAxios({
 		method: "GET",
@@ -14,14 +15,14 @@ export default function JoinButton({ idGroup }) {
 		executeOnRender: false,
 	});
 
-    useEffect(() => {
+	useEffect(() => {
 		if (!auth.isLogged) return;
 		runRequest({ url: `/groups/${auth.id}/${idGroup}` });
 	}, [auth.isLogged]);
 
 	useEffect(() => {
 		if (!data) return;
-        setIsJoin(data.member);
+		setIsJoin(data.member);
 	}, [data]);
 
 	const handleClick = async () => {
@@ -32,29 +33,56 @@ export default function JoinButton({ idGroup }) {
 
 		try {
 			const method = isJoin ? "DELETE" : "POST";
+
+			setLoadingF(true);
 			const result = await axios.request({
 				method: method,
 				url: `/groups/user/${idGroup}`,
-				headers: { accept: "*/*" },
-                data: {
-                    idGroup: idGroup,
-                    idUser: auth.id
-                }
+				headers: { accept: "*/*", ...auth.getJwtToken() },
+				data: {
+					idGroup: idGroup,
+					idUser: auth.id,
+				},
 			});
-			//setResponse(result.data);
-		} catch (error) {
-			//setError(error);
-		} finally {
 			setIsJoin((prev) => {
 				return !prev;
 			});
+		} catch (error) {
+			console.log("Błąd przy dołączaniu do grupy");
+		} finally {
+			setLoadingF(false);
 		}
 	};
 
 	return (
-		<div onClick={()=> handleClick()} className={isJoin && auth.isLogged ? "likes-box-liked" : "likes-box"} style={{width: "150px", textAlign:"center"}}>
-			{!isJoin && <span>Dołącz</span>}
-			{isJoin && <span>Opuść</span>}
-		</div>
+		<>
+			{idOwner && idOwner != auth.id ? (
+				<>
+					<div
+						onClick={() => handleClick()}
+						className={
+							isJoin && auth.isLogged ? "likes-box-liked" : "likes-box"
+						}
+						style={{ width: "150px", textAlign: "center" }}
+					>
+						{!loadingF ? (
+							<>
+								{!isJoin && <span>Dołącz</span>}
+								{isJoin && <span>Dołączono</span>}
+							</>
+						) : (
+							<span>Przetwarzam...</span>
+						)}
+					</div>
+				</>
+			) : (
+				<div
+					className={"likes-box-liked"}
+					style={{ width: "150px", textAlign: "center" }}
+				>
+					Założyciel
+				</div>
+			)}
+		</>
 	);
 }

@@ -41,7 +41,7 @@ export default function GroupDataTable({group}) {
 				<Col>
 					<span>Założyciel:</span>
 				</Col>
-				<Col>{group && <span>{group.idUserCreator}</span>}</Col>
+				<Col>{group && <span>{group.nick}</span>}</Col>
 			</Row>
 			<Row>
 				<Col>

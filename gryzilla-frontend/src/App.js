@@ -31,6 +31,7 @@ import SearchPage from "./pages/search/SearchPage";
 import ArticleEdit from "./pages/articleEdit/ArticleEdit";
 import ProfilePanel from "./pages/profilePanel/ProfilePanel";
 import ProfilePanelWrapper from "./pages/profilePanel/ProfilePanelWrapper";
+import HomePage from "./pages/home/HomePage";
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -53,6 +54,9 @@ function App() {
 
 							<Col xxl={8} xl={12}>
 								<Routes>
+									<Route path="/">
+										<Route index element={<HomePage/>}/>
+									</Route>
 									<Route path="/posts">
 										<Route index element={<Posts />} />
 										<Route path=":idPost" element={<PostDetails />} />

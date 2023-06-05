@@ -2,7 +2,6 @@ import { DbDateConvert } from "../../utils/DataUtlis";
 import GroupBar from "./components/GroupBar";
 
 export default function GroupPreview({ data }) {
-	console.log(data);
 
 	return (
 		<div className="content-container">

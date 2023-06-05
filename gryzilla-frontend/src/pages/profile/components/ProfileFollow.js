@@ -14,7 +14,7 @@ export default function ProfileFollow({ idUser, nick }) {
 		// 	</span>
 		// </Link>
 
-		<div onClick={()=>handleClick()} className="content-container follow-container user-nick" style={{width: "auto"}}>
+		<div onClick={()=>handleClick()} className="content-container follow-container user-nick" style={{width: "auto", cursor: "pointer"}}>
 		    {nick}
 		</div>
 	);

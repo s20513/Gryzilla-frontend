@@ -119,11 +119,16 @@
     font-size: 0.9rem;
     font-weight: 400;
     height: 25px;
+    background-color: transparent;
 
     padding: 0rem 0.6rem;
     //border-radius: 0.4rem;
     //background-color: transparent;
     text-align: center;
+}
+
+.widget-button:disabled {
+    background-color: transparent;
 }
 
 .widget-button:hover {
