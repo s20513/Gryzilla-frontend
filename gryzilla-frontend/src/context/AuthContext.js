@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 		const apiCall = {
 			method: "POST",
 			url: "/users/refreshToken",
-			headers: { accept: "*/*" },
+			headers: { accept: "*/*", Authorization: "Bearer ", 'Access-Control-Allow-Origin': "http://localhost:3000" },
 			data: { refreshToken: refreshToken },
 		};
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 				setResponse(result.data);
 			} catch (error) {
 				setRefreshToken(null);
-				console.log("refreshToken utracił ważność: " + error);
+				console.log("refreshToken error: " + error);
 			} finally {
 				//setLoading(false);
 			}

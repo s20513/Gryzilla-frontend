@@ -19,9 +19,10 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName 
 						<span>ID zgłoszenia: {idReport}</span>
 						<span> Utworzono: {DbDateConvert(reportData.reportedAt).time + " " + DbDateConvert(reportData.reportedAt).date}</span>
 						<hr className="hr-line" />
-                        <Link to={urlLink} className="article-title">Zgłaszana treść</Link>
+                        <Link to={urlLink} className="article-title"><span style={{textDecoration: "underline"}}>Zgłaszana treść</span></Link>
 						<div>Powód zgłoszenia: {reportData.reasonName}</div>     
-						<div>Komentarz do zgłoszenia: {reportData.content}</div>  
+						<div>Komentarz do zgłoszenia: {reportData.content}</div>
+						<div>Właściciel zgłoszonej treści: {reportData.nickReported} id: {reportData.idUserReported}</div>  
 					</div>
 					<hr className="hr-line" />
 					<div className="d-flex justify-content-center gap-3 mt-2">

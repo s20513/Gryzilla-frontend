@@ -8,7 +8,8 @@ export default function GroupPreview({ data }) {
 			<GroupBar
 				avatar={{ type: data.type, base64PhotoData: data.base64PhotoData }}
 				groupName={data.groupName}
-				members={data.users.length}
+				// members={data.users.length}
+				members={69}
                 idGroup={data.idGroup}
 			/>
 			<hr className="hr-line" />

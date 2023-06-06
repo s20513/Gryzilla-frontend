@@ -20,6 +20,7 @@ import ProfileLinkButtons from "./components/ProfileLinkButtons";
 import OptionDropdown from "../../components/OptionDropdown";
 import ProfileEditModal from "../../components/modals/ProfileEditModal";
 import Require from "../../context/Require";
+import ProfileGroups from "./ProfileGroups";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -106,6 +107,9 @@ export default function Profile() {
 					</Tab>
 					<Tab eventKey="articles" title="Artykuły">
 						<ProfileArticles idUser={idUser} />
+					</Tab>
+					<Tab eventKey="groups" title="Grupy">
+						<ProfileGroups idUser={idUser} />
 					</Tab>
 					<Tab eventKey="fallowed" title="Obserwowani">
 						<ProfileFollowed idUser={idUser} />
