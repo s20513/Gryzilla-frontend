@@ -11,9 +11,9 @@ export default function SearchBar() {
 
     const handleSubmit = () => {
         if(searchPhrase)
-            navigate(`/search/phrase/${searchPhrase}`)
+            navigate(`/search/posts/phrase/${searchPhrase}`)
         else
-            navigate('/search')
+            navigate('/search/posts')
     }
 
 	return (

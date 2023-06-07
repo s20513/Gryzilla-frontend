@@ -39,7 +39,7 @@ export default function PhotoModal({show, setShow, urlPOST, afterSubmit}) {
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Zamiana zdjęcia profilu</Modal.Title>
+				<Modal.Title>Zmiana zdjęcia</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<div className="d-flex flex-center flex-column">
@@ -75,7 +75,7 @@ export default function PhotoModal({show, setShow, urlPOST, afterSubmit}) {
 						</div>
 					) : (
 						<Form.Text className="text-muted">
-							Wybierz plik aby wyświetlić szczegóły
+							Wybierz plik, aby wyświetlić szczegóły
 						</Form.Text>
 					)}
 					{/* <div>

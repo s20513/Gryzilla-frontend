@@ -21,8 +21,8 @@ export const Validate = (value, validation) => {
 	var errorMessage = "";
 
 	const empty = "Pole nie może być puste";
-	const toShort = "Pole powinno się składać z conajmniej * znaków";
-	const toLong = "Pole powinno się składać z maksymalnie * znkaów";
+	const toShort = "Pole powinno się składać z co najmniej * znaków";
+	const toLong = "Pole powinno się składać z maksymalnie * znaków";
     const notEqual = "Pola różnią się od siebie";
 	const notEmail = "Podany email nie jest prawidłowy";
 	const notPhone = "Podany numer telefonu nie jest prawidłowy";

@@ -78,7 +78,7 @@ export default function GroupsNewForm() {
 					validation={{
 						validate: description,
 						required: {value: true, message: "Opis grupy jest wymagany"},
-						minLength: {value: 10, message: "Opis musi się składac z conajmniej 10 znaków"},
+						minLength: {value: 10, message: "Opis musi się składac z co najmniej 10 znaków"},
 						maxLength: {value: 200},
 					}}
 				/>

@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputMockup from "../../components/InputMockup";
 import { useAuth } from "../../context/AuthContext";
 import ContentInput from "../../components/Editor/ContentInput";
 import useAxios from "../../hooks/useAxios";
 import Comment from "../../components/Comment";
 
-export default function GroupComments({ idGroup }) {
+export default function GroupComments({ idGroup, isMember }) {
 	const auth = useAuth();
 
 	const [showInput, setShowInput] = useState(false);
-	const [newComment, setNewComment] = useState(null);
+	const [newComments, setNewComments] = useState([]);
 
 	const [message, error, loading] = useAxios({
 		method: "GET",
@@ -17,49 +17,62 @@ export default function GroupComments({ idGroup }) {
 		headers: { accept: "*/*" },
 	});
 
+	// const [dataMember, errorMember, loadingMember, runRequestMember] = useAxios({
+	// 	method: "GET",
+	// 	headers: { accept: "*/*" },
+	// 	executeOnRender: false,
+	// });
+
+	// useEffect(() => {
+	// 	if (!auth.isLogged) return;
+	// 	runRequestMember({ url: `/groups/${auth.id}/${idGroup}` });
+	// }, [auth.isLogged]);
+
 	const addNewComment = (newComment) => {
-		setNewComment(newComment);
-		setShowInput(false)
+		setNewComments((prev) => {
+			return [...prev, newComment];
+		});
+		setShowInput(false);
 	};
 
 	return (
 		<>
-			{!showInput ? (
-				<InputMockup
-					handleClick={() =>
-						auth.isLogged
-							? setShowInput(true)
-							: alert("Zaloguj się aby dodawać treści")
-					}
-					placeHolder={"Dodaj nową wiadomość na grupie..."}
-				/>
-			) : (
-				<ContentInput
-					addNew={addNewComment}
-					url={`/groupsMessage`}
-					method={"POST"}
-					apiData={{ idGroup: idGroup }}
-					enableTags={false}
-					enableTitle={false}
-					placeHolder={"Wprowadz nową wiadomość..."}
-					handleClose={() => setShowInput(false)}
-				/>
-			)}
-
-			{newComment && (
-				<div className="content-container">
-					nowy
-					{/* <Link to={`/posts/${newPosts[0].idPost}`}>
-						Dodano nowy komentarz, sprawdź tutaj...
-					</Link> */}
-				</div>
+			{isMember && (
+				<>
+					{!showInput ? (
+						<InputMockup
+							handleClick={() =>
+								auth.isLogged
+									? setShowInput(true)
+									: alert("Zaloguj się aby dodawać treści")
+							}
+							placeHolder={"Dodaj nową wiadomość na grupie..."}
+						/>
+					) : (
+						<ContentInput
+							addNew={addNewComment}
+							url={`/groupsMessage`}
+							method={"POST"}
+							apiData={{ idGroup: idGroup }}
+							enableTags={false}
+							enableTitle={false}
+							placeHolder={"Wprowadz nową wiadomość..."}
+							handleClose={() => setShowInput(false)}
+						/>
+					)}
+				</>
 			)}
 
 			{message &&
-				message.map((msg) => {
+				message.concat(newComments).map((msg) => {
 					return (
-                        <Comment avatar={null} nick={msg.nick} content={msg.content} createdAt={msg.createdAt} />
-						
+						<Comment
+							key={msg.idMessage}
+							avatar={null}
+							nick={msg.nick}
+							content={msg.content}
+							createdAt={msg.createdAt}
+						/>
 					);
 				})}
 		</>

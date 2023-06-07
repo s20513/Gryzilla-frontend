@@ -8,7 +8,7 @@ import useAxios from "../../hooks/useAxios";
 export default function ProfileComments({ idUser }) {
 	const auth = useAuth();
 	const [showInput, setShowInput] = useState(false);
-	const [newComment, setNewComment] = useState(null);
+	const [newComments, setNewComments] = useState([]);
 
 	const [reviews, error, loading, runRequest] = useAxios({
 		method: "GET",
@@ -18,10 +18,13 @@ export default function ProfileComments({ idUser }) {
 
 	useEffect(()=>{
 		runRequest();
+		setNewComments([]);
 	},[idUser])
 
 	const addNewComment = (newComment) => {
-		setNewComment(newComment);
+		setNewComments((prev) => {
+			return [...prev, newComment];
+		});
 		setShowInput(false)
 	};
 
@@ -49,17 +52,8 @@ export default function ProfileComments({ idUser }) {
 				/>
 			)}
 
-			{newComment && (
-				<div className="content-container">
-					nowy
-					{/* <Link to={`/posts/${newPosts[0].idPost}`}>
-						Dodano nowy komentarz, sprawdź tutaj...
-					</Link> */}
-				</div>
-			)}
-
 			{reviews &&
-				reviews.map((review) => {
+				newComments.reverse().concat(reviews).map((review) => {
 					return (
 						<ProfileComment
 							key={review.idProfileComment}

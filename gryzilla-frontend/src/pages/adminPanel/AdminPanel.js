@@ -4,6 +4,7 @@ import ReportedPosts from "./ReportedPosts";
 import ReportedPostComments from "./ReportedPostComments";
 import ReportedArticleComments from "./ReportedArticleComments";
 import ReportedUsers from "./ReportedUsers";
+import ReportedUsersComments from "./ReportedUsersComments";
 
 export default function AdminPanel() {
 	return (
@@ -26,8 +27,11 @@ export default function AdminPanel() {
 				<Tab eventKey="articleComments" title="Komentarze artykułów">
 					<ReportedArticleComments />
 				</Tab>
-				<Tab eventKey="Użytkownicy" title="Użytkownicy">
+				<Tab eventKey="users" title="Użytkownicy">
 					<ReportedUsers />
+				</Tab>
+				<Tab eventKey="usersComments" title="Komentarze profili">
+					<ReportedUsersComments />
 				</Tab>
 			</Tabs>
 		</Container>

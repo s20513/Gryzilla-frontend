@@ -11,7 +11,7 @@ export default function GroupSearch({ searchType, searchPhrase }) {
 
 	const [groups, loading, error, hasMore] = useAxiosSearch({
 		content: "groups",
-		url: `/search/getGroupsByWord/`,
+		url: `/search/getGroupsByWord`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,
 		pageNumber: pageNumber,

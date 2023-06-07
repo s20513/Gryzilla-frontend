@@ -15,7 +15,7 @@ export default function ArticleNew() {
 
 	return (
 		<Container className="main-panel">
-			<h3>Szczegóły artykułu</h3>
+			<h3>Tworzenie nowego artykułu</h3>
 
 			<ContentInput
 					addNew={addNewArticle}

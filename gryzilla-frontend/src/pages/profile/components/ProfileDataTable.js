@@ -39,7 +39,7 @@ export default function ProfileDataTable({profile}) {
 			</Row>
 			<Row>
 				<Col>
-					<span>User since:</span>
+					<span>Użytkownik od:</span>
 				</Col>
 				<Col>{profile && <span>{DbDateConvert(profile.createdAt).date}</span>}</Col>
 			</Row>

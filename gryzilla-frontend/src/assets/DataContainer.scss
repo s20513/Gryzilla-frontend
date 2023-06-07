@@ -163,6 +163,11 @@
     height: 230px;
 }
 
+button.nav-link{
+    padding: 7px 0px;
+    height: 100%;
+}
+
 .tabs-style {
     button {
         color: white;
@@ -175,6 +180,7 @@
         color: white !important;
         background-color: $secondary-color !important;
         border-color: red;
+        box-shadow: 3px 10px 24px 1px rgb(1, 0, 6);
     }
 
     .nav-tabs {

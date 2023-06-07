@@ -19,7 +19,7 @@ export default function ProfilePanel() {
 				<h4>Zmiana hasła</h4>
 
 				<Button onClick={() => setShowChangePassModal(true)}>
-					Kliknij tutaj aby zmienic hasło
+					Kliknij tutaj aby zmienić hasło
 				</Button>
 				<ChangePasswordModal
 					show={showChangePassModal}

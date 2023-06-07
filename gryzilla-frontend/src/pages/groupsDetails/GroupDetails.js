@@ -26,6 +26,24 @@ export default function GroupDetials() {
 		headers: { accept: "*/*" },
 	});
 
+	const [isMember, setIsMember] = useState(false);
+
+	const [dataMember, errorMember, loadingMember, runRequestMember] = useAxios({
+		method: "GET",
+		headers: { accept: "*/*" },
+		executeOnRender: false,
+	});
+
+	useEffect(() => {
+		if (!auth.isLogged) return;
+		runRequestMember({ url: `/groups/${auth.id}/${idGroup}` });
+	}, [auth.isLogged]);
+
+	useEffect(() => {
+		if(!dataMember) return;
+		setIsMember(dataMember.member);
+	}, [dataMember]);
+
 	return (
 		<>
 			<Container className="main-panel">
@@ -44,6 +62,8 @@ export default function GroupDetials() {
 											<JoinButton
 												idGroup={idGroup}
 												idOwner={group.idUserCreator}
+												isMember={dataMember?.member}
+												setIsMember={setIsMember}
 											/>
 										)}
 									</Require>
@@ -68,10 +88,10 @@ export default function GroupDetials() {
 					justify
 				>
 					<Tab eventKey="msg" title="Wiadomości grupy">
-						<GroupComments idGroup={idGroup} />
+						<GroupComments idGroup={idGroup} isMember={isMember} />
 					</Tab>
 					<Tab eventKey="members" title="Członkowie">
-						<GroupMembers groupData={group} />
+						<GroupMembers groupData={group} isMember={isMember} />
 					</Tab>
 				</Tabs>
 			</Container>

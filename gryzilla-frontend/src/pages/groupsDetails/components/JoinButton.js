@@ -3,27 +3,16 @@ import useAxios from "../../../hooks/useAxios";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function JoinButton({ idGroup, idOwner }) {
+export default function JoinButton({ idGroup, idOwner, isMember, setIsMember }) {
 	const auth = useAuth();
 
 	const [isJoin, setIsJoin] = useState(false);
 	const [loadingF, setLoadingF] = useState(false);
 
-	const [data, error, loading, runRequest] = useAxios({
-		method: "GET",
-		headers: { accept: "*/*" },
-		executeOnRender: false,
-	});
-
 	useEffect(() => {
-		if (!auth.isLogged) return;
-		runRequest({ url: `/groups/${auth.id}/${idGroup}` });
-	}, [auth.isLogged]);
-
-	useEffect(() => {
-		if (!data) return;
-		setIsJoin(data.member);
-	}, [data]);
+		if (!isMember) return;
+		setIsJoin(isMember);
+	}, [isMember]);
 
 	const handleClick = async () => {
 		if (!auth.isLogged) {
@@ -47,6 +36,9 @@ export default function JoinButton({ idGroup, idOwner }) {
 			setIsJoin((prev) => {
 				return !prev;
 			});
+			setIsMember((prev) => {
+				return !prev;
+			})
 		} catch (error) {
 			console.log("Błąd przy dołączaniu do grupy");
 		} finally {

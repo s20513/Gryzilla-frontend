@@ -47,7 +47,7 @@ export default function Profile() {
 			{profile && (
 				<Container className="main-panel">
 					<Container className="d-flex justify-content-between">
-						<h2>Profil użytkonika {profile.nick}</h2>
+						<h2>Profil użytkownika {profile.nick}</h2>
 					</Container>
 
 					<Container>
@@ -99,7 +99,7 @@ export default function Profile() {
 					className="tabs-style mb-3"
 					justify
 				>
-					<Tab eventKey="comments" title="Opinnie">
+					<Tab eventKey="comments" title="Opinie">
 						<ProfileComments idUser={idUser} />
 					</Tab>
 					<Tab eventKey="posts" title="Posty">

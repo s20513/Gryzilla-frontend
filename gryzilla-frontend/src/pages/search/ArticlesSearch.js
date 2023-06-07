@@ -13,7 +13,7 @@ export default function ArticlesSearch({ searchType, searchPhrase }) {
 		content: "articles",
 		url:
 			searchType === "phrase"
-				? `/search/getArticlesByWord/`
+				? `/search/getArticlesByWord`
 				: `/search/getArticlesByTag`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,

@@ -7,11 +7,14 @@ import OptionDropdown from "../../components/OptionDropdown";
 import ReportModal from "../../components/modals/ReportModal";
 import DeleteModal from "../../components/modals/DeleteModal";
 import { useEffect, useState } from "react";
+import { DbDateConvert } from "../../utils/DataUtlis";
 
 export default function ArticleDetails() {
 	const params = useParams();
 	const naviagte = useNavigate();
 	const idCommentHighlight = params.idComment ? params.idComment : null;
+
+
 
 	const [showReportModal, setShowReportModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -53,7 +56,7 @@ export default function ArticleDetails() {
 							<div dangerouslySetInnerHTML={{ __html: data.content }}></div>
 						</div>
 						<span className="article-label">
-							Artykuł użytkownika {data.author.nick}, utworzono {data.createdAt}
+							Artykuł użytkownika {data.author.nick}, utworzono {DbDateConvert(data.createdAt).time} {DbDateConvert(data.createdAt).date}
 						</span>
 
 						<div className="lower-tag-container">

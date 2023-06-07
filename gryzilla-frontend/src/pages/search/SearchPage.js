@@ -61,10 +61,10 @@ export default function SearchPage() {
 						id="input-group-dropdown-1"
 					>
 						<Dropdown.Item onClick={() => setSearchType("phrase")}>
-							Wyszukiwanie po frazie i tagu
+							Wyszukiwanie po frazie
 						</Dropdown.Item>
 						<Dropdown.Item onClick={() => setSearchType("tag")}>
-							Wyszukiwanie po tagu lub frazie
+							Wyszukiwanie po tagu
 						</Dropdown.Item>
 					</DropdownButton>
 
@@ -123,7 +123,7 @@ export default function SearchPage() {
 			</Tabs>
 			{!debouncedSearchPhrase && (
 				<div className="content-container text-center">
-					Wprowadz dane do wyszukiwania aby uzyskać wyniki
+					Wprowadź dane do wyszkukania aby uzyskać wyniki
 				</div>
 			)}
 		</Container>

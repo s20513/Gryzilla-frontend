@@ -12,7 +12,7 @@ export default function PostsSearch({ searchType, searchPhrase }) {
 		content: "posts",
 		url:
 			searchType === "phrase"
-				? `/search/getPostsByWord/`
+				? `/search/getPostsByWord`
 				: `/search/getPostsByTag`,
 		searchType: searchType,
 		searchPhrase: searchPhrase,

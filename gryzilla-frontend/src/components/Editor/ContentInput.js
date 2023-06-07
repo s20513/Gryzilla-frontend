@@ -46,8 +46,8 @@ export default function ContentInput(props) {
 	const [isOkTitle, msg] = useValidation({
 		validation: {
 			validate: title,
-			required: { value: true, message: "Podanie tytuły jest wymagane" },
-			minLength: { value: 6, message: "Tytuł powinien składać się z conajmniej 6 znaków" },
+			required: { value: true, message: "Podanie tytułu jest wymagane" },
+			minLength: { value: 6, message: "Tytuł powinien składać się z co najmniej 6 znaków" },
 			maxLength: { value: 100, message: "Tytuł nie może mieć więcej niż 100 znaków" },
 		},
 	});
@@ -108,7 +108,7 @@ export default function ContentInput(props) {
 								value={title}
 								className="article-title-input"
 								type="text"
-								placeholder="Wprowadz tytuł artykuły.."
+								placeholder="Wprowadź tytuł artykułu.."
 								onChange={(e) => setTitle(e.target.value)}
 							/>
 							<Form.Text className="text-muted">{msg}</Form.Text>
@@ -139,7 +139,7 @@ export default function ContentInput(props) {
 							Zamknij
 						</button>
 						<button className="widget-button" type="submit">
-							Wyślij post
+							Wyślij
 						</button>
 					</div>
 				</form>
