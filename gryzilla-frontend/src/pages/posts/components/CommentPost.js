@@ -85,7 +85,7 @@ export default function CommentPost({ commentData }) {
 				isDeleted={isDeleted}
 				setIsDeleted={setIsDeleted}
 				url={`/posts/comment/${commentData.idComment}`}
-				reportedContentId={{ idComment: commentData.idComment }}
+				deletedContentId={{ idComment: commentData.idComment }}
 			/>
 		</DeleteContentWrapper>
 	);

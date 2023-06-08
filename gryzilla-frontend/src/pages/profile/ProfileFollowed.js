@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import ProfileFollow from "./components/ProfileFollow";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function ProfileFollowed({ idUser }) {
 	const [followed, errorPosts, loadingPosts, runRequest] = useAxios({
@@ -9,9 +10,9 @@ export default function ProfileFollowed({ idUser }) {
 		headers: { accept: "*/*" },
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		runRequest();
-	},[idUser])
+	}, [idUser]);
 
 	const [showMore, setShowMore] = useState(false);
 	const limit = 5;
@@ -19,7 +20,7 @@ export default function ProfileFollowed({ idUser }) {
 	return (
 		<>
 			<div className="d-flex flex-wrap">
-				{followed &&
+				{followed && !loadingPosts &&
 					followed.map((followedUser, index) => {
 						return (
 							<ProfileFollow
@@ -30,6 +31,11 @@ export default function ProfileFollowed({ idUser }) {
 						);
 					})}
 			</div>
+			<LoadingBanner
+				loading={loadingPosts}
+				error={errorPosts}
+				placeHolder={"Ładowanie listy obserwowanych"}
+			/>
 		</>
 	);
 }

@@ -43,7 +43,7 @@ export default function WidgetButtons({
 			</Button>
 
 			<OptionDropdown
-				handleNewView={() => navigate(`${idPost}`)}
+				handleNewView={() => navigate(`/posts/${idPost}`)}
 				handleEdit={handleEdit}
 				handleDelete={handleDelete}
 				handleReport={handleReport}

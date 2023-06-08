@@ -5,11 +5,15 @@ import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../../utils/DataUtlis";
 
-export default function Report({ urlResolve, urlLink, reportData, idContentName }) {
+export default function Report({ urlResolve, urlLink, reportData, idContentName, setChosenUser }) {
 	const [fullData, setFullData] = useState(false);
 	const [isResolved, setIsResolved] = useState(() => reportData.viewed);
 
 	const idReport = "" + reportData[idContentName] + reportData.idUser + reportData.idReason;
+
+	const handleChooseUser = () => {
+		setChosenUser(reportData.nickReported);
+	}
 
 	return (
 		<div className="content-container">
@@ -22,7 +26,7 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName 
                         <Link to={urlLink} className="article-title"><span style={{textDecoration: "underline"}}>Zgłaszana treść</span></Link>
 						<div>Powód zgłoszenia: {reportData.reasonName}</div>     
 						<div>Komentarz do zgłoszenia: {reportData.content}</div>
-						<div>Właściciel zgłoszonej treści: {reportData.nickReported} id: {reportData.idUserReported}</div>  
+						<div>Właściciel zgłoszonej treści: <Button className={"btn-secondary"} onClick={() => handleChooseUser()}>{reportData.nickReported} Id: {reportData.idUserReported}</Button></div> 
 					</div>
 					<hr className="hr-line" />
 					<div className="d-flex justify-content-center gap-3 mt-2">

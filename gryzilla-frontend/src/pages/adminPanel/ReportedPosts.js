@@ -1,7 +1,7 @@
 import useAxios from "../../hooks/useAxios";
 import Report from "./components/Report";
 
-export default function ReportedPosts() {
+export default function ReportedPosts({setChosenUser}) {
 	const [reportedPosts, error, loading] = useAxios({
 		method: "GET",
 		url: `/reportPost/all`,
@@ -19,6 +19,7 @@ export default function ReportedPosts() {
 							urlLink={"/posts/" + post.idPost}
 							reportData={post}
 							idContentName={"idPost"}
+							setChosenUser={setChosenUser}
 						/>
 					);
 				})}

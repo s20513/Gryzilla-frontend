@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import ContentInput from "../../components/Editor/ContentInput";
 import ProfileComment from "./components/ProfileComment";
 import useAxios from "../../hooks/useAxios";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function ProfileComments({ idUser }) {
 	const auth = useAuth();
@@ -16,16 +17,16 @@ export default function ProfileComments({ idUser }) {
 		headers: { accept: "*/*" },
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		runRequest();
 		setNewComments([]);
-	},[idUser])
+	}, [idUser]);
 
 	const addNewComment = (newComment) => {
 		setNewComments((prev) => {
 			return [...prev, newComment];
 		});
-		setShowInput(false)
+		setShowInput(false);
 	};
 
 	return (
@@ -53,18 +54,33 @@ export default function ProfileComments({ idUser }) {
 			)}
 
 			{reviews &&
-				newComments.reverse().concat(reviews).map((review) => {
-					return (
-						<ProfileComment
-							key={review.idProfileComment}
-							idComment={review.idProfileComment}
-							nick={review.nick}
-							createdAt={review.createdAt}
-							content={review.content}
-							avatar={{type: review.type, base64PhotoData: review.base64PhotoData}}
-						/>
-					);
-				})}
+				!loading &&
+				newComments
+					.reverse()
+					.concat(reviews)
+					.map((review) => {
+						return (
+							<ProfileComment
+								key={review.idProfileComment}
+								idComment={review.idProfileComment}
+								idUserComment={review.idUserComment}
+								idUser={review.idUser}
+								nick={review.nick}
+								createdAt={review.createdAt}
+								content={review.content}
+								avatar={{
+									type: review.type,
+									base64PhotoData: review.base64PhotoData,
+								}}
+							/>
+						);
+					})}
+
+			<LoadingBanner
+				loading={loading}
+				error={error}
+				placeHolder={"Ładowanie postów..."}
+			/>
 		</>
 	);
 }

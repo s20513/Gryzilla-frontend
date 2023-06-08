@@ -2,7 +2,7 @@
 import useAxios from "../../hooks/useAxios";
 import Report from "./components/Report";
 
-export default function ReportedUsersComments() {
+export default function ReportedUsersComments({setChosenUser}) {
 	const [reportedUserComments, error, loading] = useAxios({
 		method: "GET",
 		url: `/reportProfileComment/all`,
@@ -20,6 +20,7 @@ export default function ReportedUsersComments() {
 							urlLink={"/posts/" + 1 + "/" + 1}
 							reportData={userComment}
 							idContentName={"idProfileComment"}
+							setChosenUser={setChosenUser}
 						/>
 					);
 				})}

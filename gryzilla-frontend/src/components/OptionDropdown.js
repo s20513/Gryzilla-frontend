@@ -1,5 +1,6 @@
 import { Dropdown } from "react-bootstrap";
 import Require from "../context/Require";
+import { useAuth } from "../context/AuthContext";
 
 export default function OptionDropdown({
 	handleEdit,
@@ -9,6 +10,13 @@ export default function OptionDropdown({
 	upper,
 	owner,
 }) {
+
+	const auth = useAuth();
+
+	if(!handleNewView && !auth.isLogged ){
+		return <></>
+	}
+	
 	return (
 		<Dropdown align="start">
 			<Dropdown.Toggle
@@ -52,8 +60,8 @@ export default function OptionDropdown({
 
 				<Require
 					req={{
-						authLogged: true,
-						authOwner: false,
+						idOwner: owner,
+						notOwner: true,
 					}}
 				>
 					{handleReport && (

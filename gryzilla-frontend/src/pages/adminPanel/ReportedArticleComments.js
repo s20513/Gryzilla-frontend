@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import useAxios from "../../hooks/useAxios";
 import Report from "./components/Report";
 
-export default function ReportedArticleComments() {
+export default function ReportedArticleComments({setChosenUser}) {
+
 	const [reportedArticleComments, error, loading] = useAxios({
 		method: "GET",
 		url: `/reportCommentArticle`,
@@ -20,6 +20,7 @@ export default function ReportedArticleComments() {
 							urlLink={"/articles/" + post.idArticle + "/" + post.idComment}
 							reportData={post}
 							idContentName={"idComment"}
+							setChosenUser={setChosenUser}
 						/>
 					);
 				})}

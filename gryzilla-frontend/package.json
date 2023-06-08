@@ -25,6 +25,7 @@
     "react-scripts": "5.0.1",
     "react-tag-autocomplete": "^6.3.0",
     "react-tag-input": "^6.8.1",
+    "react-widgets": "^5.8.4",
     "sass": "^1.56.1",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"

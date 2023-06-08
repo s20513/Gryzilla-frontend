@@ -11,6 +11,7 @@ import "./assets/Global.scss";
 import "./assets/DataContainer.scss";
 import "./assets/Profile.scss";
 import "./assets/TagInput.scss";
+import "react-widgets/styles.css";
 
 import Profile from "./pages/profile/Profile";
 import Articles from "./pages/articles/Articles";
@@ -32,6 +33,8 @@ import ArticleEdit from "./pages/articleEdit/ArticleEdit";
 import ProfilePanel from "./pages/profilePanel/ProfilePanel";
 import ProfilePanelWrapper from "./pages/profilePanel/ProfilePanelWrapper";
 import HomePage from "./pages/home/HomePage";
+import { AvatarChangeProvider } from "./context/AvatarChangeContext";
+
 
 function App() {
 	//document.body.style = 'background-color: #1E1F23 ;';
@@ -42,7 +45,8 @@ function App() {
 		<AuthProvider>
 			<ProSidebarProvider>
 				<NavbarProvider>
-					<NavBar></NavBar>
+				<AvatarChangeProvider>
+					<NavBar/>
 
 					<Container className="main-container">
 						<Row>
@@ -93,6 +97,7 @@ function App() {
 							</Col>
 						</Row>
 					</Container>
+					</AvatarChangeProvider>
 				</NavbarProvider>
 			</ProSidebarProvider>
 		</AuthProvider>

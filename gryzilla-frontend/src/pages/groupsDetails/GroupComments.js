@@ -3,7 +3,8 @@ import InputMockup from "../../components/InputMockup";
 import { useAuth } from "../../context/AuthContext";
 import ContentInput from "../../components/Editor/ContentInput";
 import useAxios from "../../hooks/useAxios";
-import Comment from "../../components/Comment";
+
+import GroupComment from "./components/GroupComment";
 
 export default function GroupComments({ idGroup, isMember }) {
 	const auth = useAuth();
@@ -16,17 +17,6 @@ export default function GroupComments({ idGroup, isMember }) {
 		url: `/groupsMessage/${idGroup}`,
 		headers: { accept: "*/*" },
 	});
-
-	// const [dataMember, errorMember, loadingMember, runRequestMember] = useAxios({
-	// 	method: "GET",
-	// 	headers: { accept: "*/*" },
-	// 	executeOnRender: false,
-	// });
-
-	// useEffect(() => {
-	// 	if (!auth.isLogged) return;
-	// 	runRequestMember({ url: `/groups/${auth.id}/${idGroup}` });
-	// }, [auth.isLogged]);
 
 	const addNewComment = (newComment) => {
 		setNewComments((prev) => {
@@ -66,9 +56,14 @@ export default function GroupComments({ idGroup, isMember }) {
 			{message &&
 				message.concat(newComments).map((msg) => {
 					return (
-						<Comment
+						<GroupComment
 							key={msg.idMessage}
-							avatar={null}
+							idMessage={msg.idMessage}
+							idUserMessage={msg.idUser}
+							avatar={{
+								type: msg.type,
+								base64PhotoData: msg.base64PhotoData,
+							}}
 							nick={msg.nick}
 							content={msg.content}
 							createdAt={msg.createdAt}

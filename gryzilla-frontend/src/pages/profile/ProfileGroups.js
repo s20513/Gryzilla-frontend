@@ -3,6 +3,7 @@ import useAxios from "../../hooks/useAxios";
 import Post from "../posts/Post";
 import PostAndComments from "../posts/PostAndComments";
 import GroupPreview from "../groups/GroupPreview";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function ProfileGroups({ idUser }) {
 	const [groups, errorGropups, loadingGroups, runRequest] = useAxios({
@@ -11,9 +12,9 @@ export default function ProfileGroups({ idUser }) {
 		headers: { accept: "*/*" },
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		runRequest();
-	},[idUser])
+	}, [idUser]);
 
 	const [showMore, setShowMore] = useState(false);
 	const limit = 3;
@@ -21,11 +22,18 @@ export default function ProfileGroups({ idUser }) {
 	return (
 		<>
 			{groups &&
+				!loadingGroups &&
 				groups.map((group, index) => {
-					if (showMore === false && index > (limit - 1)) return;
+					if (showMore === false && index > limit - 1) return;
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <GroupPreview key={group.idGroup} data={group} />;
 				})}
+
+			<LoadingBanner
+				loading={loadingGroups}
+				error={errorGropups}
+				placeHolder={"Ładowanie listy grup..."}
+			/>
 
 			{groups && !showMore && (
 				<div

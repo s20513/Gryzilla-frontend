@@ -4,7 +4,7 @@ import DataBar from "./DataBarPost";
 import { DbDateConvert } from "../utils/DataUtlis";
 import { useParams } from "react-router-dom";
 
-export default function Comment({ avatar, nick, createdAt, content, id }) {
+export default function Comment({ avatar, nick, createdAt, content, id, idUser }) {
 	const scrollRef = useRef(null);
 	const {idComment} = useParams();
 
@@ -25,6 +25,7 @@ export default function Comment({ avatar, nick, createdAt, content, id }) {
 	return (
 		<div className="content-container" ref={scrollRef} style={{borderColor: isHighlight() ? "#72DBF0" : "", border: isHighlight() ? "1px solid #72DBF0" : ""}}>
 			<DataBar
+				idUser={idUser}
 				nick={nick}
 				date={DbDateConvert(createdAt)}
 				avatar={avatar}

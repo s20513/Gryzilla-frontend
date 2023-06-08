@@ -5,12 +5,20 @@ import ReportedPostComments from "./ReportedPostComments";
 import ReportedArticleComments from "./ReportedArticleComments";
 import ReportedUsers from "./ReportedUsers";
 import ReportedUsersComments from "./ReportedUsersComments";
+import RankChanger from "./components/RankChanger";
+import { useState } from "react";
 
 export default function AdminPanel() {
+
+	const [chosenUser, setChosenUser] = useState(null);
+
 	return (
 		<Container className="main-panel">
+			
+			<h3>Nadawnie uprawnień</h3>
+			<RankChanger chosenUserFromReport={chosenUser} />
+			
 			<h3>Zgłoszenia</h3>
-
 			<Tabs
 				defaultActiveKey="posts"
 				id="fill-tab-example"
@@ -19,19 +27,19 @@ export default function AdminPanel() {
 				justify
 			>
 				<Tab eventKey="posts" title="Posty">
-					<ReportedPosts />
+					<ReportedPosts setChosenUser={setChosenUser}/>
 				</Tab>
 				<Tab eventKey="postsComments" title="Komentarze postów">
-					<ReportedPostComments />
+					<ReportedPostComments setChosenUser={setChosenUser}/>
 				</Tab>
 				<Tab eventKey="articleComments" title="Komentarze artykułów">
-					<ReportedArticleComments />
+					<ReportedArticleComments setChosenUser={setChosenUser}/>
 				</Tab>
 				<Tab eventKey="users" title="Użytkownicy">
-					<ReportedUsers />
+					<ReportedUsers setChosenUser={setChosenUser}/>
 				</Tab>
 				<Tab eventKey="usersComments" title="Komentarze profili">
-					<ReportedUsersComments />
+					<ReportedUsersComments setChosenUser={setChosenUser}/>
 				</Tab>
 			</Tabs>
 		</Container>
