@@ -11,7 +11,6 @@ import "./assets/Global.scss";
 import "./assets/DataContainer.scss";
 import "./assets/Profile.scss";
 import "./assets/TagInput.scss";
-import "react-widgets/styles.css";
 
 import Profile from "./pages/profile/Profile";
 import Articles from "./pages/articles/Articles";

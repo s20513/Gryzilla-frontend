@@ -12,7 +12,7 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName,
 	const idReport = "" + reportData[idContentName] + reportData.idUser + reportData.idReason;
 
 	const handleChooseUser = () => {
-		setChosenUser(reportData.nickReported);
+		setChosenUser({nickReported: reportData.nickReported, reason: reportData.reasonName});
 	}
 
 	return (
@@ -26,7 +26,7 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName,
                         <Link to={urlLink} className="article-title"><span style={{textDecoration: "underline"}}>Zgłaszana treść</span></Link>
 						<div>Powód zgłoszenia: {reportData.reasonName}</div>     
 						<div>Komentarz do zgłoszenia: {reportData.content}</div>
-						<div>Właściciel zgłoszonej treści: <Button className={"btn-secondary"} onClick={() => handleChooseUser()}>{reportData.nickReported} Id: {reportData.idUserReported}</Button></div> 
+						<div>Twórca zgłoszonej treści: <Button className={"btn-secondary"} style={{padding: "0px 4px"}} onClick={() => handleChooseUser()}>{reportData.nickReported}</Button></div> 
 					</div>
 					<hr className="hr-line" />
 					<div className="d-flex justify-content-center gap-3 mt-2">

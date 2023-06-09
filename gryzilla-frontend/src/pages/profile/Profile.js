@@ -21,6 +21,7 @@ import OptionDropdown from "../../components/OptionDropdown";
 import ProfileEditModal from "../../components/modals/ProfileEditModal";
 import Require from "../../context/Require";
 import ProfileGroups from "./ProfileGroups";
+import ReportModal from "../../components/modals/ReportModal";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -31,6 +32,7 @@ export default function Profile() {
 	const idUser = params.idUser;
 
 	const [showEditModal, setShowEditModal] = useState(false);
+	const [showReportModal, setShowReportModal] = useState(false);
 
 	const [profile, errorProfile, loadingProfile, runRequest] = useAxios({
 		method: "GET",
@@ -67,13 +69,20 @@ export default function Profile() {
 										<OptionDropdown
 											handleEdit={() => setShowEditModal(true)}
 											// handleDelete={() => setShowDeleteModal(true)}
-											// handleReport={() => setShowReportModal(true)}
+											handleReport={() => setShowReportModal(true)}
 											owner={profile.idUser}
 											upper={true}
 										/>
 										<ProfileEditModal
 											show={showEditModal}
 											setShow={setShowEditModal}
+										/>
+
+										<ReportModal
+											show={showReportModal}
+											setShow={setShowReportModal}
+											url={`/reportUser`}
+											reportedContentId={{ idUserReported: profile.idUser }}
 										/>
 									</div>
 								</Row>

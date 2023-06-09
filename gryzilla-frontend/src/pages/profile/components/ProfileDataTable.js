@@ -8,7 +8,7 @@ export default function ProfileDataTable({profile}) {
 				<Col>
 					<span>Nick:</span>
 				</Col>
-				<Col>{profile && <span>{profile.nick}</span>}</Col>
+				<Col>{profile && <span>{profile.nick} {profile.idUser}</span>}</Col>
 			</Row>
 			<Row>
 				<Col>
