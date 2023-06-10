@@ -13,7 +13,7 @@ export default function GroupPreview({ data }) {
 			/>
 			<hr className="hr-line" />
 			<div className="muted-text">
-				Twórca grupy: {data.idUserCreator}, utworzono{" "}
+				Twórca grupy: {data.nick}, utworzono{" "}
 				{DbDateConvert(data.createdAt).date}
 			</div>
 			<div>Opis: {data.content}</div>

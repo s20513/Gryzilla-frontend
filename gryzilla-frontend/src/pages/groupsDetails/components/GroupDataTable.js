@@ -1,14 +1,47 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { DbDateConvert } from "../../../utils/DataUtlis";
 
-export default function GroupDataTable({group}) {
+export default function GroupDataTable({ group }) {
 	return (
-		<Container className="content-container content-wrapper">
+		<Container className="content-container content-wrapper ">
+			<div>
+				<span className="article-label table-label">Nazwa: </span>
+				{group && <span>{group.groupName}</span>}
+			</div>
+
+			<hr className="hr-line" />
+
+			<div>
+				<span className="article-label table-label">Opis: </span>
+				{group && <span>{group.content}</span>}
+			</div>
+
+			<hr className="hr-line" />
+
+			<div>
+				<span className="article-label table-label">Liczba członków: </span>
+				{group && <span>{group.users.length}</span>}
+			</div>
+
+			<hr className="hr-line" />
+
+			<div>
+				<span className="article-label table-label">Założyciel: </span>
+				{group && <span>{group.nick}</span>}
+			</div>
+
+			<hr className="hr-line" />
+
+			<div>
+				<span className="article-label table-label">Założono: </span>
+				{group && <span>{DbDateConvert(group.createdAt).date}</span>}
+			</div>
+			{/* 
 			<Row>
 				<Col>
 					<span>Nazwa:</span>
 				</Col>
-				<Col>{group && <span>{group.groupName}</span>}</Col>
+				<Col></Col>
 			</Row>
 			<Row>
 				<Col>
@@ -26,7 +59,7 @@ export default function GroupDataTable({group}) {
 					<hr className="hr-line" />
 				</Col>
 			</Row>
-            <Row>
+			<Row>
 				<Col>
 					<span>Liczba członków:</span>
 				</Col>
@@ -53,7 +86,7 @@ export default function GroupDataTable({group}) {
 					<span>Założono:</span>
 				</Col>
 				<Col>{group && <span>{DbDateConvert(group.createdAt).date}</span>}</Col>
-			</Row>
+			</Row>  */}
 		</Container>
 	);
 }

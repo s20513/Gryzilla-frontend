@@ -11,24 +11,21 @@ import SuccessBaner from "../../../components/SuccessBanner";
 import ErrorBanner2 from "../../../components/banners/ErrorBanner2";
 import SuccessBaner2 from "../../../components/banners/SuccessBaner2";
 
-export default function ChangePasswordModal({ show, setShow, userData }) {
+export default function ChangePasswordAdminModal({ show, setShow, userData }) {
 	const auth = useAuth();
 
-	const [oldPassword, setOldPassword] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordReapet, setPasswordReapet] = useState("");
 
-	const [oldPasswordError, setOldPasswordError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
 	const [passwordReapetError, setPasswordReaperError] = useState(false);
 
-	// const [isSuccess, setIsSuccess] = useState(false);
 
-	const isValidArr = [oldPasswordError, passwordError, passwordReapetError];
+	const isValidArr = [ passwordError, passwordReapetError];
 
 	const [data, error, loading, runRequest, isSuccess] = useAxios({
 		method: "PUT",
-		url: `/users/password/${userData.idUser}`,
+		url: `/users/password/admin/${userData.idUser}`,
 		headers: { accept: "*/*" },
 		executeOnRender: false,
 	});
@@ -43,7 +40,6 @@ export default function ChangePasswordModal({ show, setShow, userData }) {
 		runRequest({
 			data: {
 				newPassword: password,
-				oldPassword: oldPassword,
 			},
 		});
 	};
@@ -51,30 +47,10 @@ export default function ChangePasswordModal({ show, setShow, userData }) {
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Zmiana hasła</Modal.Title>
+				<Modal.Title>Zmiana hasła jako administrator</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
-				<FormInput
-					label={"Stare hasło"}
-					control={
-						<Form.Control
-							onChange={(e) => {
-								setOldPassword(e.target.value);
-							}}
-							type="password"
-							placeholder="Hasło"
-						/>
-					}
-					setIsValid={setOldPasswordError}
-					validation={{
-						validate: oldPassword,
-						required: { value: true },
-						minLength: { value: 5 },
-						maxLength: { value: 255 },
-					}}
-				/>
-
 				<FormInput
 					label={"Nowe hasło"}
 					control={

@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap";
+import { InputGroup, Modal } from "react-bootstrap";
 import useAxios from "../../../hooks/useAxios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -11,20 +11,22 @@ import SuccessBaner from "../../../components/SuccessBanner";
 import ErrorBanner2 from "../../../components/banners/ErrorBanner2";
 import SuccessBaner2 from "../../../components/banners/SuccessBaner2";
 
-export default function ChangeDetailsModal({ show, setShow, userData }) {
+export default function ChangeLinkModal({
+	title,
+	linkHead,
+	linkTail,
+	link,
+	show,
+	setShow,
+	idUser,
+}) {
 	const auth = useAuth();
 
-	const [email, setEmail] = useState("");
-	const [phone, setPhone] = useState("");
-
-	const [emailError, setEmailError] = useState(false);
-	const [phoneError, setphoneError] = useState(false);
-
-	const isValidArr = [emailError, phoneError];
+	const [myLink, setMyLink] = useState("");
 
 	const [data, error, loading, runRequest, isSuccess] = useAxios({
 		method: "PUT",
-		url: `/users/${userData.idUser}`,
+		url: `/links/${link}`,
 		headers: { accept: "*/*" },
 		executeOnRender: false,
 	});
@@ -34,14 +36,12 @@ export default function ChangeDetailsModal({ show, setShow, userData }) {
 	};
 
 	const handleSubmit = () => {
-		if (isValidArr.some((v) => v !== true)) return;
+		// if (isValidArr.some((v) => v !== true)) return;
 
 		runRequest({
 			data: {
-				idUser: userData.idUser,
-				nick: userData.nick,
-				email: email,
-				phoneNumber: phone,
+				idUser: idUser,
+				link: (linkHead + myLink),
 			},
 		});
 	};
@@ -49,51 +49,18 @@ export default function ChangeDetailsModal({ show, setShow, userData }) {
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Zmiana hasła</Modal.Title>
+				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
-				<FormInput
-					label={"Adres email"}
-					control={
-						<Form.Control
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
-							type="text"
-							placeholder="email"
-						/>
-					}
-					setIsValid={setEmailError}
-					validation={{
-						validate: email,
-						required: { value: true },
-						minLength: { value: 1 },
-						maxLength: { value: 255 },
-						email: { value: true },
-					}}
-				/>
-
-				<FormInput
-					label={"Numer telefonu"}
-					control={
-						<Form.Control
-							onChange={(e) => {
-								setPhone(e.target.value);
-							}}
-							type="text"
-							placeholder="telefon"
-						/>
-					}
-					setIsValid={setphoneError}
-					validation={{
-						validate: phone,
-						required: { value: true },
-						minLength: { value: 1 },
-						maxLength: { value: 20 },
-						phoneNumber: { value: true },
-					}}
-				/>
+				<InputGroup className="mb-3">
+					<InputGroup.Text id="basic-addon3">{linkHead}</InputGroup.Text>
+					<Form.Control
+						placeholder="link"
+						value={myLink ? myLink : ""}
+						onChange={(e) => setMyLink(e.target.value)}
+					/>
+				</InputGroup>
 
 				<LoadingBanner
 					placeHolder={"Przetwarzanie rządania"}

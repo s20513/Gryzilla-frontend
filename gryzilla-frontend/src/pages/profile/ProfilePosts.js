@@ -23,7 +23,7 @@ export default function ProfilePotst({ idUser }) {
 			{posts &&
 				!loadingPosts &&
 				posts.map((post, index) => {
-					if (showMore === false && index > limit - 1) return;
+					// if (showMore === false && index > limit - 1) return;
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <PostAndComments key={post.idPost} postData={post} />;
 				})}
@@ -34,7 +34,7 @@ export default function ProfilePotst({ idUser }) {
 				placeHolder={"Ładowanie postów..."}
 			/>
 
-			{posts && !showMore && (
+			{/* {posts && !showMore && (
 				<div
 					className="content-container content-container-hover text-center"
 					onClick={() => setShowMore(true)}
@@ -50,7 +50,7 @@ export default function ProfilePotst({ idUser }) {
 				>
 					Pokaż mniej
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }

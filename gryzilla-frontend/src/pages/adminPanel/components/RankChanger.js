@@ -11,9 +11,9 @@ import useDebounce from "../../../hooks/useDebounce";
 import useAxios from "../../../hooks/useAxios";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { DbDateConvert } from "../../../utils/DataUtlis";
 
 export default function RankChanger({ chosenUserFromReport }) {
-
 	const [nick, setNick] = useState("");
 	const nickDebounce = useDebounce(nick, 400);
 
@@ -24,15 +24,14 @@ export default function RankChanger({ chosenUserFromReport }) {
 	const [commentReport, setCommentReport] = useState(null);
 
 	const auth = useAuth();
-	const nav = useNavigate()
+	const nav = useNavigate();
 
-	useEffect(()=>{
-		if(!auth.isLogged) nav('/')
-	},[auth.isLogged])
+	// useEffect(()=>{
+	// 	if(!auth.isLogged) nav('/')
+	// },[auth.isLogged])
 
 	useEffect(() => {
-		if(!chosenUserFromReport) return;
-		console.log(chosenUserFromReport);
+		if (!chosenUserFromReport) return;
 		setBlockComment(chosenUserFromReport.reason);
 		setNick(chosenUserFromReport.nickReported);
 	}, [chosenUserFromReport]);
@@ -94,12 +93,27 @@ export default function RankChanger({ chosenUserFromReport }) {
 	}, [nickDebounce]);
 
 	const handleBlock = () => {
-		runRequestBlock({data: {idUserBlocking: auth.id, idUserBlocked: chosenUser.idUser, comment: blockComment}})
-	}
+		setChosenUser(null);
+		runRequestBlock({
+			data: {
+				idUserBlocking: auth.id,
+				idUserBlocked: chosenUser.idUser,
+				comment: blockComment,
+			},
+		});
+	};
 
 	const handleUnblock = () => {
-		runRequestUnblock({url: `/block/${chosenUser.idUser}`,})
-	}
+		setChosenUser(null);
+		runRequestUnblock({ url: `/block/${chosenUser.idUser}` });
+	};
+
+	useEffect(() => {
+		if(!nickDebounce) return;
+		runRequestUsers({
+			params: { nick: nickDebounce },
+		});
+	}, [block, unblock, rankChange]);
 
 	const handleSubmit = () => {
 		if (!chosenUser || !chosenRank) return;
@@ -152,39 +166,42 @@ export default function RankChanger({ chosenUserFromReport }) {
 					</InputGroup>
 				</div>
 
-				<hr className="hr-line"></hr>
-
 				<div className="d-flex justify-content-center">
-				
-					{chosenUser && auth.role == 'Admin' && (
-						<div className="d-flex flex-row align-items-center gap-2 justify-content-center change-rank-button">
-							<span>Zmień range z {chosenUser?.rankName} na:</span>
+					{chosenUser &&
+						auth.role == "Admin" &&
+						chosenUser.rankName != "Blocked" && (
+							<>
+								<div className="d-flex flex-row align-items-center gap-2 justify-content-center change-rank-button">
+									<span>Zmień range z {chosenUser?.rankName} na:</span>
 
-							<Dropdown>
-								<Dropdown.Toggle
-									style={{ height: "30px", padding: "0px 20px" }}
-									id="dropdown-button-dark-example1"
-									variant="secondary"
-								>
-									{chosenRank ? chosenRank.name : "nie wybrano"}
-								</Dropdown.Toggle>
+									<Dropdown>
+										<Dropdown.Toggle
+											style={{ height: "30px", padding: "0px 20px" }}
+											id="dropdown-button-dark-example1"
+											variant="secondary"
+										>
+											{chosenRank ? chosenRank.name : "nie wybrano"}
+										</Dropdown.Toggle>
 
-								<Dropdown.Menu variant="dark">
-									{ranks &&
-										ranks.map((rank) => {
-											return (
-												<Dropdown.Item
-													key={rank.idRank}
-													onClick={() => setChosenRank(rank)}
-												>
-													{rank.name}
-												</Dropdown.Item>
-											);
-										})}
-								</Dropdown.Menu>
-							</Dropdown>
-						</div>
-					)}
+										<Dropdown.Menu variant="dark">
+											{ranks &&
+												ranks
+													.filter((rank) => rank.name != "Blocked")
+													.map((rank) => {
+														return (
+															<Dropdown.Item
+																key={rank.idRank}
+																onClick={() => setChosenRank(rank)}
+															>
+																{rank.name}
+															</Dropdown.Item>
+														);
+													})}
+										</Dropdown.Menu>
+									</Dropdown>
+								</div>
+							</>
+						)}
 				</div>
 				<div className="d-flex justify-content-center mt-3">
 					{chosenRank &&
@@ -207,14 +224,17 @@ export default function RankChanger({ chosenUserFromReport }) {
 					)}
 				</div>
 
-				<hr className="hr-line"></hr>
-
-				{chosenUser && chosenUser.rankName != 'Admin' && (
+				{chosenUser && chosenUser.rankName != "Admin" && (
 					<div className="d-flex justify-content-center flex-column">
+						<hr className="hr-line" />
+						<div className="d-flex justify-content-center">
+							<h4>Zarządanie blokadami użytkowników</h4>
+						</div>
+
 						<div className="d-flex flex-row justify-content-center mb-3">
 							<Form.Control
 								style={{ width: "500px" }}
-								placeholder="Wpisz nazwę użytkownika"
+								placeholder="Wpisz komentarz do zakładanej blokady"
 								value={blockComment ? blockComment : ""}
 								onChange={(e) => setBlockComment(e.target.value)}
 							/>
@@ -237,35 +257,55 @@ export default function RankChanger({ chosenUserFromReport }) {
 							</Button>
 						</div>
 
-						<div className="d-flex justify-content-center mt-1">
-							{/* {loadingBlock || loadingUnblock && (
-								<span style={{ color: "gray" }}>Przetwarzam żądanie...</span>
-							)} */}
-							{((block && !loadingBlock) || (unblock && !loadingUnblock)) && (
-								<span style={{ color: "green" }}>Status blokady został zaktualizowany</span>
-							)}
-							{/* {errorRanks && !loadingChange && (
-								<span style={{ color: "red" }}>Błąd przy zmienianiu rangi</span>
-							)} */}
-						</div>
-
 						{userHistory?.history.length > 0 ? (
 							<>
-								<span>Historia założonych blokad</span>
+								<div className="d-flex justify-content-center mt-3">
+									<h5>Historia założonych blokad</h5>
+								</div>
+
 								{userHistory.history.map((history, index) => {
 									return (
-										<span key={index}>
-											Blokował: {history.userBlockingNick} Komentarz:{" "}
-											{history.comment}
-										</span>
+										<div className="d-flex flex-column mb-2 text-center history-report">
+											<span>
+												Blokowany przez: {history.userBlockingNick} (
+												{history.userBlockingRankName})
+											</span>
+											<span>Komentarz do blokady: {history.comment}</span>
+											<span>
+												Data założenia blokady:{" "}
+												{DbDateConvert(history.start).time}{" "}
+												{DbDateConvert(history.start).date}
+											</span>
+										</div>
+										// <span key={index}>
+										// 	Blokował: {history.userBlockingNick} Komentarz:{" "}
+										// 	{history.comment}
+										// </span>
 									);
 								})}
 							</>
 						) : (
-							<span>Brak historii blokowania</span>
+							<div className="d-flex justify-content-center mt-3">
+								<h5>Brak hisitorii założonych blokad</h5>
+							</div>
 						)}
 					</div>
 				)}
+				{/* {chosenUser && (
+					<div className="d-flex justify-content-center mt-1">
+						{loadingBlock || loadingUnblock && (
+								<span style={{ color: "gray" }}>Przetwarzam żądanie...</span>
+							)}
+						{((block && !loadingBlock) || (unblock && !loadingUnblock)) && (
+							<span style={{ color: "green" }}>
+								Status blokady został zaktualizowany
+							</span>
+						)}
+						{errorRanks && !loadingChange && (
+								<span style={{ color: "red" }}>Błąd przy zmienianiu rangi</span>
+							)}
+					</div>
+				)} */}
 			</div>
 		</>
 	);

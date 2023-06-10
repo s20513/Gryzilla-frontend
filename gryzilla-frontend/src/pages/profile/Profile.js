@@ -7,7 +7,7 @@ import useAxios from "../../hooks/useAxios";
 import { useAuth } from "../../context/AuthContext";
 import ProfilePotst from "./ProfilePosts";
 import ProfileArticles from "./ProfileArticles";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -31,6 +31,8 @@ export default function Profile() {
 	const params = useParams();
 	const idUser = params.idUser;
 
+	const navigate = useNavigate();
+
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showReportModal, setShowReportModal] = useState(false);
 
@@ -42,7 +44,11 @@ export default function Profile() {
 
 	useEffect(() => {
 		runRequest();
-	}, [params.idUser]);
+	}, [idUser]);
+
+	useEffect(()=> {
+		console.log(profile)
+	},[profile])
 
 	return (
 		<>
@@ -67,7 +73,8 @@ export default function Profile() {
 											<FollowButton idUser={idUser} />
 										</Require>
 										<OptionDropdown
-											handleEdit={() => setShowEditModal(true)}
+											handleEdit={() => navigate(`/profile/panel/${idUser}`)}
+											handleEditBlocked={() => navigate(`/profile/panel/${idUser}`)}
 											// handleDelete={() => setShowDeleteModal(true)}
 											handleReport={() => setShowReportModal(true)}
 											owner={profile.idUser}
@@ -91,9 +98,9 @@ export default function Profile() {
 								<Row>
 									<ProfileDataTable profile={profile} />
 								</Row>
-								{/* <Row>
-								<ProfileLinkButtons />
-							</Row> */}
+								<Row>
+									<ProfileLinkButtons linkDiscord={profile.linkDiscord} linkEpic={profile.linkEpic} linkPs={profile.linkPs} linkSteam={profile.linkSteam} linkXbox={profile.linkXbox}/>
+								</Row>
 							</Col>
 						</Row>
 					</Container>

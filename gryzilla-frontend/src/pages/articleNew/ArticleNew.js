@@ -25,6 +25,7 @@ export default function ArticleNew() {
 					enableTags={true}
                     enableTitle={true}
 					placeHolder={"Wprowadz nowy artykuł..."}
+					handleClose={() => navigate('/articles')}
 				/>
 		</Container>
 	);

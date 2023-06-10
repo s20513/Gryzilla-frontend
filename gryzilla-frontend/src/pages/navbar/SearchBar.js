@@ -17,7 +17,7 @@ export default function SearchBar() {
     }
 
 	return (
-		<Form className="d-flex ">
+		<Form className="d-flex" >
 			<Form.Control
 				type="search"
 				placeholder="Szukana fraza"

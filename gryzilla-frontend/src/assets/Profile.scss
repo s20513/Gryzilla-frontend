@@ -27,7 +27,6 @@
 
 .profile-img-mini {
     @extend .profile-img;
-    image-rendering: pixelated;
     width: 36px;
     height: 36px;
     border-radius: 0.3rem;

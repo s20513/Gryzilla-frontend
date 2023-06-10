@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import ResolveButton from "./ResolveButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { DbDateConvert } from "../../../utils/DataUtlis";
 
 export default function Report({ urlResolve, urlLink, reportData, idContentName, setChosenUser }) {
 	const [fullData, setFullData] = useState(false);
 	const [isResolved, setIsResolved] = useState(() => reportData.viewed);
+	const navigate = useNavigate();
 
 	const idReport = "" + reportData[idContentName] + reportData.idUser + reportData.idReason;
 
@@ -26,7 +27,7 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName,
                         <Link to={urlLink} className="article-title"><span style={{textDecoration: "underline"}}>Zgłaszana treść</span></Link>
 						<div>Powód zgłoszenia: {reportData.reasonName}</div>     
 						<div>Komentarz do zgłoszenia: {reportData.content}</div>
-						<div>Twórca zgłoszonej treści: <Button className={"btn-secondary"} style={{padding: "0px 4px"}} onClick={() => handleChooseUser()}>{reportData.nickReported}</Button></div> 
+						<div>Twórca zgłoszonej treści: <Link to={`/profile/${reportData.idUserReported}`}><Button className={"btn-secondary"} style={{padding: "0px 4px"}}>{reportData.nickReported}</Button></Link></div> 
 					</div>
 					<hr className="hr-line" />
 					<div className="d-flex justify-content-center gap-3 mt-2">
@@ -38,6 +39,7 @@ export default function Report({ urlResolve, urlLink, reportData, idContentName,
 							isResolved={isResolved}
                             setIsResolved={setIsResolved}
 						/>
+						<Button className="btn-info" onClick={() => handleChooseUser()}>Wyszukiwanie użytkownika</Button>
 					</div>
 				</>
 			) : (

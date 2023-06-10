@@ -5,6 +5,7 @@ import ContentInput from "../../components/Editor/ContentInput";
 import useAxios from "../../hooks/useAxios";
 
 import GroupComment from "./components/GroupComment";
+import Require from "../../context/Require";
 
 export default function GroupComments({ idGroup, isMember }) {
 	const auth = useAuth();
@@ -27,31 +28,33 @@ export default function GroupComments({ idGroup, isMember }) {
 
 	return (
 		<>
-			{isMember && (
-				<>
-					{!showInput ? (
-						<InputMockup
-							handleClick={() =>
-								auth.isLogged
-									? setShowInput(true)
-									: alert("Zaloguj się aby dodawać treści")
-							}
-							placeHolder={"Dodaj nową wiadomość na grupie..."}
-						/>
-					) : (
-						<ContentInput
-							addNew={addNewComment}
-							url={`/groupsMessage`}
-							method={"POST"}
-							apiData={{ idGroup: idGroup }}
-							enableTags={false}
-							enableTitle={false}
-							placeHolder={"Wprowadz nową wiadomość..."}
-							handleClose={() => setShowInput(false)}
-						/>
-					)}
-				</>
-			)}
+			<Require req={{ authLogged: true }}>
+				{isMember && (
+					<>
+						{!showInput ? (
+							<InputMockup
+								handleClick={() =>
+									auth.isLogged
+										? setShowInput(true)
+										: alert("Zaloguj się aby dodawać treści")
+								}
+								placeHolder={"Dodaj nową wiadomość na grupie..."}
+							/>
+						) : (
+							<ContentInput
+								addNew={addNewComment}
+								url={`/groupsMessage`}
+								method={"POST"}
+								apiData={{ idGroup: idGroup }}
+								enableTags={false}
+								enableTitle={false}
+								placeHolder={"Wprowadz nową wiadomość..."}
+								handleClose={() => setShowInput(false)}
+							/>
+						)}
+					</>
+				)}
+			</Require>
 
 			{message &&
 				message.concat(newComments).map((msg) => {

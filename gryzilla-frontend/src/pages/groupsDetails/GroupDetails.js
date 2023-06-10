@@ -15,10 +15,14 @@ import GroupDataTable from "./components/GroupDataTable";
 import GroupComments from "./GroupComments";
 import GroupMembers from "./GroupMembers";
 import Require from "../../context/Require";
+import OptionDropdown from "../../components/OptionDropdown";
+import GroupEditModal from "./components/GroupEditModal";
 
 export default function GroupDetials() {
 	const auth = useAuth();
 	const { idGroup } = useParams();
+
+	const [showChangeDetailsModal, setShowChangeDetailsModal] = useState(false);
 
 	const [group, error, loading] = useAxios({
 		method: "GET",
@@ -40,7 +44,7 @@ export default function GroupDetials() {
 	}, [auth.isLogged]);
 
 	useEffect(() => {
-		if(!dataMember) return;
+		if (!dataMember) return;
 		setIsMember(dataMember.member);
 	}, [dataMember]);
 
@@ -67,6 +71,21 @@ export default function GroupDetials() {
 											/>
 										)}
 									</Require>
+									{group && (
+										<Require req={{authOwner: true, authRole: ['Admin'], idOwner: group.idUserCreator}}>
+											<OptionDropdown
+												handleEdit={() => setShowChangeDetailsModal(true)}
+												owner={group.idUserCreator}
+												upper={true}
+											/>
+
+											<GroupEditModal
+												show={showChangeDetailsModal}
+												setShow={setShowChangeDetailsModal}
+												groupData={group}
+											/>
+										</Require>
+									)}
 								</div>
 							</Row>
 						</Col>

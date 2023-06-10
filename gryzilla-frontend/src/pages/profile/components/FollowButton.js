@@ -62,7 +62,6 @@ export default function FollowButton({ idUser }) {
 
 	return (
 		<>
-		{idUser != auth.id}
 			<div
 				onClick={() => handleClick()}
 				className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"}

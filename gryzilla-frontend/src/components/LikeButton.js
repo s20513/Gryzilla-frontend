@@ -24,7 +24,7 @@ export default function LikeButton(props) {
 	}, [data]);
 
 	useEffect(() => {
-		if (!auth.isLogged) return;
+		if (!auth.isLogged || auth.role == 'Blocked') return;
 		runRequest({ url: `/${url}/${auth.id}/${idContent}/` });
 	}, [auth.isLogged]);
 
@@ -69,7 +69,7 @@ export default function LikeButton(props) {
 			onClick={() => handleClick()}
 			type="button"
 			className="widget-button"
-			disabled={auth.isLogged ? false : true}
+			disabled={!auth.isLogged || auth.role == 'Blocked' ? true : false}
 		>
 			<span
 				style={{

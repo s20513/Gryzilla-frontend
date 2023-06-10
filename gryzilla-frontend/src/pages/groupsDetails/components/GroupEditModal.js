@@ -11,20 +11,20 @@ import SuccessBaner from "../../../components/SuccessBanner";
 import ErrorBanner2 from "../../../components/banners/ErrorBanner2";
 import SuccessBaner2 from "../../../components/banners/SuccessBaner2";
 
-export default function ChangeDetailsModal({ show, setShow, userData }) {
+export default function GroupEditModal({ show, setShow, groupData }) {
 	const auth = useAuth();
 
-	const [email, setEmail] = useState("");
-	const [phone, setPhone] = useState("");
+    const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
 
-	const [emailError, setEmailError] = useState(false);
-	const [phoneError, setphoneError] = useState(false);
+	const [isValidName, setIsValidName] = useState(false);
+	const [isValidDesc, setIsValidDesc] = useState(false);
 
-	const isValidArr = [emailError, phoneError];
+    const isValidArr = [isValidName, isValidDesc];
 
 	const [data, error, loading, runRequest, isSuccess] = useAxios({
 		method: "PUT",
-		url: `/users/${userData.idUser}`,
+		url: `/groups/${groupData.idGroup}`,
 		headers: { accept: "*/*" },
 		executeOnRender: false,
 	});
@@ -38,10 +38,9 @@ export default function ChangeDetailsModal({ show, setShow, userData }) {
 
 		runRequest({
 			data: {
-				idUser: userData.idUser,
-				nick: userData.nick,
-				email: email,
-				phoneNumber: phone,
+				idGroup: groupData.idGroup,
+				groupName: name,
+                content: description
 			},
 		});
 	};
@@ -49,49 +48,46 @@ export default function ChangeDetailsModal({ show, setShow, userData }) {
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Zmiana hasła</Modal.Title>
+				<Modal.Title>Zmiana danych grupy</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
-				<FormInput
-					label={"Adres email"}
+            <FormInput
+					label={"Nazwa grupy"}
 					control={
 						<Form.Control
 							onChange={(e) => {
-								setEmail(e.target.value);
+								setName(e.target.value);
 							}}
 							type="text"
-							placeholder="email"
+							placeholder="Nazwa grupy"
 						/>
 					}
-					setIsValid={setEmailError}
+					setIsValid={setIsValidName}
 					validation={{
-						validate: email,
-						required: { value: true },
-						minLength: { value: 1 },
-						maxLength: { value: 255 },
-						email: { value: true },
+						validate: name,
+						required: {value: true},
+						minLength: {value: 5},
+						maxLength: {value: 60},
 					}}
 				/>
 
 				<FormInput
-					label={"Numer telefonu"}
+					label={"Opis grupy"}
 					control={
 						<Form.Control
-							onChange={(e) => {
-								setPhone(e.target.value);
-							}}
-							type="text"
-							placeholder="telefon"
+							as="textarea"
+							rows={3}
+							placeholder="Opis grupy"
+							onChange={(event) => setDescription(event.target.value)}
 						/>
 					}
-					setIsValid={setphoneError}
+					setIsValid={setIsValidDesc}
 					validation={{
-						validate: phone,
-						required: { value: true },
-						minLength: { value: 1 },
-						maxLength: { value: 20 },
-						phoneNumber: { value: true },
+						validate: description,
+						required: {value: true, message: "Opis grupy jest wymagany"},
+						minLength: {value: 10, message: "Opis musi się składac z co najmniej 10 znaków"},
+						maxLength: {value: 200},
 					}}
 				/>
 

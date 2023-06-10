@@ -112,6 +112,7 @@ export default function ContentInput(props) {
 								onChange={(e) => setTitle(e.target.value)}
 							/>
 							<Form.Text className="text-muted">{msg}</Form.Text>
+							<div className="mb-3"></div>
 						</>
 					)}
 

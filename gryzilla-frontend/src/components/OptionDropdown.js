@@ -7,13 +7,18 @@ export default function OptionDropdown({
 	handleDelete,
 	handleReport,
 	handleNewView,
+	handleEditBlocked,
 	upper,
 	owner,
 }) {
 
 	const auth = useAuth();
 
-	if(!handleNewView && !auth.isLogged ){
+	if(!handleNewView && (!auth.isLogged || auth.role == 'Blocked')){
+		return <></>
+	}
+
+	if(!handleNewView && !handleEdit && !handleDelete && !handleReport) {
 		return <></>
 	}
 	

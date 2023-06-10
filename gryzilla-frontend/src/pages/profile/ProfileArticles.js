@@ -22,7 +22,7 @@ export default function ProfileArticles({ idUser }) {
 			{articles &&
 				!loadingPosts &&
 				articles.map((article, index) => {
-					if (showMore === false && index > limit - 1) return;
+					// if (showMore === false && index > limit - 1) return;
 					return (
 						<ArticlePreview
 							key={article.idArticle}
@@ -41,7 +41,7 @@ export default function ProfileArticles({ idUser }) {
 				error={errorPosts}
 				placeHolder={"Ładowanie artykułów..."}
 			/>
-
+{/* 
 			{articles && !showMore && (
 				<div
 					className="content-container content-container-hover text-center"
@@ -58,7 +58,7 @@ export default function ProfileArticles({ idUser }) {
 				>
 					Pokaż mniej
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }

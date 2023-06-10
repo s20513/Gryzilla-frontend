@@ -9,7 +9,7 @@ export default function ProfilePanelWrapper({ children }) {
 	const [redirect, setRedirect] = useState(false);
 
 	useEffect(() => {
-		if (!auth.isLogged || auth.id != idUser) navigate(`/profile/${idUser}`);
+		if (!auth.isLogged || (auth.id != idUser && auth.role != 'Admin')) navigate(`/profile/${idUser}`);
 	}, [auth.isLogged]);
 
 	return <>{children}</>;

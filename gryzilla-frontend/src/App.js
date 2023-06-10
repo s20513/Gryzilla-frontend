@@ -33,6 +33,8 @@ import ProfilePanel from "./pages/profilePanel/ProfilePanel";
 import ProfilePanelWrapper from "./pages/profilePanel/ProfilePanelWrapper";
 import HomePage from "./pages/home/HomePage";
 import { AvatarChangeProvider } from "./context/AvatarChangeContext";
+import AdminPanelWrapper from "./pages/adminPanel/components/AdminPanelWrapper";
+import AuthLoggedBoundery from "./components/AuthLoggedBoundery";
 
 
 function App() {
@@ -69,13 +71,13 @@ function App() {
 										<Route index element={<Articles />} />
 										<Route path=":idArticle" element={<ArticleDetails />} />
 										<Route path=":idArticle/:idComment" element={<ArticleDetails />} />
-										<Route path="new" element={<ArticleNew />} />
-										<Route path="edit/:idArticle" element={<ArticleEdit />} />
+										<Route path="new" element={<AuthLoggedBoundery roles={['Redactor', 'Admin']} urlBlock={'/articles'}><ArticleNew /></AuthLoggedBoundery>} />
+										<Route path="edit/:idArticle" element={<AuthLoggedBoundery roles={['Redactor', 'Admin']} urlBlock={'/articles'}><ArticleEdit /></AuthLoggedBoundery>} />
 									</Route>
 									<Route path="/groups">
 										<Route index element={<Groups />} />
 										<Route path=":idGroup" element={<GroupDetials />} />
-										<Route path="new" element={<GroupNew/>} />
+										<Route path="new" element={<AuthLoggedBoundery roles={['Redactor', 'Admin', 'User', 'Moderator']} urlBlock={'/groups'}><GroupNew /></AuthLoggedBoundery>} />
 									</Route>
 									<Route path="/profile">
 										<Route exact path=":idUser" element={<Profile />} />
@@ -90,7 +92,7 @@ function App() {
 										<Route path="phrase/:searchPhrase" element={<SearchPage/>}/>
 										<Route path="tag/:searchPhrase" element={<SearchPage/>}/>
 									</Route>
-									<Route path="/adminPanel" element={<AdminPanel/>}/>
+									<Route path="/adminPanel" element={<AdminPanelWrapper><AdminPanel/></AdminPanelWrapper>}/>
 									<Route path="*" element={<NotFound />} />
 								</Routes>
 							</Col>

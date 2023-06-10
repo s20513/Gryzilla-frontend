@@ -5,6 +5,7 @@ import ContentInput from "../../components/Editor/ContentInput";
 import ProfileComment from "./components/ProfileComment";
 import useAxios from "../../hooks/useAxios";
 import LoadingBanner from "../../components/LoadingBanner";
+import Require from "../../context/Require";
 
 export default function ProfileComments({ idUser }) {
 	const auth = useAuth();
@@ -31,27 +32,29 @@ export default function ProfileComments({ idUser }) {
 
 	return (
 		<>
-			{!showInput ? (
-				<InputMockup
-					handleClick={() =>
-						auth.isLogged
-							? setShowInput(true)
-							: alert("Zaloguj się aby dodawać treści")
-					}
-					placeHolder={"Dodaj nowy komentarz o użytkowniku..."}
-				/>
-			) : (
-				<ContentInput
-					addNew={addNewComment}
-					url={`/profileComments`}
-					method={"POST"}
-					apiData={{ idUserComment: idUser }}
-					enableTags={false}
-					enableTitle={false}
-					placeHolder={"Wprowadz komentarz o użytkowniku..."}
-					handleClose={() => setShowInput(false)}
-				/>
-			)}
+			<Require req={{ authLogged: true }}>
+				{!showInput ? (
+					<InputMockup
+						handleClick={() =>
+							auth.isLogged
+								? setShowInput(true)
+								: alert("Zaloguj się aby dodawać treści")
+						}
+						placeHolder={"Dodaj nowy komentarz o użytkowniku..."}
+					/>
+				) : (
+					<ContentInput
+						addNew={addNewComment}
+						url={`/profileComments`}
+						method={"POST"}
+						apiData={{ idUserComment: idUser }}
+						enableTags={false}
+						enableTitle={false}
+						placeHolder={"Wprowadz komentarz o użytkowniku..."}
+						handleClose={() => setShowInput(false)}
+					/>
+				)}
+			</Require>
 
 			{reviews &&
 				!loading &&

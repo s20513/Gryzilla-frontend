@@ -7,6 +7,7 @@ import ContentInput from "../../components/Editor/ContentInput";
 import Comment from "../../components/Comment";
 import VerticalLineWrapper from "../posts/components/VerticalLineWrapper";
 import ArticleComment from "./ArticleComment";
+import Require from "../../context/Require";
 
 export default function ArticleComments(props) {
 	const data = props.data;
@@ -23,28 +24,32 @@ export default function ArticleComments(props) {
 	const [newComment, setNewComment] = useState([]);
 
 	const addNewComment = (newComment) => {
-		setNewComment(newComment);
+		setNewComment((prev) => {
+			return [...prev, newComment];
+		});
 		setDisplayCommentInput(false);
 	};
 
 	return (
 		<>
 			<div className="mt-3">
-				{!displayCommentInput ? (
-					<InputMockup handleClick={() => setDisplayCommentInput(true)}>
-						Dodaj nowy komentarz...
-					</InputMockup>
-				) : (
-					<ContentInput
-						addNew={addNewComment}
-						url={"comments"}
-						method={"POST"}
-						apiData={{ idUser: 6, idArticle: data.idArticle }}
-						enableTags={false}
-						placeHolder={"Wprowadz nowy komentarz..."}
-						handleClose={() => setDisplayCommentInput(false)}
-					/>
-				)}
+				<Require req={{ authLogged: true }}>
+					{!displayCommentInput ? (
+						<InputMockup handleClick={() => setDisplayCommentInput(true)}>
+							Dodaj nowy komentarz...
+						</InputMockup>
+					) : (
+						<ContentInput
+							addNew={addNewComment}
+							url={"/articles/comments"}
+							method={"POST"}
+							apiData={{ idArticle: data.idArticle }}
+							enableTags={false}
+							placeHolder={"Wprowadz nowy komentarz..."}
+							handleClose={() => setDisplayCommentInput(false)}
+						/>
+					)}
+				</Require>
 			</div>
 			{data &&
 				data.comments

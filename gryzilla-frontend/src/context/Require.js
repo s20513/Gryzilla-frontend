@@ -14,6 +14,10 @@ export default function Require({ req, children }) {
     const idUserLogged = auth.id;
     const isLogged = auth.isLogged;
 
+    if(!isLogged || role == 'Blocked'){
+        return <></>;
+    }
+
     if(req.notOwner && req.notOwner == true) {
         if(isLogged && (req.idOwner != idUserLogged) ) {
             return (
@@ -25,7 +29,7 @@ export default function Require({ req, children }) {
     }
 
     if(req.authLogged && req.authLogged == true) {
-        if(isLogged && auth.role != "blocked") {
+        if(isLogged && auth.role != "Blocked") {
             return (
                 <>{children}</> 
             )
@@ -43,7 +47,6 @@ export default function Require({ req, children }) {
     }
 
     if(isLogged && req.authRole && req.authRole.length > 0 ) {
-        console.log("sptawdzam authROle")
         if(req.authRole.includes(role)) {
             return (
                 <>{children}</> 

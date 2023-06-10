@@ -24,7 +24,7 @@ export default function ProfileGroups({ idUser }) {
 			{groups &&
 				!loadingGroups &&
 				groups.map((group, index) => {
-					if (showMore === false && index > limit - 1) return;
+					// if (showMore === false && index > limit - 1) return;
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <GroupPreview key={group.idGroup} data={group} />;
 				})}
@@ -35,7 +35,7 @@ export default function ProfileGroups({ idUser }) {
 				placeHolder={"Ładowanie listy grup..."}
 			/>
 
-			{groups && !showMore && (
+			{/* {groups && !showMore && (
 				<div
 					className="content-container content-container-hover text-center"
 					onClick={() => setShowMore(true)}
@@ -51,7 +51,7 @@ export default function ProfileGroups({ idUser }) {
 				>
 					Pokaż mniej
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }

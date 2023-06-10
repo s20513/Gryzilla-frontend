@@ -210,7 +210,8 @@ a:hover {
 
 .article-title-input {
     width: 100%;
-    background-color: #bfc8da;
+    height: 30px;
+    background-color: #fefeff;
     border: 1px solid rgb(166, 166, 173);
     border-radius: 4px;
 }
@@ -248,6 +249,8 @@ a:hover {
 
 .button-web-link {
     height: 38px;
+    background-color: rgb(73, 67, 107);
+    border: 2px solid rgb(41, 47, 59);
 }
 
 .button-web-link-icon {
