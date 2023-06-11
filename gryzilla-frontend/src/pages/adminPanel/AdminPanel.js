@@ -15,7 +15,7 @@ export default function AdminPanel() {
 	return (
 		<Container className="main-panel">
 			
-			<h3>Nadawnie uprawnień</h3>
+			<h3>Nadawanie uprawnień</h3>
 			<RankChanger chosenUserFromReport={chosenUser} />
 			
 			<h3>Zgłoszenia</h3>

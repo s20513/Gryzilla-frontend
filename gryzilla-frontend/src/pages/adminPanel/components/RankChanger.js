@@ -265,7 +265,7 @@ export default function RankChanger({ chosenUserFromReport }) {
 
 								{userHistory.history.map((history, index) => {
 									return (
-										<div className="d-flex flex-column mb-2 text-center history-report">
+										<div key={index} className="d-flex flex-column mb-2 text-center history-report">
 											<span>
 												Blokowany przez: {history.userBlockingNick} (
 												{history.userBlockingRankName})
@@ -286,7 +286,7 @@ export default function RankChanger({ chosenUserFromReport }) {
 							</>
 						) : (
 							<div className="d-flex justify-content-center mt-3">
-								<h5>Brak hisitorii założonych blokad</h5>
+								<h5>Brak historii założonych blokad</h5>
 							</div>
 						)}
 					</div>

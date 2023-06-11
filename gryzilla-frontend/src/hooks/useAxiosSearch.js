@@ -21,10 +21,10 @@ export default function useAxiosSearch({content, url, searchType, searchPhrase, 
 	}, [searchType, searchPhrase]);
 
 	useEffect(() => {
-        console.log("wyszukana: " + searchPhrase)
+        //console.log("wyszukana: " + searchPhrase)
         if(!searchPhrase) return;
 
-		console.log("pobieranie")
+		//console.log("pobieranie")
 
 		setLoading(true);
 		setError(false);
@@ -39,7 +39,7 @@ export default function useAxiosSearch({content, url, searchType, searchPhrase, 
 					}
 				);
 
-				console.log(response.data[content])
+				//console.log(response.data[content])
 				
 				setPosts((prevPosts) => {
 					if(prevPosts)

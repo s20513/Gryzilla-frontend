@@ -7,11 +7,26 @@ import axios from "axios";
 import useAxiosFile from "../../../hooks/useAxiosFile";
 import { Form } from "react-bootstrap";
 import PhotoModal from "../../../components/modals/PhotoModal";
+import { useAuth } from "../../../context/AuthContext";
 
-export default function GroupAvatar({ idGroup }) {
+export default function GroupAvatar({ idGroup, owner }) {
+
+	const auth = useAuth();
 	
 	const [show, setShow] = useState(false);
-	const handleShow = () => setShow(true);
+
+	const handleShow = () => {
+		if(!auth.isLogged) return;
+
+		if(auth.id != owner && auth.role != 'Admin') {
+			return;
+		}
+		
+		if(auth.rank == 'Blocked') return;
+
+		setShow(true);
+
+	}
 	
 	const [photo, errorPhoto, loadingPhoto, runRequest] = useAxios({
 		method: "GET",

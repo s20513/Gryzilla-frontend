@@ -4,12 +4,21 @@ export const useValidation = ({ validation }) => {
 	const [isValidate, setIsValidate] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 
+	// useEffect(() => {
+	// 	// console.log(validation.validate);
+	// 	const { isOk, msg } = Validate(validation.validate, validation);
+	// 	setIsValidate(isOk);
+	// 	setErrorMessage(msg);
+	// }, [validation.validate, validation.equalTo ? validation.equalTo.value : null]);
+
 	useEffect(() => {
-		console.log(validation.validate);
+		//console.log("waliduje pole " + validation.validate);
+		//console.log(validation)
 		const { isOk, msg } = Validate(validation.validate, validation);
+		//console.log(isOk)
 		setIsValidate(isOk);
 		setErrorMessage(msg);
-	}, [validation.validate, validation.equalTo ? validation.equalTo.value : null]);
+	}, [validation]);
 
 	return [isValidate, errorMessage];
 };

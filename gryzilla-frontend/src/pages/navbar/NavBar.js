@@ -128,13 +128,22 @@ export default function NavBar() {
 												Mój profil
 											</Dropdown.Item>
 
-											<Dropdown.Item as={Link} to={`/profile/panel/${auth.id}`}>
-												Panel użytkownika
-											</Dropdown.Item>
+											<Require
+												req={{
+													authRole: ["User", "Redactor", "Admin", "Moderator"],
+												}}
+											>
+												<Dropdown.Item
+													as={Link}
+													to={`/profile/panel/${auth.id}`}
+												>
+													Panel użytkownika
+												</Dropdown.Item>
+											</Require>
 
 											<Require
 												req={{
-													authRole: ["Admin","Moderator"],
+													authRole: ["Admin", "Moderator"],
 												}}
 											>
 												<Dropdown.Item as={Link} to={`/adminPanel`}>

@@ -123,7 +123,7 @@ export default function SearchPage() {
 			</Tabs>
 			{!debouncedSearchPhrase && (
 				<div className="content-container text-center">
-					Wprowadź dane do wyszkukania aby uzyskać wyniki
+					Wprowadź dane do wyszkukania, aby uzyskać wyniki
 				</div>
 			)}
 		</Container>

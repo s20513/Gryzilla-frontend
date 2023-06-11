@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import ChangePasswordModal from "./components/ChangePasswordModal";
 import { useAuth } from "../../context/AuthContext";
@@ -31,6 +31,10 @@ export default function ProfilePanel() {
 		headers: { accept: "*/*" },
 	});
 
+	useEffect(() => {
+		runRequest();
+	},[params.idUser])
+
 	return (
 		<Container className="main-panel">
 			{profile && (
@@ -40,10 +44,10 @@ export default function ProfilePanel() {
 					</Container>
 					<Require req={{ authRole: ["Admin"] }}>
 						<div className="content-container">
-							<h4>Zmiana hasła jako administrator</h4>
+							<h4>Resetowanie hasła użytkownika</h4>
 
 							<Button onClick={() => setshowChangePassAdminModal(true)}>
-								Kliknij tutaj aby zmienić hasło jako administrator
+								Kliknij tutaj, aby zmienić hasło jako administrator
 							</Button>
 							<ChangePasswordAdminModal
 								show={showChangePassAdminModal}
@@ -53,23 +57,25 @@ export default function ProfilePanel() {
 						</div>
 					</Require>
 
-					<div className="content-container">
-						<h4>Zmiana hasła</h4>
+					<Require req={{ authOwner: true,  idOwner: profile.idUser }}>
+						<div className="content-container">
+							<h4>Zmiana hasła</h4>
 
-						<Button onClick={() => setShowChangePassModal(true)}>
-							Kliknij tutaj aby zmienić hasło
-						</Button>
-						<ChangePasswordModal
-							show={showChangePassModal}
-							setShow={setShowChangePassModal}
-							userData={profile}
-						/>
-					</div>
+							<Button onClick={() => setShowChangePassModal(true)}>
+								Kliknij tutaj, aby zmienić hasło
+							</Button>
+							<ChangePasswordModal
+								show={showChangePassModal}
+								setShow={setShowChangePassModal}
+								userData={profile}
+							/>
+						</div>
+					</Require>
 
 					<div className="content-container">
 						<h4>Zmiana danych konta</h4>
 						<Button onClick={() => setShowChangeDetailsModal(true)}>
-							Kliknij tutaj aby zmienić dane konta
+							Kliknij tutaj, aby zmienić dane konta
 						</Button>
 						<ChangeDetailsModal
 							show={showChangeDetailsModal}
@@ -95,7 +101,8 @@ export default function ProfilePanel() {
 							/>
 
 							<Button onClick={() => setShowDiscordModal(true)}>
-								Zmiana konta Discord <BsDiscord className="button-web-link-icon" />
+								Zmiana konta Discord{" "}
+								<BsDiscord className="button-web-link-icon" />
 							</Button>
 							<ChangeLinkModal
 								title={"Zmiana linku do Discord"}
@@ -121,7 +128,8 @@ export default function ProfilePanel() {
 							/>
 
 							<Button onClick={() => setShowEpicModal(true)}>
-								Zmiana konta Epic <SiEpicgames className="button-web-link-icon" />
+								Zmiana konta Epic{" "}
+								<SiEpicgames className="button-web-link-icon" />
 							</Button>
 							<ChangeLinkModal
 								title={"Zmiana linku do Epic"}

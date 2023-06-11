@@ -12,22 +12,28 @@ export default function ProfileLinkButtons({
 	linkSteam,
 	linkXbox,
 }) {
+
+	const openInNewTab = (url) => {
+		if(!url) return;
+		window.open(url, '_blank', 'noreferrer');
+	};
+
 	return (
 		<div className="content-container d-flex  justify-content-center gap-3">
 			{/* <div className="flex-items"> */}
-			<a href={linkSteam ? linkSteam : null}>
+			<a onClick={() => openInNewTab(linkSteam ? linkSteam : null)}>
 				<Button disabled={linkSteam ? false : true} className="button-web-link">
 					<FaSteam className="button-web-link-icon" />
 					<span className="d-none d-md-inline"> Steam</span>
 				</Button>
 			</a>
-			<a href={linkEpic ? linkEpic : null}>
+			<a onClick={() => openInNewTab(linkEpic ? linkEpic : null)} >
 				<Button disabled={linkEpic ? false : true} className="button-web-link">
 					<SiEpicgames className="button-web-link-icon" />
 					<span className="d-none d-md-inline"> Epic</span>
 				</Button>
 			</a>
-			<a href={linkDiscord ? linkDiscord : null}>
+			<a onClick={() => openInNewTab(linkDiscord ? linkDiscord : null)}  >
 				<Button
 					disabled={linkDiscord ? false : true}
 					className="button-web-link"
@@ -37,7 +43,7 @@ export default function ProfileLinkButtons({
 				</Button>
 			</a>
 			{/* <Link to={linkPs ? linkPs : ""} ></Lik><Button disabled={linkPs ? false : true} className="button-web-link"><FaPlaystation className="button-web-link-icon"/><span className="d-none d-md-inline"> PlayStation</span></Button> */}
-			<a href={linkXbox ? linkXbox : null}>
+			<a onClick={() => openInNewTab(linkXbox ? linkXbox : null)} >
 				<Button disabled={linkXbox ? false : true} className="button-web-link">
 					<FaXbox className="button-web-link-icon" />
 					<span className="d-none d-md-inline"> Xbox</span>

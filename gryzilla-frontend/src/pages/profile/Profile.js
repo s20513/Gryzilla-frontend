@@ -46,9 +46,6 @@ export default function Profile() {
 		runRequest();
 	}, [idUser]);
 
-	useEffect(()=> {
-		console.log(profile)
-	},[profile])
 
 	return (
 		<>
@@ -63,7 +60,7 @@ export default function Profile() {
 							<Col lg={3} md={12} sm={12}>
 								<Row>
 									<div className="content-container profile-data-container gap-2">
-										<ProfileAvatar idUser={idUser} />
+										<ProfileAvatar idUser={idUser} owner={idUser} />
 										<Require
 											req={{
 												idOwner: idUser,

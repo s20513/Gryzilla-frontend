@@ -8,12 +8,24 @@ import useAxiosFile from "../../../hooks/useAxiosFile";
 import { Form } from "react-bootstrap";
 import PhotoModal from "../../../components/modals/PhotoModal";
 import { useVatarChange } from "../../../context/AvatarChangeContext";
+import { useAuth } from "../../../context/AuthContext";
 
-export default function ProfileAvatar({ idUser }) {
+export default function ProfileAvatar({ idUser, owner }) {
 	const avatarContext = useVatarChange();
+	const auth = useAuth();
 
 	const [show, setShow] = useState(false);
-	const handleShow = () => setShow(true);
+	const handleShow = () => {
+		if(!auth.isLogged) return;
+
+		if(auth.id != owner && auth.role != 'Admin') {
+			return;
+		}
+		
+		if(auth.rank == 'Blocked') return;
+
+		setShow(true);
+	}
 
 	const [photo, errorPhoto, loadingPhoto, runRequest] = useAxios({
 		method: "GET",

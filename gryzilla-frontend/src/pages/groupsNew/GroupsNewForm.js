@@ -25,7 +25,6 @@ export default function GroupsNewForm() {
 		headers: { accept: "*/*" },
 	});
 
-
 	useEffect(() => {
 		if (!data) return;
 		console.log("dodoano");
@@ -33,13 +32,16 @@ export default function GroupsNewForm() {
 	}, [data]);
 
 	const handleSubmit = () => {
-		if(isValidArr.some(v => v !== true))
-			return
-		
+		if (isValidArr.some((v) => v !== true)) return;
+
 		runRequest({
 			data: { idUser: auth.id, groupName: name, description: description },
 		});
 	};
+
+	const handleClose = () => {
+		navigate("/groups");
+	}
 
 	return (
 		<>
@@ -58,9 +60,9 @@ export default function GroupsNewForm() {
 					setIsValid={setIsValidName}
 					validation={{
 						validate: name,
-						required: {value: true},
-						minLength: {value: 5},
-						maxLength: {value: 60},
+						required: { value: true },
+						minLength: { value: 5 },
+						maxLength: { value: 60 },
 					}}
 				/>
 
@@ -77,14 +79,24 @@ export default function GroupsNewForm() {
 					setIsValid={setIsValidDesc}
 					validation={{
 						validate: description,
-						required: {value: true, message: "Opis grupy jest wymagany"},
-						minLength: {value: 10, message: "Opis musi się składac z co najmniej 10 znaków"},
-						maxLength: {value: 200},
+						required: { value: true, message: "Opis grupy jest wymagany" },
+						minLength: {
+							value: 10,
+							message: "Opis musi się składac z co najmniej 10 znaków",
+						},
+						maxLength: { value: 200 },
 					}}
 				/>
-
 			</Form>
+
+			<div className="d-flex justify-content-center mb-3">
+				{error && <span>Grupa o takiej nazwie już istnieje</span>}
+			</div>
+
 			<div className="d-flex justify-content-center gap-3">
+				<Button variant="primary" onClick={handleClose}>
+					Powrót
+				</Button>
 				<Button variant="primary" onClick={handleSubmit}>
 					Utwórz
 				</Button>

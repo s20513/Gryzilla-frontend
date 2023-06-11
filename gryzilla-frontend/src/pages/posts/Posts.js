@@ -52,7 +52,6 @@ export default function Posts(props) {
 			observer.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting && hasMore) {
 					setPageNumber((prevPageNumber) => prevPageNumber + 5);
-					console.log("1. dodaje 5");
 				}
 			});
 			if (node) observer.current.observe(node);

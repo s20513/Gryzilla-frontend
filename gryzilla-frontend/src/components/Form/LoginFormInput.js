@@ -40,22 +40,25 @@ export default function LoginFormInput({
 	useEffect(() => {
 		setErrorUnique(null);
 
-		console.log("sprawdzam")
+		//console.log("sprawdzam login")
+		//console.log("Czy jest register: " + isRegister)
 
 		//jezeli blad walidacji
 		if (!isOk) {
-			console.log("blad walidacji " + msg)
+			//console.log("blad walidacji " + msg)
 			setIsValid(false);
 			return;
 		}
-		console.log("czy register? " + isRegister)
+		// console.log("czy register? " + isRegister)
 		//jezeli jest logowanie i przeszło walidacje
         if(!isRegister){
-			console.log("Walidacja ok i nie ma rejestracji")
+			//console.log("Walidacja ok i nie ma rejestracji")
             setErrorUnique(null);
             setIsValid(true);
             return;
         }
+
+		//console.log("ide dalej")
 
         setErrorUnique("Trwa sprawdzanie dostępności loginu...")
 		runRequest({
@@ -63,7 +66,7 @@ export default function LoginFormInput({
 				Nick: value,
 			},
 		});
-	}, [valueDebounced, isRegister]);
+	}, [valueDebounced, isRegister, isOk]);
 
 	return (
 		<>

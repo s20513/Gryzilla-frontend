@@ -28,9 +28,9 @@ const Tag = forwardRef((props, _ref) => {
 		});
 	});
 
-	useEffect(()=> {
-		console.log(parentTags);
-	},[parentTags])
+	// useEffect(()=> {
+	// 	console.log(parentTags);
+	// },[parentTags])
 
 	useImperativeHandle(_ref, () => ({
 		getPostTags: () => {

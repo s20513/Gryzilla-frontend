@@ -40,7 +40,7 @@ export default function GroupSearch({ searchType, searchPhrase }) {
 		<div>
 			{groups &&
 				groups.map((group) => {
-					return <GroupPreview data={group} />;
+					return <GroupPreview key={group.idGroup} data={group} />;
 				})}
 
 			{groups && groups.length === 0 && (

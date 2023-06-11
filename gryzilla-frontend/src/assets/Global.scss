@@ -253,6 +253,11 @@ a:hover {
     border: 2px solid rgb(41, 47, 59);
 }
 
+.button-web-link:disabled {
+    background-color: rgb(61, 57, 88);
+    border: none;
+}
+
 .button-web-link-icon {
     font-size: 1.2rem;
     position: relative;

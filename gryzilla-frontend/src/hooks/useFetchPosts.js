@@ -21,11 +21,11 @@ export default function useFetchPosts(content, url, sortType, pageNumber) {
 	}, [sortType]);
 
 	useEffect(() => {
-		console.log("2. pobieranie danych")
+		//console.log("2. pobieranie danych")
 
 		if (cancelToken) {
 			cancelToken.cancel();
-			console.log("2.1. poszedł cancel - zmienił się sortType, pageNumber")
+			//console.log("2.1. poszedł cancel - zmienił się sortType, pageNumber")
 		}
 		
 		const source = axios.CancelToken.source();
@@ -52,7 +52,7 @@ export default function useFetchPosts(content, url, sortType, pageNumber) {
 						return [...prevPosts, ...response.data[content]];
 					return [...response.data[content]]
 				});
-				console.log("3. dane zostały pobrane")
+				//console.log("3. dane zostały pobrane")
 
 				setHasMore(response.data.isNext);
 				setError(null);
@@ -65,7 +65,7 @@ export default function useFetchPosts(content, url, sortType, pageNumber) {
 				}
 			} finally {
 				setLoading(false);
-				console.log("4. koniec ładowania")
+				//console.log("4. koniec ładowania")
 			}
 		};
 		fetchData();
@@ -73,7 +73,7 @@ export default function useFetchPosts(content, url, sortType, pageNumber) {
 		return () => {
 			if (cancelToken) {
 			  cancelToken.cancel();
-			  console.log("5. useEffect końcowy, cancel")
+			  //console.log("5. useEffect końcowy, cancel")
 			}
 		  };
 

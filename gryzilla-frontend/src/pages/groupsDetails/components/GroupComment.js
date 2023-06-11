@@ -56,6 +56,7 @@ export default function GroupComment({
 					nick={nick}
 					content={contentN}
 					createdAt={createdAt}
+					idUser={idUserMessage}
 				/>
 
 				<OptionDropdown

@@ -65,14 +65,17 @@ export default function MyVerticallyCenteredModal(props) {
 	//po rejestracji
 	useEffect(() => {
 		if (dataRegister == null) return;
-		console.log("zarejestrowano");
+		//console.log("zarejestrowano");
 		setSuccessRegister(true);
 		setModalType("login");
 	}, [dataRegister]);
 
 	const handleSubmit = (event) => {
 		if (modalType == "login") {
-			console.log("logowanie")
+			//console.log("logowanie")
+
+			//console.log(isValidLoginArr[0]);
+			//console.log(isValidLoginArr[1]);
 			
 			if (isValidLoginArr.some((v) => v !== true)) return;
 
@@ -146,9 +149,10 @@ export default function MyVerticallyCenteredModal(props) {
 						}
 						setIsValid={setLoginError}
 						validation={{
+							modalType: modalType,
 							validate: login,
 							required: { value: true },
-							minLength: { value: 5 },
+							minLength: modalType != 'register' ? undefined : { value: 5},
 							maxLength: { value: 60 },
 						}}
 					/>
@@ -166,9 +170,10 @@ export default function MyVerticallyCenteredModal(props) {
 						}
 						setIsValid={setPasswordError}
 						validation={{
+							modalType: modalType,
 							validate: password,
 							required: { value: true },
-							minLength: { value: 5 },
+							minLength: modalType != 'register' ? undefined : { value: 5},
 							maxLength: { value: 255 },
 						}}
 					/>

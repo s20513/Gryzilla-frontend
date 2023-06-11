@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import InputMockup from "../../components/InputMockup";
 import useAxios from "../../hooks/useAxios";
 import ArticlePreview from "./ArticlePreview";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import DropdownList from "../../components/DropdownList";
 import { useState } from "react";
@@ -15,6 +15,7 @@ import Require from "../../context/Require";
 
 export default function Articles() {
 	const observer = useRef();
+	const navigate = useNavigate();
 
 	const [sortType, setSortType] = useLocalStorage(
 		"sortTypeArticles",
@@ -61,9 +62,9 @@ export default function Articles() {
 					authRole: ["Redactor", "Admin"],
 				}}
 			>
-				<Link to={"/articles/new"}>
-					<InputMockup>Dodaj nowy artykuł...</InputMockup>
-				</Link>
+				{/* <Link to={"/articles/new"}> */}
+					<InputMockup handleClick={() => navigate("/articles/new")} >Dodaj nowy artykuł...</InputMockup>
+				{/* </Link> */}
 			</Require>
 
 			{articles &&

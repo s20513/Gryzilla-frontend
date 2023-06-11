@@ -60,7 +60,7 @@ export default function GroupDetials() {
 						<Col lg={3} md={12} sm={12}>
 							<Row>
 								<div className="content-container profile-data-container">
-									<GroupAvatar idGroup={idGroup} />
+									<GroupAvatar idGroup={idGroup} owner={group?.idUserCreator}/>
 									<Require req={{ authLogged: true }}>
 										{group && (
 											<JoinButton
