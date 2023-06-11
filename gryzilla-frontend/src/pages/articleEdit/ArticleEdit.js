@@ -27,12 +27,12 @@ export default function ArticleEdit() {
 				<ContentInput
                     initialContent={data}
 					addNew={addNewArticle}
-					url={"/articles"}
-					method={"POST"}
-					apiData={{}}
+					url={`/articles/${params.idArticle}`}
+					method={"PUT"}
+					apiData={{idArticle: params.idArticle}}
 					enableTags={true}
 					enableTitle={true}
-					placeHolder={"Wprowadz nowy artykuł..."}
+					placeHolder={"Wprowadź nowy artykuł..."}
                     handleClose={()=>navigate(`/articles/${params.idArticle}`)}
 				/>
 			)}

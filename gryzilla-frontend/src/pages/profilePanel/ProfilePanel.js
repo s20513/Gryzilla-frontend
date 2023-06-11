@@ -95,7 +95,7 @@ export default function ProfilePanel() {
 								show={showXboxModal}
 								setShow={setShowXboxModal}
 								linkTail={profile.linkXbox}
-								linkHead={"https://account.xbox.com/pl-pl/"}
+								linkHead={"https://account.xbox.com/pl-pl/Profile?"}
 								idUser={params.idUser}
 								link={"xbox"}
 							/>

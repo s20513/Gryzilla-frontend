@@ -67,17 +67,17 @@ export default function ArticleDetails() {
 					<OptionDropdown
 						handleEdit={() => naviagte(`/articles/edit/${data.idArticle}`)}
 						handleDelete={()=>setShowDeleteModal(true)}
-						handleReport={()=>setShowReportModal(true)}
+						// handleReport={()=>setShowReportModal(true)}
 						upper={false}
 						owner={data.author.idUser}
 					/>
 
-					<ReportModal
+					{/* <ReportModal
 						show={showReportModal}
 						setShow={setShowReportModal}
 						url={`/reportCommentArticle`}
 						reportedContentId={{ idAricle: data.idArticle }}
-					/>
+					/> */}
 
 					<DeleteModal
 						show={showDeleteModal}

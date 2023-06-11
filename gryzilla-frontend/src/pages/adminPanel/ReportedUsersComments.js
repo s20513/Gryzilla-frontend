@@ -17,7 +17,7 @@ export default function ReportedUsersComments({setChosenUser}) {
 						<Report
 							key={index}
 							urlResolve={"/reportProfileComment"}
-							urlLink={"/posts/" + 1 + "/" + 1}
+							urlLink={`/profile/${userComment.idUserProfile}`}
 							reportData={userComment}
 							idContentName={"idProfileComment"}
 							setChosenUser={setChosenUser}

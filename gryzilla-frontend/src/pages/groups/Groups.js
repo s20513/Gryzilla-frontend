@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import useAxios from "../../hooks/useAxios";
 import GroupPreview from "./GroupPreview";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputMockup from "../../components/InputMockup";
 import LoadingBanner from "../../components/LoadingBanner";
 import Require from "../../context/Require";
@@ -13,13 +13,14 @@ export default function Groups() {
 		headers: { accept: "*/*" },
 	});
 
+	const navigate = useNavigate();
+
+
 	return (
 		<Container className="main-panel">
 			<h3>Grupy</h3>
 			<Require req={{ authLogged: true }}>
-				<Link to={"/groups/new"}>
-					<InputMockup>Utwórz nową grupę...</InputMockup>
-				</Link>
+				<InputMockup handleClick={() => navigate("/groups/new")}>Utwórz nową grupę...</InputMockup>	
 			</Require>
 
 			{data &&

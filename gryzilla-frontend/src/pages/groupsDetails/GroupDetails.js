@@ -108,6 +108,8 @@ export default function GroupDetials() {
 												setIsDeleted={setIsDeleted}
 												url={`/groups/${group.idGroup}`}
 												deletedContentId={{ idGroup: group.idGroup }}
+												title={"Usuwanie grupy"}
+												info={"Czy na pewno chcesz usunąć grupę?"}
 											/>
 										</Require>
 									)}

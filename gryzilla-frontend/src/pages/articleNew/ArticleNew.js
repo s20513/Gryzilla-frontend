@@ -24,7 +24,7 @@ export default function ArticleNew() {
 					apiData={ {} }
 					enableTags={true}
                     enableTitle={true}
-					placeHolder={"Wprowadz nowy artykuł..."}
+					placeHolder={"Wprowadź nowy artykuł..."}
 					handleClose={() => navigate('/articles')}
 				/>
 		</Container>

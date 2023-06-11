@@ -253,8 +253,8 @@ export default function MyVerticallyCenteredModal(props) {
 					>
 						<Form.Text>
 							{modalType == "login"
-								? "Kliknij tutaj aby utworzyć konto"
-								: "Kliknij tutaj aby się zalogować"}
+								? "Kliknij tutaj, aby utworzyć konto"
+								: "Kliknij tutaj, aby się zalogować"}
 						</Form.Text>
 					</Form.Group>
 

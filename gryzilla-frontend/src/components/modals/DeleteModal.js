@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../../context/AuthContext";
 
-export default function DeleteModal({show, setShow, isDeleted, setIsDeleted, url, deletedContentId}) {
+export default function DeleteModal({show, setShow, isDeleted, setIsDeleted, url, deletedContentId, title, info}) {
 
 	const auth = useAuth();
 
@@ -34,13 +34,13 @@ export default function DeleteModal({show, setShow, isDeleted, setIsDeleted, url
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Usuwanie treści</Modal.Title>
+				<Modal.Title>{title ? title : "Usuwanie treści"}</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
 				<div className="d-flex flex-center flex-column">
-					{!isDeleted && <span>Czy na pewno chcesz usunąc wybraną treść?</span>}
-					{isDeleted && <span>Treść została usunięta</span>}
+					{!isDeleted && <span>{info ? info : "Czy na pewno chcesz usunąć wybraną treść?"}</span>}
+					{isDeleted && <span>Pomyślnie usunięto</span>}
 				</div>
 			</Modal.Body>
 

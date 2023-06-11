@@ -80,7 +80,7 @@ export default function ProfileComments({ idUser }) {
 						);
 					})}
 
-			<EmptyContentInfo content={newComments.concat(newComments)} />
+			{reviews && <EmptyContentInfo content={reviews.concat(newComments)} />}
 
 			<LoadingBanner
 				loading={loading}
