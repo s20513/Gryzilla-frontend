@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import ProfileFollow from "./components/ProfileFollow";
 import LoadingBanner from "../../components/LoadingBanner";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function ProfileFollowed({ idUser }) {
 	const [followed, errorPosts, loadingPosts, runRequest] = useAxios({
@@ -31,6 +32,9 @@ export default function ProfileFollowed({ idUser }) {
 						);
 					})}
 			</div>
+
+			<EmptyContentInfo content={followed} />
+
 			<LoadingBanner
 				loading={loadingPosts}
 				error={errorPosts}

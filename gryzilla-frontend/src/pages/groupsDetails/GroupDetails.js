@@ -5,7 +5,7 @@ import axios from "axios";
 import useFetchPhoto from "../../hooks/useFetchPhoto";
 import useAxios from "../../hooks/useAxios";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -17,12 +17,15 @@ import GroupMembers from "./GroupMembers";
 import Require from "../../context/Require";
 import OptionDropdown from "../../components/OptionDropdown";
 import GroupEditModal from "./components/GroupEditModal";
+import DeleteModal from "../../components/modals/DeleteModal";
 
 export default function GroupDetials() {
 	const auth = useAuth();
 	const { idGroup } = useParams();
 
 	const [showChangeDetailsModal, setShowChangeDetailsModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [isDeleted, setIsDeleted] = useState(false);
 
 	const [group, error, loading] = useAxios({
 		method: "GET",
@@ -37,6 +40,13 @@ export default function GroupDetials() {
 		headers: { accept: "*/*" },
 		executeOnRender: false,
 	});
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if(!isDeleted) return;
+		navigate("/groups")
+	},[isDeleted])
 
 	useEffect(() => {
 		if (!auth.isLogged) return;
@@ -60,7 +70,7 @@ export default function GroupDetials() {
 						<Col lg={3} md={12} sm={12}>
 							<Row>
 								<div className="content-container profile-data-container">
-									<GroupAvatar idGroup={idGroup} owner={group?.idUserCreator}/>
+									<GroupAvatar idGroup={idGroup} owner={group?.idUserCreator} />
 									<Require req={{ authLogged: true }}>
 										{group && (
 											<JoinButton
@@ -72,9 +82,16 @@ export default function GroupDetials() {
 										)}
 									</Require>
 									{group && (
-										<Require req={{authOwner: true, authRole: ['Admin'], idOwner: group.idUserCreator}}>
+										<Require
+											req={{
+												authOwner: true,
+												authRole: ["Admin"],
+												idOwner: group.idUserCreator,
+											}}
+										>
 											<OptionDropdown
 												handleEdit={() => setShowChangeDetailsModal(true)}
+												handleDelete={() => setShowDeleteModal(true)}
 												owner={group.idUserCreator}
 												upper={true}
 											/>
@@ -83,6 +100,14 @@ export default function GroupDetials() {
 												show={showChangeDetailsModal}
 												setShow={setShowChangeDetailsModal}
 												groupData={group}
+											/>
+											<DeleteModal
+												show={showDeleteModal}
+												setShow={setShowDeleteModal}
+												isDeleted={isDeleted}
+												setIsDeleted={setIsDeleted}
+												url={`/groups/${group.idGroup}`}
+												deletedContentId={{ idGroup: group.idGroup }}
 											/>
 										</Require>
 									)}

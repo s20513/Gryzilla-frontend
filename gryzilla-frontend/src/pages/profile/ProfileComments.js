@@ -6,6 +6,7 @@ import ProfileComment from "./components/ProfileComment";
 import useAxios from "../../hooks/useAxios";
 import LoadingBanner from "../../components/LoadingBanner";
 import Require from "../../context/Require";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function ProfileComments({ idUser }) {
 	const auth = useAuth();
@@ -78,6 +79,8 @@ export default function ProfileComments({ idUser }) {
 							/>
 						);
 					})}
+
+			<EmptyContentInfo content={newComments.concat(newComments)} />
 
 			<LoadingBanner
 				loading={loading}

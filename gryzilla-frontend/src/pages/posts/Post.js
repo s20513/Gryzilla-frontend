@@ -105,7 +105,7 @@ export default function Post({
 				isDeleted={isDeleted}
 				setIsDeleted={setIsDeleted}
 				url={`/posts/${postData.idPost}`}
-				reportedContentId={{ idPost: postData.idPost }}
+				deletedContentId={{ idPost: postData.idPost }}
 			/>
 		</>
 	);

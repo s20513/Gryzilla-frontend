@@ -3,6 +3,7 @@ import useAxios from "../../hooks/useAxios";
 import Post from "../posts/Post";
 import PostAndComments from "../posts/PostAndComments";
 import LoadingBanner from "../../components/LoadingBanner";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function ProfilePotst({ idUser }) {
 	const [posts, errorPosts, loadingPosts, runRequest] = useAxios({
@@ -27,6 +28,8 @@ export default function ProfilePotst({ idUser }) {
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <PostAndComments key={post.idPost} postData={post} />;
 				})}
+
+				<EmptyContentInfo content={posts}/>
 
 			<LoadingBanner
 				loading={loadingPosts}

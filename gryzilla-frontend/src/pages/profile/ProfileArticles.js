@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import ArticlePreview from "../articles/ArticlePreview";
 import LoadingBanner from "../../components/LoadingBanner";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function ProfileArticles({ idUser }) {
 	const [articles, errorPosts, loadingPosts, runRequest] = useAxios({
@@ -35,6 +36,8 @@ export default function ProfileArticles({ idUser }) {
 						/>
 					);
 				})}
+
+			<EmptyContentInfo content={articles}/>
 
 			<LoadingBanner
 				loading={loadingPosts}

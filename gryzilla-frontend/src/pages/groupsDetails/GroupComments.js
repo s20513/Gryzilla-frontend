@@ -6,6 +6,7 @@ import useAxios from "../../hooks/useAxios";
 
 import GroupComment from "./components/GroupComment";
 import Require from "../../context/Require";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function GroupComments({ idGroup, isMember }) {
 	const auth = useAuth();
@@ -73,6 +74,8 @@ export default function GroupComments({ idGroup, isMember }) {
 						/>
 					);
 				})}
+
+				{message && <EmptyContentInfo content={message.concat(newComments)} />}
 		</>
 	);
 }

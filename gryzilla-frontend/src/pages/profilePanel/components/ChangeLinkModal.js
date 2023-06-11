@@ -31,6 +31,19 @@ export default function ChangeLinkModal({
 		executeOnRender: false,
 	});
 
+	const [
+		dataDelete,
+		errorDelete,
+		loadingDelete,
+		runRequestDelete,
+		isSuccessDelete,
+	] = useAxios({
+		method: "DELETE",
+		url: `/links/${link}/${idUser}`,
+		headers: { accept: "*/*" },
+		executeOnRender: false,
+	});
+
 	const handleClose = () => {
 		setShow(false);
 	};
@@ -41,10 +54,18 @@ export default function ChangeLinkModal({
 		runRequest({
 			data: {
 				idUser: idUser,
-				link: (linkHead + myLink),
+				link: linkHead + myLink,
 			},
 		});
 	};
+
+	const handleDelete = () => {
+		runRequestDelete({
+			data: {
+				idUser: idUser,
+			},
+		});
+	}
 
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
@@ -61,6 +82,25 @@ export default function ChangeLinkModal({
 						onChange={(e) => setMyLink(e.target.value)}
 					/>
 				</InputGroup>
+
+				<div className="d-flex flex-column">
+					<Button variant="warning" onClick={handleDelete}>
+						Usuń link
+					</Button>
+				</div>
+
+				<LoadingBanner
+					placeHolder={"Przetwarzanie rządania"}
+					loading={loadingDelete}
+				/>
+				<ErrorBanner2
+					placeholder={"Błąd przy usuwaniu linku"}
+					isSuccess={isSuccessDelete}
+				/>
+				<SuccessBaner2
+					placeholder={"Pomyślnie usunięto link"}
+					isSuccess={isSuccessDelete}
+				/>
 
 				<LoadingBanner
 					placeHolder={"Przetwarzanie rządania"}

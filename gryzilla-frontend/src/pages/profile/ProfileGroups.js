@@ -4,6 +4,7 @@ import Post from "../posts/Post";
 import PostAndComments from "../posts/PostAndComments";
 import GroupPreview from "../groups/GroupPreview";
 import LoadingBanner from "../../components/LoadingBanner";
+import EmptyContentInfo from "../../components/EmptyContentInfo";
 
 export default function ProfileGroups({ idUser }) {
 	const [groups, errorGropups, loadingGroups, runRequest] = useAxios({
@@ -28,6 +29,8 @@ export default function ProfileGroups({ idUser }) {
 					//return <Post key={post.idPost} postData={post}></Post>;
 					return <GroupPreview key={group.idGroup} data={group} />;
 				})}
+
+			<EmptyContentInfo content={groups} />
 
 			<LoadingBanner
 				loading={loadingGroups}
