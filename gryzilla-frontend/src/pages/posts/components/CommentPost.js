@@ -10,6 +10,7 @@ import DeleteModal from "../../../components/modals/DeleteModal";
 import DeleteContentWrapper from "../../../components/wrappers/DeleteContentWrapper";
 import Require from "../../../context/Require";
 import { useNavigate } from "react-router-dom";
+import SuperOptionDropdown from "../../../components/SuperOptionDropdown";
 
 export default function CommentPost({ commentData }) {
 	const navigate = useNavigate();
@@ -56,20 +57,47 @@ export default function CommentPost({ commentData }) {
 					createdAt={commentData.createdAt}
 					content={commentData.content}
 					id={commentData.idComment}
+					idUser={commentData.idUser}
 				/>
-				{/* <Require
-					req={{
-						authLogged: true,
-					}}
-				> */}
-					<OptionDropdown
-						handleEdit={changeDisplayEditor}
-						handleDelete={() => setShowDeleteModal(true)}
-						handleReport={() => setShowReportModal(true)}
-						handleNewView={() => navigate(`/posts/${commentData.idPost}/${commentData.idComment}`)}
-						owner={commentData.idUser}
-					/>
-				{/* </Require> */}
+				<SuperOptionDropdown
+					upper={false}
+					owner={commentData.idUser}
+					options={[
+						{
+							title: "Widok szczegółowy komentarza",
+							onClick: () => navigate(`/posts/${commentData.idPost}/${commentData.idComment}`),
+							conditions: { loggedIn: false },
+						},
+						{
+							title: "Edytuj komentarz",
+							onClick: () => changeDisplayEditor(),
+							conditions: { ranks: ["Admin"], owner: true },
+						},
+						{
+							title: "Usuń komentarz",
+							onClick: () => setShowDeleteModal(true),
+							conditions: {
+								ranks: ["Admin", "Moderator"],
+								owner: true,
+							},
+						},
+						{
+							title: "Zgłoś komentarz",
+							onClick: () => setShowReportModal(true),
+							conditions: { owner: false },
+						},
+					]}
+				/>
+				{/* 
+				<OptionDropdown
+					handleEdit={changeDisplayEditor}
+					handleDelete={() => setShowDeleteModal(true)}
+					handleReport={() => setShowReportModal(true)}
+					handleNewView={() =>
+						navigate(`/posts/${commentData.idPost}/${commentData.idComment}`)
+					}
+					owner={commentData.idUser}
+				/> */}
 			</EditContentInputWrapper>
 
 			<ReportModal

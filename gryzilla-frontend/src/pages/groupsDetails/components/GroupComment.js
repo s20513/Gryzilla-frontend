@@ -7,10 +7,12 @@ import ReportModal from "../../../components/modals/ReportModal";
 import DeleteModal from "../../../components/modals/DeleteModal";
 import OptionDropdown from "../../../components/OptionDropdown";
 import EditContentInputWrapper from "../../../components/wrappers/EditContentInputWrapper";
+import SuperOptionDropdown from "../../../components/SuperOptionDropdown";
 
 export default function GroupComment({
 	idMessage,
 	idUserMessage,
+	idUserCreatorGroup,
 	nick,
 	createdAt,
 	content,
@@ -29,7 +31,7 @@ export default function GroupComment({
 	};
 
 	const setNewMessageData = (data) => {
-		setContentN(data.content)
+		setContentN(data.content);
 		setDisplayEditor(false);
 	};
 
@@ -40,12 +42,12 @@ export default function GroupComment({
 		>
 			<EditContentInputWrapper
 				displayEditor={displayEditor}
-				initialContent={{content: contentN}}
+				initialContent={{ content: contentN }}
 				addNew={setNewMessageData}
 				url={`/groupsMessage/${idMessage}`}
 				method={"PUT"}
 				apiData={{
-					idMessage: idMessage
+					idMessage: idMessage,
 				}}
 				enableTags={false}
 				placeHolder={"Wprowadz nową wiadomość..."}
@@ -58,12 +60,33 @@ export default function GroupComment({
 					createdAt={createdAt}
 					idUser={idUserMessage}
 				/>
+				<SuperOptionDropdown
+					upper={false}					
+					owner={idUserMessage}
+					relatedOwner={idUserCreatorGroup}
+					options={[
+						{
+							title: "Edytuj komentarz",
+							onClick: () => changeDisplayEditor(),
+							conditions: { ranks: ["Admin"], owner: true },
+						},
+						{
+							title: "Usuń komentarz",
+							onClick: () => setShowDeleteModal(true),
+							conditions: {
+								ranks: ["Admin", "Moderator"],
+								owner: true,
+								relatedOwner: true,
+							},
+						},
+					]}
+				/>
 
-				<OptionDropdown
+				{/* <OptionDropdown
 					handleEdit={changeDisplayEditor}
 					handleDelete={() => setShowDeleteModal(true)}
 					owner={idUserMessage}
-				/>
+				/> */}
 			</EditContentInputWrapper>
 
 			{/* <ReportModal

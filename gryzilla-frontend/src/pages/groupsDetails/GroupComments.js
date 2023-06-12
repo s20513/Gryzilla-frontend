@@ -8,7 +8,7 @@ import GroupComment from "./components/GroupComment";
 import Require from "../../context/Require";
 import EmptyContentInfo from "../../components/EmptyContentInfo";
 
-export default function GroupComments({ idGroup, isMember }) {
+export default function GroupComments({ idGroup, idUserCreatorGroup, isMember }) {
 	const auth = useAuth();
 
 	const [showInput, setShowInput] = useState(false);
@@ -64,6 +64,7 @@ export default function GroupComments({ idGroup, isMember }) {
 							key={msg.idMessage}
 							idMessage={msg.idMessage}
 							idUserMessage={msg.idUser}
+							idUserCreatorGroup={idUserCreatorGroup}
 							avatar={{
 								type: msg.type,
 								base64PhotoData: msg.base64PhotoData,

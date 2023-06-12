@@ -17,6 +17,8 @@ export default function FollowButton({ idUser }) {
 
 	useEffect(() => {
 		if (!auth.isLogged) return;
+		console.log("pobieram nowe");
+		setIsLiked(false);
 		runRequest({ url: `/friends/${auth.id}/` });
 	}, [idUser]);
 
@@ -62,20 +64,29 @@ export default function FollowButton({ idUser }) {
 
 	return (
 		<>
-			<div
-				onClick={() => handleClick()}
-				className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"}
-				style={{ width: "150px", textAlign: "center" }}
-			>
-				{!loadingF ? (
-					<>
-						{!isLiked && <span>Obserwuj</span>}
-						{isLiked && <span>Obeserwowany</span>}
-					</>
-				) : (
+			{!loadingF ? (
+				<div
+					onClick={() => handleClick()}
+					className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"}
+					style={{ width: "150px", textAlign: "center" }}
+				>
+					{!loadingF ? (
+						<>
+							{!isLiked && <span>Obserwuj</span>}
+							{isLiked && <span>Obeserwowany</span>}
+						</>
+					) : (
+						<span>Przetwarzam...</span>
+					)}
+				</div>
+			) : (
+				<div
+					className={isLiked && auth.isLogged ? "likes-box-liked" : "likes-box"}
+					style={{ width: "150px", textAlign: "center" }}
+				>
 					<span>Przetwarzam...</span>
-				)}
-			</div>
+				</div>
+			)}
 		</>
 	);
 }

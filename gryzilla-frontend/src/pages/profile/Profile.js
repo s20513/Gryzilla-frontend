@@ -22,6 +22,7 @@ import ProfileEditModal from "../../components/modals/ProfileEditModal";
 import Require from "../../context/Require";
 import ProfileGroups from "./ProfileGroups";
 import ReportModal from "../../components/modals/ReportModal";
+import SuperOptionDropdown from "../../components/SuperOptionDropdown";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -46,7 +47,6 @@ export default function Profile() {
 		runRequest();
 	}, [idUser]);
 
-
 	return (
 		<>
 			{profile && (
@@ -69,14 +69,29 @@ export default function Profile() {
 										>
 											<FollowButton idUser={idUser} />
 										</Require>
-										<OptionDropdown
+										<SuperOptionDropdown
+										upper={true}
+											owner={profile.idUser}
+											options={[
+												{
+													title: "Edytuj dane profilu",
+													onClick: () => navigate(`/profile/panel/${idUser}`),
+													conditions: { ranks: ["Admin"], owner: true },
+												},
+												{
+													title: "Zgłoś profil użytkownika",
+													onClick: () => setShowReportModal(true),
+													conditions: { owner: false },
+												},
+											]}
+										/>
+										{/* <OptionDropdown
 											handleEdit={() => navigate(`/profile/panel/${idUser}`)}
-											handleEditBlocked={() => navigate(`/profile/panel/${idUser}`)}
 											// handleDelete={() => setShowDeleteModal(true)}
 											handleReport={() => setShowReportModal(true)}
 											owner={profile.idUser}
 											upper={true}
-										/>
+										/> */}
 										<ProfileEditModal
 											show={showEditModal}
 											setShow={setShowEditModal}
@@ -96,7 +111,13 @@ export default function Profile() {
 									<ProfileDataTable profile={profile} />
 								</Row>
 								<Row>
-									<ProfileLinkButtons linkDiscord={profile.linkDiscord} linkEpic={profile.linkEpic} linkPs={profile.linkPs} linkSteam={profile.linkSteam} linkXbox={profile.linkXbox}/>
+									<ProfileLinkButtons
+										linkDiscord={profile.linkDiscord}
+										linkEpic={profile.linkEpic}
+										linkPs={profile.linkPs}
+										linkSteam={profile.linkSteam}
+										linkXbox={profile.linkXbox}
+									/>
 								</Row>
 							</Col>
 						</Row>

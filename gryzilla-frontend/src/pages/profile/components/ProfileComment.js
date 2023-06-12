@@ -7,6 +7,7 @@ import ReportModal from "../../../components/modals/ReportModal";
 import DeleteContentWrapper from "../../../components/wrappers/DeleteContentWrapper";
 import Comment from "../../../components/Comment";
 import EditContentInputWrapper from "../../../components/wrappers/EditContentInputWrapper";
+import SuperOptionDropdown from "../../../components/SuperOptionDropdown";
 
 export default function ProfileComment({
 	idComment,
@@ -26,6 +27,7 @@ export default function ProfileComment({
 	const [contentN, setContentN] = useState(content);
 
 	const changeDisplayEditor = () => {
+		console.log("change")
 		setDisplayEditor((prev) => !prev);
 	};
 
@@ -57,11 +59,26 @@ export default function ProfileComment({
 					content={contentN}
 					createdAt={createdAt}
 				/>
-				<OptionDropdown
-					handleEdit={changeDisplayEditor}
-					handleDelete={() => setShowDeleteModal(true)}
-					handleReport={() => setShowReportModal(true)}
+				<SuperOptionDropdown
 					owner={idUser}
+					relatedOwner={idUserComment}
+					options={[
+						{
+							title: "Edytuj komentarz profilu",
+							onClick: () => changeDisplayEditor(),
+							conditions: { ranks: ["Admin"], owner: true },
+						},
+						{
+							title: "Usuń komentarz profilu",
+							onClick: () => setShowDeleteModal(true),
+							conditions: { ranks: ["Admin", "Moderator"] , owner: true, relatedOwner: true},
+						},
+						{
+							title: "Zgłoś komentarz profilu",
+							onClick: () => setShowReportModal(true),
+							conditions: { owner: false},
+						},
+					]}
 				/>
 			</EditContentInputWrapper>
 			<ReportModal

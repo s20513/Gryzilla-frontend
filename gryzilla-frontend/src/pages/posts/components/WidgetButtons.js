@@ -14,6 +14,7 @@ import ReportModal from "../../../components/modals/ReportModal";
 import LikeButton from "../../../components/LikeButton";
 import { MdThumbUp } from "react-icons/md";
 import OptionDropdown from "../../../components/OptionDropdown";
+import SuperOptionDropdown from "../../../components/SuperOptionDropdown";
 
 export default function WidgetButtons({
 	handleComments,
@@ -25,30 +26,53 @@ export default function WidgetButtons({
 	showDetailsButton,
 	likes,
 	url,
-	owner
+	owner,
 }) {
-
 	const navigate = useNavigate();
 	return (
 		<div className="widget-box">
-			
-			<LikeButton
-				likesNum={likes}
-				id={idPost}
-				url={"likesPost"}
-			/>
+			<LikeButton likesNum={likes} id={idPost} url={"likesPost"} />
 
 			<Button type="button" onClick={handleComments} className="widget-button">
-				<BsFillChatLeftTextFill /> {commentsNumber} 
+				<BsFillChatLeftTextFill /> {commentsNumber}
 			</Button>
 
-			<OptionDropdown
+			{/* <OptionDropdown
 				handleNewView={() => navigate(`/posts/${idPost}`)}
 				handleEdit={handleEdit}
 				handleDelete={handleDelete}
 				handleReport={handleReport}
 				upper={true}
 				owner={owner}
+			/> */}
+			<SuperOptionDropdown
+				upper={true}
+				owner={owner}
+				options={[
+					{
+						title: "Widok szczegółowy posta",
+						onClick: () => navigate(`/posts/${idPost}`),
+						conditions: { loggedIn: false },
+					},
+					{
+						title: "Edytuj post",
+						onClick: () => handleEdit(),
+						conditions: { ranks: ["Admin"], owner: true },
+					},
+					{
+						title: "Usuń post",
+						onClick: () => handleDelete(true),
+						conditions: {
+							ranks: ["Admin", "Moderator"],
+							owner: true,
+						},
+					},
+					{
+						title: "Zgłoś post",
+						onClick: () => handleReport(true),
+						conditions: { owner: false },
+					},
+				]}
 			/>
 		</div>
 	);

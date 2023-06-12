@@ -8,6 +8,7 @@ import OptionDropdown from "../../components/OptionDropdown";
 import EditContentInputWrapper from "../../components/wrappers/EditContentInputWrapper";
 import DeleteContentWrapper from "../../components/wrappers/DeleteContentWrapper";
 import DeleteModal from "../../components/modals/DeleteModal";
+import SuperOptionDropdown from "../../components/SuperOptionDropdown";
 
 export default function ArticleComment({ commentData }) {
 	const [displayEditor, setDisplayEditor] = useState(false);
@@ -45,16 +46,44 @@ export default function ArticleComment({ commentData }) {
 				handleClose={changeDisplayEditor}
 			>
 				<Comment
-					avatar={null}
+					avatar={{
+						type: commentData.type,
+						base64PhotoData: commentData.base64PhotoData,
+					}}
 					nick={commentData.nick}
 					createdAt={commentData.createdAt}
 					content={commentData.content}
+					idUser={commentData.idUser}
 				/>
-				<OptionDropdown
+				<SuperOptionDropdown
+					upper={false}
+					owner={commentData.idUser}
+					options={[
+						{
+							title: "Edytuj komentarz",
+							onClick: () => changeDisplayEditor(),
+							conditions: { ranks: ["Admin"], owner: true },
+						},
+						{
+							title: "Usuń komentarz",
+							onClick: () => setShowDeleteModal(true),
+							conditions: {
+								ranks: ["Admin", "Moderator"],
+								owner: true,
+							},
+						},
+						{
+							title: "Zgłoś komentarz",
+							onClick: () => setShowReportModal(true),
+							conditions: { owner: false },
+						},
+					]}
+				/>
+				{/* <OptionDropdown
 					handleEdit={changeDisplayEditor}
 					handleDelete={() =>setShowDeleteModal(true)}
 					handleReport={() => setShowReportModal(true)}
-				/>
+				/> */}
 			</EditContentInputWrapper>
 
 			<ReportModal

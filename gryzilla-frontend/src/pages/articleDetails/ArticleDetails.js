@@ -8,13 +8,12 @@ import ReportModal from "../../components/modals/ReportModal";
 import DeleteModal from "../../components/modals/DeleteModal";
 import { useEffect, useState } from "react";
 import { DbDateConvert } from "../../utils/DataUtlis";
+import SuperOptionDropdown from "../../components/SuperOptionDropdown";
 
 export default function ArticleDetails() {
 	const params = useParams();
 	const naviagte = useNavigate();
 	const idCommentHighlight = params.idComment ? params.idComment : null;
-
-
 
 	const [showReportModal, setShowReportModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,9 +31,9 @@ export default function ArticleDetails() {
 		headers: { accept: "*/*" },
 	});
 
-	useEffect(()=>{
+	useEffect(() => {
 		runRequest();
-	},[params.idArticle])
+	}, [params.idArticle]);
 
 	return (
 		<Container className="main-panel">
@@ -56,7 +55,9 @@ export default function ArticleDetails() {
 							<div dangerouslySetInnerHTML={{ __html: data.content }}></div>
 						</div>
 						<span className="article-label">
-							Artykuł użytkownika {data.author.nick}, utworzono {DbDateConvert(data.createdAt).time} {DbDateConvert(data.createdAt).date}
+							Artykuł użytkownika {data.author.nick}, utworzono{" "}
+							{DbDateConvert(data.createdAt).time}{" "}
+							{DbDateConvert(data.createdAt).date}
 						</span>
 
 						<div className="lower-tag-container">
@@ -64,13 +65,33 @@ export default function ArticleDetails() {
 								data.tags.map((tag, index) => <span key={index}>#{tag} </span>)}
 						</div>
 					</div>
-					<OptionDropdown
+					<SuperOptionDropdown
+						upper={false}
+						owner={data.author.idUser}
+						options={[
+						
+							{
+								title: "Edytuj artykuł",
+								onClick: () => naviagte(`/articles/edit/${data.idArticle}`),
+								conditions: { ranks: ["Admin"], owner: true },
+							},
+							{
+								title: "Usuń artykuł",
+								onClick: () => setShowDeleteModal(true),
+								conditions: {
+									ranks: ["Admin", "Moderator"],
+									owner: true,
+								},
+							},
+						]}
+					/>
+					{/* <OptionDropdown
 						handleEdit={() => naviagte(`/articles/edit/${data.idArticle}`)}
 						handleDelete={()=>setShowDeleteModal(true)}
 						// handleReport={()=>setShowReportModal(true)}
 						upper={false}
 						owner={data.author.idUser}
-					/>
+					/> */}
 
 					{/* <ReportModal
 						show={showReportModal}

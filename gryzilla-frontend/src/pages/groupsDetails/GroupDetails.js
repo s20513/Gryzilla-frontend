@@ -18,6 +18,7 @@ import Require from "../../context/Require";
 import OptionDropdown from "../../components/OptionDropdown";
 import GroupEditModal from "./components/GroupEditModal";
 import DeleteModal from "../../components/modals/DeleteModal";
+import SuperOptionDropdown from "../../components/SuperOptionDropdown";
 
 export default function GroupDetials() {
 	const auth = useAuth();
@@ -44,9 +45,9 @@ export default function GroupDetials() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if(!isDeleted) return;
-		navigate("/groups")
-	},[isDeleted])
+		if (!isDeleted) return;
+		navigate("/groups");
+	}, [isDeleted]);
 
 	useEffect(() => {
 		if (!auth.isLogged) return;
@@ -72,7 +73,7 @@ export default function GroupDetials() {
 								<div className="content-container profile-data-container">
 									<GroupAvatar idGroup={idGroup} owner={group?.idUserCreator} />
 									<Require req={{ authLogged: true }}>
-										{group && (
+										{group && dataMember && (
 											<JoinButton
 												idGroup={idGroup}
 												idOwner={group.idUserCreator}
@@ -82,19 +83,33 @@ export default function GroupDetials() {
 										)}
 									</Require>
 									{group && (
-										<Require
-											req={{
-												authOwner: true,
-												authRole: ["Admin"],
-												idOwner: group.idUserCreator,
-											}}
-										>
-											<OptionDropdown
+										<>
+											<SuperOptionDropdown
+												upper={true}
+												owner={group.idUserCreator}
+												options={[
+													{
+														title: "Edytuj grupę",
+														onClick: () => setShowChangeDetailsModal(true),
+														conditions: { ranks: ["Admin"], owner: true },
+													},
+													{
+														title: "Usuń grupę",
+														onClick: () => setShowDeleteModal(true),
+														conditions: {
+															ranks: ["Admin", "Moderator"],
+															owner: true,
+														},
+													},
+												]}
+											/>
+
+											{/* <OptionDropdown
 												handleEdit={() => setShowChangeDetailsModal(true)}
 												handleDelete={() => setShowDeleteModal(true)}
 												owner={group.idUserCreator}
 												upper={true}
-											/>
+											/> */}
 
 											<GroupEditModal
 												show={showChangeDetailsModal}
@@ -111,7 +126,7 @@ export default function GroupDetials() {
 												title={"Usuwanie grupy"}
 												info={"Czy na pewno chcesz usunąć grupę?"}
 											/>
-										</Require>
+										</>
 									)}
 								</div>
 							</Row>
@@ -134,7 +149,7 @@ export default function GroupDetials() {
 					justify
 				>
 					<Tab eventKey="msg" title="Wiadomości grupy">
-						<GroupComments idGroup={idGroup} isMember={isMember} />
+						{group && <GroupComments idGroup={idGroup} idUserCreatorGroup={group.idUserCreator} isMember={isMember} />}
 					</Tab>
 					<Tab eventKey="members" title="Członkowie">
 						<GroupMembers groupData={group} isMember={isMember} />
