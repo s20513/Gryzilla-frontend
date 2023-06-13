@@ -259,7 +259,7 @@ export default function MyVerticallyCenteredModal(props) {
 					</Form.Group>
 
 					<LoadingBanner placeHolder={"logowanie"} loading={loadingLogin} />
-					{errorLogin && <ErrorBanner placeholder={"Zły login lub hasło"} />}
+					{errorLogin && !successRegister && modalType == 'login' && <ErrorBanner placeholder={"Zły login lub hasło"} />}
 					{successRegister && (
 						<SuccessBaner placeholder={"Konto pomyślnie założone"} />
 					)}

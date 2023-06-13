@@ -49,7 +49,7 @@ export default function ChangeDetailsModal({ show, setShow, userData }) {
 	return (
 		<Modal contentClassName="main-panel-modal" show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Zmiana hasła</Modal.Title>
+				<Modal.Title>Zmiana danych konta</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>

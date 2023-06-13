@@ -70,7 +70,8 @@ export default function Profile() {
 											<FollowButton idUser={idUser} />
 										</Require>
 										<SuperOptionDropdown
-										upper={true}
+											idUser={idUser}
+											upper={true}
 											owner={profile.idUser}
 											options={[
 												{

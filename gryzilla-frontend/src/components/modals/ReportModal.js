@@ -137,6 +137,8 @@ export default function ReportModal({ show, setShow, url, reportedContentId }) {
 							</div>
 						)}
 						{isReported && <span>Zgłoszenie zostało dodane</span>}
+						<div className="d-flex justify-content-center"></div>
+						{errorPost && !isReported && <div className="d-flex justify-content-center"><span>Zgłoszenie jest już w systemie</span></div>}
 					</div>
 				</Modal.Body>
 

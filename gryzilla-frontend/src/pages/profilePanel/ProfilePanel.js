@@ -86,7 +86,7 @@ export default function ProfilePanel() {
 
 					<div className="content-container">
 						<h4>Zmiana linków konta</h4>
-						<div className="d-flex gap-3">
+						<div className="d-flex gap-3 flex-wrap">
 							<Button onClick={() => setShowXboxModal(true)}>
 								Zmiana konta Xbox <FaXbox className="button-web-link-icon" />
 							</Button>

@@ -9,6 +9,7 @@ export default function SuperOptionDropdown({
 	relatedOwner,
 	options,
 	upper,
+	idUser
 }) {
 	const auth = useAuth();
 
