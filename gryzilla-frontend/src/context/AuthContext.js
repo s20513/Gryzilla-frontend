@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 				setResponse(result.data);
 			} catch (error) {
 				setRefreshToken(null);
-				console.log("refreshToken error: " + error);
+				//console.log("refreshToken error: " + error);
 			} finally {
 				//setLoading(false);
 			}
@@ -48,27 +48,27 @@ export const AuthProvider = ({ children }) => {
 
 	//po renderze strony
 	useEffect(() => {
-		console.log("logowanie");
+		//console.log("logowanie");
 
 		//Jeżeli brak refresh tokena to nie loguj
 		if (refreshToken == null) {
-			console.log("Brak refreshTokena");
+			//console.log("Brak refreshTokena");
 			return;
 		} else {
-			console.log("Jest refreshToken")
+			//console.log("Jest refreshToken")
 		}
 
 		//jeżeli ważny jwtToken to zaloguj
 		if (jwtToken != null && chechValidJwt(jwtToken, 10000)) {
-			console.log("Zapisany ważny jwtToken i jest resfresh token");
+			//console.log("Zapisany ważny jwtToken i jest resfresh token");
 			relogin();
 			return;
 		} else {
-			console.log("Brak jwt lub nie ważny")
+			//console.log("Brak jwt lub nie ważny")
 		}
 
 		//Jeżeli jest refreshToken ale brak ważnego jwtTokena, pobierz nowy jwtToken
-		console.log("Używanie refreshTokena");
+		//console.log("Używanie refreshTokena");
 		fetchNewJwtToken()
 		
 	}, []);
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
 
 	const renewJwtToken = () => {
 		if(!chechValidJwt(jwtToken,5000)){
-			console.log("Potrzebny nowy token")
+			//console.log("Potrzebny nowy token")
 			fetchNewJwtToken();
 		}
 	}

@@ -11,6 +11,7 @@ import { FaSteam, FaXbox } from "react-icons/fa";
 import ChangeLinkModal from "./components/ChangeLinkModal";
 import { SiEpicgames } from "react-icons/si";
 import { BsDiscord } from "react-icons/bs";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function ProfilePanel() {
 	const auth = useAuth();
@@ -144,6 +145,7 @@ export default function ProfilePanel() {
 					</div>
 				</>
 			)}
+			<LoadingBanner error={errorProfile} loading={loadingProfile}>Ładowanie panelu użytkownika...</LoadingBanner>
 		</Container>
 	);
 }

@@ -23,6 +23,7 @@ import Require from "../../context/Require";
 import ProfileGroups from "./ProfileGroups";
 import ReportModal from "../../components/modals/ReportModal";
 import SuperOptionDropdown from "../../components/SuperOptionDropdown";
+import LoadingBanner from "../../components/LoadingBanner";
 
 export default function Profile() {
 	const [idPhoto, setIdPhoto] = useState(10);
@@ -49,82 +50,87 @@ export default function Profile() {
 
 	return (
 		<>
-			{profile && (
-				<Container className="main-panel">
-					<Container className="d-flex justify-content-between">
-						<h2>Profil użytkownika {profile.nick}</h2>
-					</Container>
+			<Container className="main-panel">
+				{profile && (
+					<>
+						<Container className="d-flex justify-content-between">
+							<h2>Profil użytkownika {profile.nick}</h2>
+						</Container>
 
-					<Container>
-						<Row>
-							<Col lg={3} md={12} sm={12}>
-								<Row>
-									<div className="content-container profile-data-container gap-2">
-										<ProfileAvatar idUser={idUser} owner={idUser} />
-										<Require
-											req={{
-												idOwner: idUser,
-												notOwner: true,
-											}}
-										>
-											<FollowButton idUser={idUser} />
-										</Require>
-										<SuperOptionDropdown
-											idUser={idUser}
-											upper={true}
-											owner={profile.idUser}
-											options={[
-												{
-													title: "Edytuj dane profilu",
-													onClick: () => navigate(`/profile/panel/${idUser}`),
-													conditions: { ranks: ["Admin"], owner: true },
-												},
-												{
-													title: "Zgłoś profil użytkownika",
-													onClick: () => setShowReportModal(true),
-													conditions: { owner: false },
-												},
-											]}
-										/>
-										{/* <OptionDropdown
+						<Container>
+							<Row>
+								<Col lg={3} md={12} sm={12}>
+									<Row>
+										<div className="content-container profile-data-container gap-2">
+											<ProfileAvatar idUser={idUser} owner={idUser} />
+											<Require
+												req={{
+													idOwner: idUser,
+													notOwner: true,
+												}}
+											>
+												<FollowButton idUser={idUser} />
+											</Require>
+											<SuperOptionDropdown
+												idUser={idUser}
+												upper={true}
+												owner={profile.idUser}
+												options={[
+													{
+														title: "Edytuj dane profilu",
+														onClick: () => navigate(`/profile/panel/${idUser}`),
+														conditions: { ranks: ["Admin"], owner: true },
+													},
+													{
+														title: "Zgłoś profil użytkownika",
+														onClick: () => setShowReportModal(true),
+														conditions: { owner: false },
+													},
+												]}
+											/>
+											{/* <OptionDropdown
 											handleEdit={() => navigate(`/profile/panel/${idUser}`)}
 											// handleDelete={() => setShowDeleteModal(true)}
 											handleReport={() => setShowReportModal(true)}
 											owner={profile.idUser}
 											upper={true}
 										/> */}
-										<ProfileEditModal
-											show={showEditModal}
-											setShow={setShowEditModal}
-										/>
+											<ProfileEditModal
+												show={showEditModal}
+												setShow={setShowEditModal}
+											/>
 
-										<ReportModal
-											show={showReportModal}
-											setShow={setShowReportModal}
-											url={`/reportUser`}
-											reportedContentId={{ idUserReported: profile.idUser }}
+											<ReportModal
+												show={showReportModal}
+												setShow={setShowReportModal}
+												url={`/reportUser`}
+												reportedContentId={{ idUserReported: profile.idUser }}
+											/>
+										</div>
+									</Row>
+								</Col>
+								<Col lg={{ span: 8, offset: 1 }} md={12} sm={12}>
+									<Row>
+										<ProfileDataTable profile={profile} />
+									</Row>
+									<Row>
+										<ProfileLinkButtons
+											linkDiscord={profile.linkDiscord}
+											linkEpic={profile.linkEpic}
+											linkPs={profile.linkPs}
+											linkSteam={profile.linkSteam}
+											linkXbox={profile.linkXbox}
 										/>
-									</div>
-								</Row>
-							</Col>
-							<Col lg={{ span: 8, offset: 1 }} md={12} sm={12}>
-								<Row>
-									<ProfileDataTable profile={profile} />
-								</Row>
-								<Row>
-									<ProfileLinkButtons
-										linkDiscord={profile.linkDiscord}
-										linkEpic={profile.linkEpic}
-										linkPs={profile.linkPs}
-										linkSteam={profile.linkSteam}
-										linkXbox={profile.linkXbox}
-									/>
-								</Row>
-							</Col>
-						</Row>
-					</Container>
-				</Container>
-			)}
+									</Row>
+								</Col>
+							</Row>
+						</Container>
+					</>
+				)}
+				<LoadingBanner error={errorProfile} loading={loadingProfile}>
+					Ładownie danych profilu...
+				</LoadingBanner>
+			</Container>
 
 			<Container className="main-panel">
 				<Tabs

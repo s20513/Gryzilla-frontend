@@ -31,7 +31,7 @@ export default function Groups() {
 			<LoadingBanner
 				loading={loadingData}
 				error={errorData}
-				placeHolder={"Ładowanie grup"}
+				placeHolder={"Ładowanie listy grup..."}
 			/>
 		</Container>
 	);
